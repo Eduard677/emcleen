@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMCleen — Weekly Car Cleaning, Ennis</title>
+<meta name="description" content="Weekly car cleaning in Ennis, Co. Clare. €30 recurring maintenance wash. One-off details available.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #fafaf8;
+    --dark: #0e0e0f;
+    --dark-2: #131315;
+    --text: #17171a;
+    --text-dim: #6b6b70;
+    --text-faint: #9a9a9e;
+    --line: #e8e8e5;
+    --line-dark: rgba(255, 255, 255, 0.1);
+    --dark-text: #f4f4f2;
+    --dark-text-dim: #9d9da2;
+    --accent: #0e9670;
+    --accent-soft: rgba(14, 150, 112, 0.08);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent-soft); }
+
+  .wrap {
+    width: min(960px, 90vw);
+    margin: 0 auto;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    transition-delay: var(--d, 0s);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ---------- type ---------- */
+  h1, h2 {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  h1 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); }
+  h2 { font-size: clamp(1.25rem, 2.4vw, 1.6rem); }
+
+  .kicker {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 1.1rem;
+  }
+  .dark-section .kicker { color: var(--dark-text-dim); }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
+                color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+  }
+  .btn-primary:hover { background: #0b8462; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line);
+  }
+  .btn-ghost:hover { border-color: #c9c9c5; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    padding: 9rem 0 8rem;
+    background: var(--bg);
+  }
+  .wordmark {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 4rem;
+  }
+  .wordmark span { color: var(--accent); }
+  .hero h1 { max-width: 24ch; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p {
+    margin-top: 1.1rem;
+    color: var(--text-dim);
+    max-width: 46ch;
+  }
+  .hero-cta {
+    margin-top: 2.4rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- pricing ---------- */
+  .pricing {
+    padding: 6.5rem 0 7rem;
+    background: var(--bg-soft);
+    border-top: 1px solid var(--line);
+  }
+  .plans {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .plan {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.8rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease),
+                box-shadow 0.3s var(--ease);
+  }
+  .plan:hover {
+    transform: translateY(-3px);
+    border-color: #d9d9d5;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  }
+  .plan-flag { border-color: rgba(14, 150, 112, 0.4); }
+  .plan-flag:hover {
+    border-color: var(--accent);
+    box-shadow: 0 12px 32px rgba(14, 150, 112, 0.08);
+  }
+  .plan-tag {
+    align-self: flex-start;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.25rem 0.6rem;
+    border-radius: 99px;
+    margin-bottom: 1.1rem;
+  }
+  .plan h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .plan-price {
+    margin-top: 0.8rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .plan-price strong {
+    font-size: 1.7rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .plan-price span {
+    color: var(--text-faint);
+    font-size: 0.8rem;
+  }
+  .plan ul {
+    list-style: none;
+    margin-top: 1.2rem;
+    flex-grow: 1;
+  }
+  .plan li {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid var(--bg-soft);
+  }
+  .plan li:last-child { border-bottom: none; }
+  .plan .btn { margin-top: 1.5rem; text-align: center; }
+  .plans-note {
+    margin-top: 1.8rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  /* ---------- before / after (dark) ---------- */
+  .dark-section {
+    background: var(--dark);
+    color: var(--dark-text);
+  }
+  .beforeafter { padding: 6.5rem 0 7rem; }
+  .ba-frame {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line-dark);
+    border: 1px solid var(--line-dark);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ba-panel {
+    position: relative;
+    aspect-ratio: 4 / 3;
+  }
+  /* Placeholder surfaces — drop a real photo into each panel later:
+     <img> with object-fit: cover, position: absolute, inset: 0. */
+  .ba-before {
+    background:
+      repeating-linear-gradient(115deg, transparent 0 52px, rgba(0, 0, 0, 0.3) 52px 54px),
+      linear-gradient(155deg, #232019 0%, #191713 60%, #121110 100%);
+  }
+  .ba-after {
+    background:
+      radial-gradient(110% 80% at 65% 20%, rgba(255, 255, 255, 0.05), transparent 55%),
+      linear-gradient(155deg, #1b201e 0%, #141817 60%, #101312 100%);
+  }
+  .ba-label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dark-text-dim);
+    padding: 0.3rem 0.7rem;
+    border-radius: 99px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--line-dark);
+  }
+  .ba-caption {
+    margin-top: 1.2rem;
+    color: var(--dark-text-dim);
+    font-size: 0.82rem;
+  }
+
+  /* ---------- how it works ---------- */
+  .how {
+    padding: 6.5rem 0;
+    background: var(--bg);
+  }
+  .steps {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .step {
+    border-top: 1px solid var(--line);
+    padding-top: 1.2rem;
+  }
+  .step-num {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  .step h3 {
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .step p {
+    margin-top: 0.3rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  /* ---------- booking (dark) ---------- */
+  .booking { padding: 6.5rem 0 7.5rem; }
+  .booking .section-lead {
+    margin-top: 0.9rem;
+    color: var(--dark-text-dim);
+    font-size: 0.9rem;
+    max-width: 50ch;
+  }
+  .booking-card {
+    margin-top: 2.8rem;
+    max-width: 640px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+  .field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .field label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dark-text-dim);
+  }
+  .field input,
+  .field select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--dark-2);
+    border: 1px solid var(--line-dark);
+    border-radius: 8px;
+    color: var(--dark-text);
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.85rem;
+    transition: border-color 0.25s var(--ease);
+  }
+  .field select {
+    background-image: linear-gradient(45deg, transparent 50%, var(--dark-text-dim) 50%),
+                      linear-gradient(135deg, var(--dark-text-dim) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2.4rem;
+  }
+  .field input::placeholder { color: #5c5c60; }
+  .field input:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .field input[type="date"] { color-scheme: dark; }
+  .form-actions {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .form-actions .btn { border: none; font-family: inherit; }
+  .form-note { color: var(--dark-text-dim); font-size: 0.78rem; }
+
+  .confirm {
+    display: none;
+    padding: 1.5rem 0;
+  }
+  .confirm.show { display: block; }
+  .confirm-mark {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1.2rem;
+    border-radius: 50%;
+    border: 1px solid rgba(14, 150, 112, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .confirm-mark::after {
+    content: "";
+    width: 13px;
+    height: 7px;
+    border-left: 1.5px solid var(--accent);
+    border-bottom: 1.5px solid var(--accent);
+    transform: rotate(-45deg) translate(0.5px, -1px);
+  }
+  .confirm h3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+  .confirm p {
+    margin-top: 0.5rem;
+    color: var(--dark-text-dim);
+    font-size: 0.9rem;
+    max-width: 44ch;
+  }
+  .confirm p strong { color: var(--dark-text); font-weight: 500; }
+
+  /* ---------- footer ---------- */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--line-dark);
+    padding: 2.8rem 0 3.2rem;
+    color: var(--dark-text);
+  }
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .foot-brand {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .foot-brand span { color: var(--accent); }
+  .foot-loc {
+    margin-top: 0.4rem;
+    color: var(--dark-text-dim);
+    font-size: 0.82rem;
+  }
+  .foot-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: right;
+  }
+  .foot-links a {
+    color: var(--dark-text-dim);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.25s var(--ease);
+  }
+  .foot-links a:hover { color: var(--accent); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 820px) {
+    .hero { padding: 6rem 0 5.5rem; }
+    .pricing, .beforeafter, .how, .booking { padding: 4.5rem 0 5rem; }
+    .plans { grid-template-columns: 1fr; max-width: 420px; }
+    .plan-flag { order: -1; }
+    .steps { grid-template-columns: 1fr; gap: 1.6rem; }
+    .ba-frame { grid-template-columns: 1fr; }
+    .ba-panel { aspect-ratio: 16 / 10; }
+    .form-grid { grid-template-columns: 1fr; }
+    .foot { flex-direction: column; }
+    .foot-links { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="wordmark reveal">EM<span>Cleen</span></div>
+      <h1 class="reveal" style="--d: 0.06s">Weekly car cleaning in Ennis.</h1>
+      <p class="reveal" style="--d: 0.12s">A recurring €30 maintenance wash, every week, at a set time. One-off details also available.</p>
+      <div class="hero-cta reveal" style="--d: 0.18s">
+        <a class="btn btn-primary" href="#book">Book Slot</a>
+        <a class="btn btn-ghost" href="#pricing">View Pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="kicker reveal">Pricing</div>
+      <h2 class="reveal" style="--d: 0.06s">Three services.</h2>
+
+      <div class="plans">
+        <div class="plan reveal" style="--d: 0.08s">
+          <h3>Mini Detail</h3>
+          <div class="plan-price"><strong>€80</strong><span>one-off</span></div>
+          <ul>
+            <li>Deeper interior clean</li>
+            <li>Deeper exterior clean</li>
+          </ul>
+          <a class="btn btn-ghost" href="#book">Book Slot</a>
+        </div>
+
+        <div class="plan plan-flag reveal" style="--d: 0s">
+          <div class="plan-tag">Weekly</div>
+          <h3>Maintenance Wash</h3>
+          <div class="plan-price"><strong>€30</strong><span>per week</span></div>
+          <ul>
+            <li>Exterior wash and dry</li>
+            <li>Interior hoover</li>
+            <li>Tyre shine</li>
+            <li>About 40 minutes</li>
+          </ul>
+          <a class="btn btn-primary" href="#book">Book Slot</a>
+        </div>
+
+        <div class="plan reveal" style="--d: 0.16s">
+          <h3>Full Detail</h3>
+          <div class="plan-price"><strong>€140</strong><span>one-off</span></div>
+          <ul>
+            <li>Complete interior detail</li>
+            <li>Complete exterior detail</li>
+          </ul>
+          <a class="btn btn-ghost" href="#book">Book Slot</a>
+        </div>
+      </div>
+
+      <p class="plans-note reveal">10% off for multiple cars.</p>
+    </div>
+  </section>
+
+  <!-- ============ BEFORE / AFTER (dark) ============ -->
+  <section class="beforeafter dark-section" id="results">
+    <div class="wrap">
+      <div class="kicker reveal">Before &amp; After</div>
+
+      <div class="ba-frame reveal" style="--d: 0.08s">
+        <div class="ba-panel ba-before">
+          <span class="ba-label">Before</span>
+        </div>
+        <div class="ba-panel ba-after">
+          <span class="ba-label">After</span>
+        </div>
+      </div>
+      <p class="ba-caption reveal" style="--d: 0.14s">Photos coming soon.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="kicker reveal">How it works</div>
+
+      <div class="steps">
+        <div class="step reveal" style="--d: 0.06s">
+          <div class="step-num">01</div>
+          <h3>Book a slot</h3>
+          <p>Pick a weekly time.</p>
+        </div>
+        <div class="step reveal" style="--d: 0.14s">
+          <div class="step-num">02</div>
+          <h3>Drop the car</h3>
+          <p>Leave it with us at your slot time.</p>
+        </div>
+        <div class="step reveal" style="--d: 0.22s">
+          <div class="step-num">03</div>
+          <h3>Collect it</h3>
+          <p>Ready in about 40 minutes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOOKING (dark) ============ -->
+  <section class="booking dark-section" id="book">
+    <div class="wrap">
+      <div class="kicker reveal">Reserve a slot</div>
+      <h2 class="reveal" style="--d: 0.06s">Book your slot.</h2>
+      <p class="section-lead reveal" style="--d: 0.12s">We confirm by phone or email. No payment now.</p>
+
+      <div class="booking-card reveal" style="--d: 0.18s">
+        <form id="bookingForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" placeholder="Your name" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" placeholder="087 123 4567" required autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="f-car">Car</label>
+              <input id="f-car" name="car" type="text" placeholder="e.g. 2019 Golf, grey" required>
+            </div>
+            <div class="field">
+              <label for="f-service">Service</label>
+              <select id="f-service" name="service" required>
+                <option value="Maintenance Wash — €30/week" selected>Maintenance Wash — €30/week</option>
+                <option value="Mini Detail — €80">Mini Detail — €80</option>
+                <option value="Full Detail — €140">Full Detail — €140</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-date">Preferred date</label>
+              <input id="f-date" name="date" type="date" required>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Reserve Slot</button>
+            <span class="form-note">We reply within a day.</span>
+          </div>
+        </form>
+
+        <div class="confirm" id="confirm">
+          <div class="confirm-mark"></div>
+          <h3>Slot requested.</h3>
+          <p id="confirmText">We'll be in touch to confirm.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <div class="foot-brand">EM<span>Cleen</span></div>
+        <div class="foot-loc">Ennis, Co. Clare, Ireland</div>
+      </div>
+      <div class="foot-links">
+        <a href="#" aria-label="Instagram">Instagram — @emcleen</a>
+        <a href="#" aria-label="Contact">Contact — coming soon</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // Booking form: min date = today, confirmation state on submit
+  const dateInput = document.getElementById('f-date');
+  dateInput.min = new Date().toISOString().split('T')[0];
+
+  const form = document.getElementById('bookingForm');
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    if (!form.reportValidity()) return;
+    const name = document.getElementById('f-name').value.trim().split(' ')[0].replace(/[<>&]/g, '');
+    const service = document.getElementById('f-service').value.split('—')[0].trim();
+    document.getElementById('confirmText').innerHTML =
+      'Thanks' + (name ? ', <strong>' + name + '</strong>' : '') +
+      '. Request received for <strong>' + service + '</strong>. We\'ll be in touch to confirm.';
+    form.style.display = 'none';
+    document.getElementById('confirm').classList.add('show');
+  });
+</script>
+</body>
+</html>
