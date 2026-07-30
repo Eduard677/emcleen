@@ -4,32 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EMCleen — Weekly Car Care, Ennis</title>
-<meta name="description" content="Weekly car care in Ennis, Co. Clare. €30 maintenance wash every week. Mini and full details available. Text to book on WhatsApp.">
+<meta name="description" content="Weekly car care in Ennis, Co. Clare. €30 maintenance wash every week, mini and full details available. Text to book on WhatsApp.">
 <style>
   :root {
-    --bg: #131316;
-    --bg-raise: #18181c;
-    --bg-raise-2: #161619;
-    --bg-deep: #0d0d0f;
-    --surface: #1a1a1e;
-    --text: #ececea;
-    --dim: #9c9c9a;
-    --faint: #6f6f72;
-    --line: rgba(255, 255, 255, 0.08);
-    --accent: #10b981;
-    --accent-bright: #34d399;
-    --accent-dim: rgba(16, 185, 129, 0.45);
-    --accent-ink: #05130c;
+    /* light base */
+    --bone: #f3efe7;
+    --bone-2: #eae5da;
+    --bone-3: #e2dcd0;
+    /* dark contrast */
+    --graphite: #1c1b18;
+    --graphite-2: #26241f;
+    --graphite-3: #2f2c26;
+    /* ink */
+    --ink: #211f1c;
+    --ink-dim: #5c574f;
+    --ink-faint: #8b857a;
+    /* on dark */
+    --on-dark: #ece7dd;
+    --on-dark-dim: #a29c90;
+    --on-dark-faint: #7d776c;
+    /* accent — deep british racing green */
+    --green: #1e4034;
+    --green-2: #2a5644;
+    --green-light: #7d9f8f;
+    --green-line: rgba(30, 64, 52, 0.3);
+    --green-line-dark: rgba(125, 159, 143, 0.34);
+    /* rules */
+    --rule: rgba(33, 31, 28, 0.13);
+    --rule-dark: rgba(236, 231, 221, 0.13);
+
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --shell: min(1160px, 90vw);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--bone);
+    color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
@@ -38,152 +55,309 @@
     overflow-x: hidden;
   }
 
-  ::selection { background: var(--accent); color: var(--accent-ink); }
+  ::selection { background: var(--green); color: var(--bone); }
 
-  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+  /* ---------- grain ---------- */
+  .grain {
+    position: fixed;
+    inset: -50%;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.32;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .shell { width: var(--shell); margin: 0 auto; }
 
   /* ---------- reveal ---------- */
   .reveal {
     opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    transform: translateY(26px);
+    transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
     transition-delay: var(--d, 0s);
   }
-  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; transition: none; }
-    .bleed-media { transform: none !important; }
+    .media-layer { transform: none !important; }
   }
 
   /* ---------- type ---------- */
-  h1, h2 { letter-spacing: -0.03em; line-height: 1.05; font-weight: 700; }
+  h1, h2, h3 { font-weight: 700; letter-spacing: -0.028em; line-height: 1.08; }
 
-  .kicker {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-bottom: 1.4rem;
+  .eyebrow {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.85rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1.5rem;
   }
-  .kicker::before {
+  .eyebrow::before {
     content: "";
-    width: 26px;
+    width: 30px;
     height: 1px;
-    background: var(--accent);
+    background: var(--green);
+    flex-shrink: 0;
   }
+  .on-dark .eyebrow { color: var(--on-dark-faint); }
+  .on-dark .eyebrow::before { background: var(--green-light); }
 
-  .accent-word { color: var(--accent); }
+  .section-title { font-size: clamp(2rem, 4.6vw, 3.1rem); }
+  .mark { color: var(--green); }
+  .on-dark .mark { color: var(--green-light); }
+
+  /* ---------- sections ---------- */
+  section { position: relative; }
+  .pad { padding: clamp(5.5rem, 13vh, 9rem) 0; }
+  .on-dark {
+    background: var(--graphite);
+    color: var(--on-dark);
+  }
 
   /* ---------- buttons ---------- */
   .btn {
-    display: inline-block;
-    padding: 0.9rem 2rem;
-    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.95rem 2.1rem;
+    font-family: inherit;
+    font-size: 0.92rem;
     font-weight: 600;
+    letter-spacing: 0.01em;
     text-decoration: none;
-    border: 1px solid var(--accent);
-    transition: background 0.3s var(--ease), color 0.3s var(--ease),
-                border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    cursor: pointer;
+    background: var(--bone);
+    color: var(--green);
+    border: 1px solid var(--green-line);
+    border-radius: 2px;
+    transition: background 0.4s var(--ease), color 0.4s var(--ease),
+                border-color 0.4s var(--ease), transform 0.4s var(--ease),
+                box-shadow 0.4s var(--ease);
   }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-solid { background: var(--accent); color: var(--accent-ink); }
-  .btn-solid:hover { background: var(--accent-bright); border-color: var(--accent-bright); }
-  .btn-line { background: transparent; color: var(--text); border-color: rgba(255, 255, 255, 0.22); }
-  .btn-line:hover { border-color: var(--accent); color: var(--accent); }
+  .btn:hover {
+    background: var(--green);
+    color: var(--bone);
+    border-color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(30, 64, 52, 0.18);
+  }
+  .btn:active { transform: translateY(0); }
+  .btn:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+  .btn-quiet {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--rule);
+  }
+  .btn-quiet:hover {
+    background: transparent;
+    color: var(--green);
+    border-color: var(--green-line);
+    box-shadow: none;
+  }
+
+  .on-dark .btn {
+    background: var(--bone);
+    color: var(--green);
+    border-color: transparent;
+  }
+  .on-dark .btn:hover {
+    background: transparent;
+    color: var(--green-light);
+    border-color: var(--green-line-dark);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+  }
+  .on-dark .btn-quiet {
+    background: transparent;
+    color: var(--on-dark);
+    border-color: var(--rule-dark);
+  }
+  .on-dark .btn-quiet:hover { color: var(--green-light); border-color: var(--green-line-dark); }
 
   /* ---------- header ---------- */
   header {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(19, 19, 22, 0.88);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line);
+    z-index: 200;
+    background: rgba(243, 239, 231, 0.9);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom: 1px solid var(--rule);
   }
-  .nav {
+  .bar {
+    height: 68px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    gap: 1rem;
   }
-  .nav-brand {
-    font-weight: 800;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .nav-right { display: flex; align-items: center; gap: 1.4rem; }
-  .nav-phone {
-    color: var(--text);
-    text-decoration: none;
+  .wordmark {
     font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-    transition: color 0.25s var(--ease);
+    font-weight: 800;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
   }
-  .nav-phone:hover { color: var(--accent); }
-  .nav .btn { padding: 0.55rem 1.3rem; font-size: 0.85rem; }
+  .bar-actions { display: flex; align-items: center; gap: 0.5rem; }
+  .disclose {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.05rem;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .disclose:hover { color: var(--green); border-color: var(--green-line); }
+  .disclose:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  .disclose .chev {
+    width: 7px; height: 7px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translate(-1px, -1px);
+    transition: transform 0.4s var(--ease);
+  }
+  .disclose[aria-expanded="true"] { color: var(--green); border-color: var(--green-line); }
+  .disclose[aria-expanded="true"] .chev { transform: rotate(-135deg) translate(-2px, -2px); }
+
+  .panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.55s var(--ease);
+    border-top: 0 solid var(--rule);
+  }
+  .panel.open { grid-template-rows: 1fr; border-top-width: 1px; }
+  .panel-inner { overflow: hidden; }
+  .panel-rows {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 2.4rem;
+    padding: 1.15rem 0 1.35rem;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.45s var(--ease) 0.08s, transform 0.45s var(--ease) 0.08s;
+  }
+  .panel.open .panel-rows { opacity: 1; transform: none; }
+  .panel-rows a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s var(--ease);
+  }
+  .panel-rows a:hover { color: var(--green); }
+  .panel-rows .lbl {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .panel-rows .soon { color: var(--ink-faint); font-size: 0.75rem; }
 
   /* ---------- hero ---------- */
   .hero {
     min-height: 100svh;
     display: flex;
     align-items: center;
-    padding-top: 64px;
+    padding: 10rem 0 5rem;
+    background:
+      radial-gradient(120% 85% at 78% 8%, rgba(30, 64, 52, 0.07), transparent 58%),
+      linear-gradient(180deg, var(--bone) 0%, var(--bone-2) 100%);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4rem;
+    align-items: end;
+    width: 100%;
   }
   .hero h1 {
-    font-size: clamp(3.5rem, 12vw, 8.5rem);
-    letter-spacing: -0.04em;
+    font-size: clamp(3.6rem, 13vw, 9rem);
+    letter-spacing: -0.045em;
+    line-height: 0.92;
   }
-  .hero-sub {
-    margin-top: 1.8rem;
-    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-    color: var(--dim);
-    max-width: 34ch;
+  .hero-rule {
+    width: 64px;
+    height: 2px;
+    background: var(--green);
+    margin: 2.2rem 0 1.6rem;
+  }
+  .hero-lead {
+    font-size: clamp(1.15rem, 2.3vw, 1.5rem);
+    color: var(--ink-dim);
+    max-width: 26ch;
+    line-height: 1.35;
   }
   .hero-cta {
-    margin-top: 3.2rem;
+    margin-top: 2.8rem;
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    gap: 0.85rem;
     flex-wrap: wrap;
   }
-
-  /* ---------- full-bleed media sections ----------
-     SLOT 1 (video): drop a real video inside .bleed-media:
-       <video autoplay muted loop playsinline poster="media/wash-poster.jpg">
-         <source src="media/wash.mp4" type="video/mp4">
-       </video>
-     SLOT 3 (image): drop an <img> inside .bleed-media:
-       <img src="media/two-cars.jpg" alt="Two cars washed together">
-     The placeholder background disappears behind real media automatically. */
-  .bleed { position: relative; }
-  .bleed-frame {
-    position: relative;
-    height: 88svh;
-    overflow: hidden;
+  .hero-meta {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
   }
-  .bleed-media {
+  .meta-row { display: flex; flex-direction: column; gap: 0.2rem; }
+  .meta-row .k {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .meta-row .v { font-size: 1rem; font-weight: 600; }
+  .meta-row a { color: inherit; text-decoration: none; transition: color 0.3s var(--ease); }
+  .meta-row a:hover { color: var(--green); }
+
+  /* ---------- full-bleed media ----------
+     Real media drops straight in:
+       video → <video autoplay muted loop playsinline poster="media/wash-poster.jpg">
+                 <source src="media/wash.mp4" type="video/mp4"></video>
+       image → <img src="media/two-cars.jpg" alt="...">
+     Placed inside .media-layer; the placeholder texture sits behind it. */
+  .media {
+    position: relative;
+    height: 86svh;
+    min-height: 460px;
+    overflow: hidden;
+    background: var(--graphite);
+  }
+  .media-layer {
     position: absolute;
     left: 0; right: 0;
     top: -8%;
     height: 116%;
     will-change: transform;
     background:
-      radial-gradient(120% 90% at 70% 15%, rgba(255, 255, 255, 0.06), transparent 55%),
-      linear-gradient(160deg, #232327 0%, #1a1a1d 55%, #101012 100%);
+      radial-gradient(115% 80% at 72% 18%, rgba(236, 231, 221, 0.07), transparent 55%),
+      repeating-linear-gradient(118deg, transparent 0 90px, rgba(236, 231, 221, 0.018) 90px 91px),
+      linear-gradient(165deg, var(--graphite-3) 0%, var(--graphite-2) 52%, #131210 100%);
   }
-  .bleed-media img,
-  .bleed-media video {
+  .media-layer img,
+  .media-layer video {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -191,270 +365,472 @@
     object-fit: cover;
     display: block;
   }
-  .bleed-hint {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0.7rem 1.4rem;
-    white-space: nowrap;
-  }
-  .bleed-overlay {
+  .media-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.5) 100%);
+    background: linear-gradient(180deg, rgba(12, 11, 10, 0.42) 0%, rgba(12, 11, 10, 0.2) 42%, rgba(12, 11, 10, 0.66) 100%);
     pointer-events: none;
   }
-  .bleed-over-caption {
+  .media-tag {
     position: absolute;
-    left: 4vw;
-    bottom: 2rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    top: 1.6rem; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(236, 231, 221, 0.42);
+    border: 1px solid rgba(236, 231, 221, 0.2);
+    padding: 0.55rem 1.2rem;
+    white-space: nowrap;
   }
-  .bleed-caption {
+  .media-copy {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6vw;
+    text-align: center;
+  }
+  .media-copy p {
+    color: var(--bone);
+    font-size: clamp(1.8rem, 5vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.14;
+    text-shadow: 0 2px 28px rgba(0, 0, 0, 0.4);
+  }
+  .media-caption {
     padding: 1.1rem 0 0;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-
-  /* ---------- before / after ----------
-     Drop real photos inside each .ba-media:
-       <img src="media/before.jpg" alt="Car before detail">  /  after.jpg */
-  .ba-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-  }
-  .ba-panel {
-    position: relative;
-    height: 72svh;
-    overflow: hidden;
-  }
-  .ba-media {
-    position: absolute;
-    inset: 0;
-  }
-  .ba-media img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .ba-before .ba-media {
-    background:
-      repeating-linear-gradient(115deg, transparent 0 56px, rgba(0, 0, 0, 0.25) 56px 58px),
-      linear-gradient(160deg, #26231e 0%, #1a1815 55%, #121110 100%);
-  }
-  .ba-after .ba-media {
-    background:
-      radial-gradient(110% 80% at 65% 20%, rgba(255, 255, 255, 0.08), transparent 55%),
-      linear-gradient(160deg, #1e2320 0%, #171a18 55%, #101211 100%);
-  }
-  .ba-label {
-    position: absolute;
-    top: 1.4rem;
-    left: 1.4rem;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.85);
-    background: rgba(0, 0, 0, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 0.4rem 0.9rem;
-  }
-
-  /* ---------- statement breaks ---------- */
-  .statement {
-    padding: clamp(7rem, 16vh, 12rem) 0;
-    text-align: center;
-  }
-  .statement p {
-    font-size: clamp(1.9rem, 5.5vw, 3.6rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
+    color: var(--ink-faint);
   }
 
   /* ---------- pricing ---------- */
-  .pricing {
-    padding: clamp(6rem, 14vh, 10rem) 0;
-    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-raise) 16%, var(--bg-raise) 84%, var(--bg) 100%);
-  }
-  .pricing h2 { font-size: clamp(2rem, 4.5vw, 3rem); }
+  .pricing { background: var(--bone); }
   .plans {
-    margin-top: 4rem;
+    margin-top: 3.6rem;
     display: grid;
-    grid-template-columns: 1fr 1.25fr 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1.22fr 1fr;
+    gap: 1.4rem;
     align-items: center;
   }
   .plan {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    padding: 2.4rem 2rem;
+    background: var(--bone-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
-    transition: border-color 0.3s var(--ease);
+    transition: transform 0.45s var(--ease), border-color 0.45s var(--ease), box-shadow 0.45s var(--ease);
   }
-  .plan:hover { border-color: var(--accent-dim); }
+  .plan:hover {
+    transform: translateY(-4px);
+    border-color: var(--green-line);
+    box-shadow: 0 18px 40px rgba(33, 31, 28, 0.08);
+  }
   .plan-flag {
-    background: linear-gradient(170deg, #172019 0%, #141a16 100%);
-    border: 1px solid var(--accent-dim);
-    padding: 3.4rem 2.4rem;
+    background: var(--bone-3);
+    border: 1px solid var(--green-line);
+    padding: 3.4rem 2.3rem;
+    box-shadow: 0 12px 34px rgba(33, 31, 28, 0.07);
   }
-  .plan-flag:hover { border-color: var(--accent); }
-  .plan-tag {
+  .plan-flag:hover { border-color: var(--green); }
+  .tag {
     align-self: flex-start;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid var(--accent-dim);
-    padding: 0.3rem 0.8rem;
-    margin-bottom: 1.4rem;
+    color: var(--green);
+    border: 1px solid var(--green-line);
+    border-radius: 2px;
+    padding: 0.32rem 0.8rem;
+    margin-bottom: 1.5rem;
   }
-  .plan h3 { font-size: 1.05rem; font-weight: 700; }
-  .plan-price {
-    margin-top: 1rem;
+  .plan h3 { font-size: 1.02rem; letter-spacing: 0.01em; }
+  .price {
+    margin-top: 0.9rem;
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
   }
-  .plan-price strong {
-    font-size: 2.2rem;
+  .price strong {
+    font-size: 2.3rem;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
   }
-  .plan-flag .plan-price strong { font-size: 3.2rem; color: var(--accent); }
-  .plan-price span { font-size: 0.85rem; color: var(--faint); }
-  .plan ul { list-style: none; margin-top: 1.4rem; flex-grow: 1; }
+  .plan-flag .price strong { font-size: 3.4rem; color: var(--green); }
+  .price span { font-size: 0.82rem; color: var(--ink-faint); }
+  .price-alt {
+    margin-top: 0.55rem;
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+  }
+  .plan ul { list-style: none; margin-top: 1.5rem; flex-grow: 1; }
   .plan li {
     font-size: 0.92rem;
-    color: var(--dim);
-    padding: 0.45rem 0;
-    border-bottom: 1px solid var(--line);
+    color: var(--ink-dim);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--rule);
   }
   .plan li:last-child { border-bottom: none; }
-  .plan .btn { margin-top: 1.8rem; text-align: center; }
+  .plan .btn { margin-top: 1.9rem; }
+  .anchor-line {
+    margin: 2.6rem auto 0;
+    max-width: 58ch;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--ink-dim);
+  }
 
-  /* ---------- multi-car offer ---------- */
-  .multicar {
-    margin-top: 3.5rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    padding: 2.8rem 2.6rem;
+  /* ---------- quote builder ---------- */
+  .quote-shell {
+    margin-top: 3.4rem;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2.6rem;
+    align-items: start;
+  }
+  .steps { display: flex; flex-direction: column; gap: 2rem; }
+  .step-label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    margin-bottom: 0.9rem;
+  }
+  .step-label .n { color: var(--green-light); }
+  .opts { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .opt {
+    flex: 1 1 auto;
+    min-width: 108px;
+    padding: 0.85rem 1.1rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--on-dark);
+    background: transparent;
+    border: 1px solid var(--rule-dark);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: color 0.35s var(--ease), border-color 0.35s var(--ease),
+                background 0.35s var(--ease), transform 0.35s var(--ease);
+  }
+  .opt:hover { border-color: var(--green-line-dark); color: var(--green-light); transform: translateY(-2px); }
+  .opt:focus-visible { outline: 2px solid var(--green-light); outline-offset: 2px; }
+  .opt[aria-pressed="true"] {
+    color: var(--green);
+    background: var(--bone);
+    border-color: var(--bone);
+  }
+  .opt .sub {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    opacity: 0.72;
+  }
+
+  .quote-out {
+    background: var(--graphite-2);
+    border: 1px solid var(--rule-dark);
+    border-radius: 3px;
+    padding: 2.2rem 2rem;
+    position: sticky;
+    top: 90px;
+  }
+  .quote-out .k {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+  }
+  .quote-total {
+    margin-top: 0.7rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    min-height: 62px;
+  }
+  .quote-total strong {
+    font-size: 3.1rem;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--green-light);
+    line-height: 1;
+  }
+  .quote-total .per { font-size: 0.85rem; color: var(--on-dark-dim); }
+  .quote-custom {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--on-dark);
+  }
+  .quote-summary {
+    margin-top: 1.1rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule-dark);
+    font-size: 0.92rem;
+    color: var(--on-dark-dim);
+  }
+  .quote-saving {
+    margin-top: 0.8rem;
+    font-size: 0.88rem;
+    color: var(--green-light);
+    display: none;
+  }
+  .quote-saving.show { display: block; }
+  .quote-out .btn { margin-top: 1.7rem; width: 100%; }
+  .quote-note {
+    margin-top: 0.9rem;
+    font-size: 0.76rem;
+    color: var(--on-dark-faint);
+    text-align: center;
+  }
+
+  /* ---------- before / after slider ----------
+     Drop real photos into .ba-before / .ba-after:
+       <img src="media/before.jpg" alt="Before"> — same for after.jpg */
+  .ba {
+    position: relative;
+    height: 78svh;
+    min-height: 420px;
+    overflow: hidden;
+    background: var(--graphite);
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: ew-resize;
+  }
+  .ba-half { position: absolute; inset: 0; }
+  .ba-half img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .ba-before {
+    background:
+      repeating-linear-gradient(112deg, transparent 0 64px, rgba(0, 0, 0, 0.22) 64px 66px),
+      linear-gradient(165deg, #34302a 0%, #24211d 55%, #171512 100%);
+  }
+  .ba-after {
+    background:
+      radial-gradient(110% 78% at 62% 22%, rgba(236, 231, 221, 0.1), transparent 55%),
+      linear-gradient(165deg, #2b332e 0%, #202722 55%, #141814 100%);
+    clip-path: inset(0 0 0 var(--split, 50%));
+  }
+  .ba-tag {
+    position: absolute;
+    top: 1.5rem;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(236, 231, 221, 0.9);
+    background: rgba(18, 17, 15, 0.5);
+    border: 1px solid rgba(236, 231, 221, 0.2);
+    padding: 0.42rem 0.95rem;
+    pointer-events: none;
+  }
+  .ba-tag.l { left: 1.5rem; }
+  .ba-tag.r { right: 1.5rem; }
+  .ba-handle {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: var(--split, 50%);
+    width: 2px;
+    background: rgba(236, 231, 221, 0.85);
+    transform: translateX(-1px);
+    pointer-events: none;
+  }
+  .ba-knob {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--bone);
+    border: 1px solid rgba(33, 31, 28, 0.1);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.32);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 2.5rem;
+    justify-content: center;
+    gap: 5px;
+  }
+  .ba-knob i {
+    width: 6px; height: 6px;
+    border-top: 1.5px solid var(--green);
+    border-left: 1.5px solid var(--green);
+    display: block;
+  }
+  .ba-knob i:first-child { transform: rotate(-45deg); }
+  .ba-knob i:last-child { transform: rotate(135deg); }
+  .ba:focus-visible { outline: 2px solid var(--green-light); outline-offset: -4px; }
+  .ba-hint {
+    position: absolute;
+    left: 50%; bottom: 1.5rem;
+    transform: translateX(-50%);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(236, 231, 221, 0.55);
+    pointer-events: none;
+  }
+
+  /* ---------- secondary cta ---------- */
+  .snap-cta { padding: clamp(3.5rem, 8vh, 5rem) 0; background: var(--bone-2); }
+  .snap-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
     flex-wrap: wrap;
-    transition: border-color 0.3s var(--ease);
+    text-align: center;
   }
-  .multicar:hover { border-color: var(--accent-dim); }
-  .multicar h3 {
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-  .multicar p {
-    margin-top: 0.7rem;
-    color: var(--dim);
-    font-size: 0.95rem;
-    max-width: 46ch;
-  }
-  .multicar .btn { flex-shrink: 0; }
+  .snap-inner p { font-size: 1rem; color: var(--ink-dim); }
+  .snap-inner .btn { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
 
   /* ---------- how it works ---------- */
-  .how { padding: clamp(6rem, 14vh, 10rem) 0; }
-  .how-line {
+  .how-row {
     display: flex;
     align-items: baseline;
     gap: 2rem;
-    padding: 2.2rem 0;
-    border-top: 1px solid var(--line);
+    padding: 2.1rem 0;
+    border-top: 1px solid var(--rule);
   }
-  .how-line:last-of-type { border-bottom: 1px solid var(--line); }
-  .how-num {
-    font-size: 0.75rem;
+  .how-row:last-of-type { border-bottom: 1px solid var(--rule); }
+  .how-row .n {
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.15em;
-    color: var(--accent);
+    letter-spacing: 0.16em;
+    color: var(--green);
     flex-shrink: 0;
   }
-  .how-line p {
-    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  .how-row p {
+    font-size: clamp(1.35rem, 3.4vw, 2.3rem);
     font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    letter-spacing: -0.025em;
+    line-height: 1.18;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.72fr 1.28fr;
+    gap: 3.4rem;
+    align-items: center;
+  }
+  .founder {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--rule-dark);
+    border-radius: 3px;
+    overflow: hidden;
+    background:
+      radial-gradient(105% 75% at 60% 20%, rgba(236, 231, 221, 0.08), transparent 58%),
+      linear-gradient(165deg, var(--graphite-3) 0%, var(--graphite-2) 55%, #141310 100%);
+  }
+  /* Founder photo: <img src="media/eduard.jpg" alt="Eduard"> */
+  .founder img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .founder span {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(236, 231, 221, 0.38);
+    border: 1px solid rgba(236, 231, 221, 0.18);
+    padding: 0.55rem 1.1rem;
+    white-space: nowrap;
+  }
+  .about-copy p {
+    font-size: clamp(1.1rem, 2vw, 1.42rem);
+    line-height: 1.5;
+    color: var(--on-dark);
+    max-width: 40ch;
+  }
+  .about-sign {
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--rule-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
   }
 
   /* ---------- reviews ---------- */
-  .reviews {
-    padding: clamp(6rem, 14vh, 10rem) 0;
-    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-raise-2) 16%, var(--bg-raise-2) 84%, var(--bg) 100%);
+  .rev-note {
+    margin-top: 0.9rem;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
   }
-  .reviews h2 { font-size: clamp(2rem, 4.5vw, 3rem); }
-  .review-grid {
-    margin-top: 4rem;
+  .rev-track {
+    margin-top: 3rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.4rem;
   }
-  .review {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    padding: 2rem 1.8rem;
+  .rev {
+    background: var(--bone-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 2.1rem 1.9rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    transition: border-color 0.3s var(--ease);
+    gap: 1.1rem;
+    transition: transform 0.45s var(--ease), border-color 0.45s var(--ease), box-shadow 0.45s var(--ease);
   }
-  .review:hover { border-color: var(--accent-dim); }
-  .review-stars {
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
+  .rev:hover {
+    transform: translateY(-4px);
+    border-color: var(--green-line);
+    box-shadow: 0 16px 34px rgba(33, 31, 28, 0.07);
   }
-  .review blockquote {
-    font-size: 0.95rem;
-    line-height: 1.55;
-    color: var(--dim);
-    flex-grow: 1;
-  }
-  .review-who { font-size: 0.85rem; font-weight: 700; }
-  .review-service {
+  .stars { color: var(--green); font-size: 0.8rem; letter-spacing: 0.22em; }
+  .rev blockquote { font-size: 0.95rem; line-height: 1.55; color: var(--ink-dim); flex-grow: 1; }
+  .rev .who { font-size: 0.85rem; font-weight: 700; }
+  .rev .svc {
     display: block;
     margin-top: 0.15rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--faint);
+    color: var(--ink-faint);
   }
+  .dots { display: none; }
 
   /* ---------- faq ---------- */
-  .faq { padding: clamp(6rem, 14vh, 10rem) 0; }
-  .faq h2 { font-size: clamp(2rem, 4.5vw, 3rem); }
-  .faq-list { margin-top: 3.5rem; max-width: 760px; }
-  .faq-item { border-top: 1px solid var(--line); }
-  .faq-item:last-child { border-bottom: 1px solid var(--line); }
-  .faq-item summary {
+  .faq-list { margin-top: 3rem; max-width: 820px; }
+  .qa { border-top: 1px solid var(--rule); }
+  .qa:last-child { border-bottom: 1px solid var(--rule); }
+  .qa summary {
     list-style: none;
     cursor: pointer;
     padding: 1.5rem 0;
@@ -464,369 +840,726 @@
     gap: 1.5rem;
     font-size: 1.05rem;
     font-weight: 600;
-    transition: color 0.25s var(--ease);
+    transition: color 0.3s var(--ease);
   }
-  .faq-item summary:hover { color: var(--accent); }
-  .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-mark {
-    position: relative;
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
-  .faq-mark::before,
-  .faq-mark::after {
+  .qa summary:hover { color: var(--green); }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+  .plus { position: relative; width: 13px; height: 13px; flex-shrink: 0; }
+  .plus::before, .plus::after {
     content: "";
     position: absolute;
     top: 50%; left: 0;
-    width: 100%;
-    height: 1.5px;
+    width: 100%; height: 1.5px;
     background: currentColor;
-    transition: transform 0.35s var(--ease);
+    transition: transform 0.4s var(--ease);
   }
-  .faq-mark::after { transform: rotate(90deg); }
-  .faq-item[open] .faq-mark::after { transform: rotate(0deg); }
-  .faq-item p {
-    padding: 0 2.5rem 1.6rem 0;
-    color: var(--dim);
-    font-size: 0.95rem;
-    max-width: 60ch;
-    animation: faqIn 0.4s var(--ease);
+  .plus::after { transform: rotate(90deg); }
+  .qa[open] .plus::after { transform: rotate(0deg); }
+  .qa[open] summary { color: var(--green); }
+  .qa p {
+    padding: 0 2.5rem 1.7rem 0;
+    max-width: 62ch;
+    color: var(--ink-dim);
+    font-size: 0.97rem;
+    animation: qaIn 0.45s var(--ease);
   }
-  @keyframes faqIn {
+  @keyframes qaIn {
     from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
+    to { opacity: 1; transform: none; }
   }
 
   /* ---------- footer ---------- */
-  footer {
-    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 35%, var(--bg-deep) 100%);
-    padding: clamp(4.5rem, 10vh, 7rem) 0;
+  footer { background: var(--graphite); color: var(--on-dark); padding: clamp(4rem, 9vh, 6rem) 0 3rem; }
+  .foot-top {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--rule-dark);
   }
-  .foot {
+  .foot-brand { font-size: 1rem; font-weight: 800; letter-spacing: 0.26em; text-transform: uppercase; }
+  .foot-loc { margin-top: 0.7rem; color: var(--on-dark-faint); font-size: 0.9rem; line-height: 1.5; }
+  .foot-col h4 {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    margin-bottom: 1rem;
+  }
+  .foot-col a, .foot-col span {
+    display: block;
+    color: var(--on-dark-dim);
+    text-decoration: none;
+    font-size: 0.92rem;
+    padding: 0.28rem 0;
+    transition: color 0.3s var(--ease);
+  }
+  .foot-col a:hover { color: var(--green-light); }
+  .foot-col .pending { color: var(--on-dark-faint); font-size: 0.8rem; }
+  .foot-base {
+    padding-top: 1.6rem;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    gap: 2.5rem;
+    gap: 1rem;
     flex-wrap: wrap;
+    font-size: 0.78rem;
+    color: var(--on-dark-faint);
   }
-  .foot-brand {
-    font-weight: 800;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    font-size: 1rem;
-  }
-  .foot-loc { margin-top: 0.6rem; color: var(--faint); font-size: 0.9rem; }
-  .foot-links { display: flex; flex-direction: column; gap: 0.55rem; text-align: right; }
-  .foot-links a {
-    color: var(--dim);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.25s var(--ease);
-  }
-  .foot-links a:hover { color: var(--accent); }
 
   /* ---------- responsive ---------- */
-  @media (max-width: 820px) {
-    .nav-phone { font-size: 0.85rem; }
-    .hero { min-height: 92svh; }
-    .bleed-frame { height: 68svh; }
-    .ba-grid { grid-template-columns: 1fr; }
-    .ba-panel { height: 46svh; }
-    .plans { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 2.8rem; align-items: start; }
+    .hero-meta { flex-direction: row; flex-wrap: wrap; gap: 1.6rem 2.5rem; }
+    .quote-shell { grid-template-columns: 1fr; gap: 2.2rem; }
+    .quote-out { position: static; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+    .founder { max-width: 300px; aspect-ratio: 1 / 1; }
+    .plans { grid-template-columns: 1fr; max-width: 470px; margin-left: auto; margin-right: auto; }
     .plan-flag { order: -1; padding: 2.8rem 2rem; }
-    .multicar { flex-direction: column; align-items: flex-start; padding: 2.2rem 1.8rem; }
-    .review-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
-    .how-line { gap: 1.2rem; padding: 1.8rem 0; }
-    .foot { flex-direction: column; align-items: flex-start; }
-    .foot-links { text-align: left; }
+    .foot-top { grid-template-columns: 1fr; gap: 2.2rem; }
   }
-  @media (max-width: 480px) {
-    .nav .btn { padding: 0.5rem 0.9rem; font-size: 0.78rem; }
-    .nav-right { gap: 0.9rem; }
+
+  @media (max-width: 760px) {
+    .hero { padding: 8.5rem 0 4rem; min-height: auto; }
+    .media { height: 66svh; min-height: 380px; }
+    .ba { height: 60svh; min-height: 360px; }
+    .how-row { gap: 1.2rem; padding: 1.7rem 0; }
+
+    /* swipeable reviews */
+    .rev-track {
+      grid-template-columns: none;
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin-left: calc((100vw - var(--shell)) / -2);
+      margin-right: calc((100vw - var(--shell)) / -2);
+      padding: 0 calc((100vw - var(--shell)) / 2) 0.5rem;
+    }
+    .rev-track::-webkit-scrollbar { display: none; }
+    .rev {
+      flex: 0 0 82%;
+      scroll-snap-align: center;
+    }
+    .rev:hover { transform: none; }
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.6rem;
+    }
+    .dots button {
+      width: 7px; height: 7px;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid var(--green-line);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .dots button[aria-current="true"] { background: var(--green); transform: scale(1.25); }
+  }
+
+  @media (max-width: 520px) {
+    .bar { height: 60px; }
+    .wordmark { font-size: 0.8rem; letter-spacing: 0.2em; }
+    .disclose { padding: 0.45rem 0.75rem; font-size: 0.68rem; letter-spacing: 0.04em; }
+    .btn { padding: 0.85rem 1.5rem; }
+    .hero-cta .btn { flex: 1 1 100%; }
+    .opt { min-width: 0; flex: 1 1 30%; font-size: 0.84rem; padding: 0.8rem 0.6rem; }
+    .snap-inner { flex-direction: column; gap: 1.2rem; }
   }
 </style>
 </head>
 <body>
+<div class="grain" aria-hidden="true"></div>
 
   <!-- ============ HEADER ============ -->
   <header>
-    <div class="wrap nav">
-      <a class="nav-brand" href="#top">EMCleen</a>
-      <div class="nav-right">
-        <a class="nav-phone" href="tel:+353830166325">083&nbsp;016&nbsp;6325</a>
-        <a class="btn btn-solid" href="https://wa.me/353830166325">Text to Book</a>
+    <div class="shell bar">
+      <a class="wordmark" href="#top">EMCleen</a>
+      <div class="bar-actions">
+        <button class="disclose" id="contactBtn" aria-expanded="false" aria-controls="contactPanel">
+          Contact <span class="chev" aria-hidden="true"></span>
+        </button>
+        <button class="disclose" id="socialBtn" aria-expanded="false" aria-controls="socialPanel">
+          Socials <span class="chev" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel" id="contactPanel">
+      <div class="panel-inner">
+        <div class="shell panel-rows">
+          <a href="tel:+353830166325"><span class="lbl">Phone</span> 083 016 6325</a>
+          <a href="https://wa.me/353830166325"><span class="lbl">WhatsApp</span> Text to book</a>
+          <a href="mailto:eduard@emcleen.com"><span class="lbl">Email</span> eduard@emcleen.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="socialPanel">
+      <div class="panel-inner">
+        <div class="shell panel-rows">
+          <a href="https://instagram.com/1.eduardm"><span class="lbl">Instagram</span> @1.eduardm</a>
+          <a href="#" aria-disabled="true"><span class="lbl">TikTok</span> <span class="soon">account coming</span></a>
+          <a href="#" aria-disabled="true"><span class="lbl">Facebook</span> <span class="soon">account coming</span></a>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- ============ 1. HERO ============ -->
+  <!-- ============ HERO ============ -->
   <section class="hero" id="top">
-    <div class="wrap">
-      <h1 class="reveal">EMCleen</h1>
-      <p class="hero-sub reveal" style="--d: 0.1s">Weekly car care in Ennis, Co.&nbsp;Clare.</p>
-      <div class="hero-cta reveal" style="--d: 0.2s">
-        <a class="btn btn-solid" href="https://wa.me/353830166325">Text to Book</a>
-        <a class="btn btn-line" href="#pricing">View Pricing</a>
+    <div class="shell hero-grid">
+      <div>
+        <h1 class="reveal">EMCleen</h1>
+        <div class="hero-rule reveal" style="--d: 0.1s"></div>
+        <p class="hero-lead reveal" style="--d: 0.16s">Weekly car care in Ennis, Co.&nbsp;Clare.</p>
+        <div class="hero-cta reveal" style="--d: 0.24s">
+          <a class="btn" href="https://wa.me/353830166325">Text to Book</a>
+          <a class="btn btn-quiet" href="#pricing">View Pricing</a>
+        </div>
+      </div>
+
+      <div class="hero-meta reveal" style="--d: 0.32s">
+        <div class="meta-row">
+          <span class="k">Weekly wash</span>
+          <span class="v">€30 &mdash; under an hour</span>
+        </div>
+        <div class="meta-row">
+          <span class="k">Where</span>
+          <span class="v">Ennis, Co. Clare</span>
+        </div>
+        <div class="meta-row">
+          <span class="k">Book by</span>
+          <span class="v"><a href="tel:+353830166325">083 016 6325</a></span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 2. SLOT 1 — FULL-BLEED VIDEO ============ -->
-  <section class="bleed">
-    <div class="bleed-frame" data-parallax>
-      <div class="bleed-media">
-        <!-- Drop video here:
-          <video autoplay muted loop playsinline poster="media/wash-poster.jpg">
-            <source src="media/wash.mp4" type="video/mp4">
-          </video> -->
-        <span class="bleed-hint">Video — The Wash</span>
-      </div>
-      <div class="bleed-overlay"></div>
-      <p class="bleed-over-caption">Maintenance wash — every week, same slot</p>
+  <!-- ============ VIDEO SLOT ============ -->
+  <section class="media" data-parallax>
+    <div class="media-layer">
+      <!-- Wash video drops in here:
+        <video autoplay muted loop playsinline poster="media/wash-poster.jpg">
+          <source src="media/wash.mp4" type="video/mp4">
+        </video> -->
+    </div>
+    <div class="media-scrim"></div>
+    <span class="media-tag">Video — the wash</span>
+    <div class="media-copy">
+      <p class="reveal">Clean once, it fades.<br>Clean weekly, it lasts.</p>
     </div>
   </section>
 
-  <section class="statement">
-    <div class="wrap">
-      <p class="reveal">Clean once, it fades.<br>Clean <span class="accent-word">weekly</span>, it lasts.</p>
-    </div>
-  </section>
-
-  <!-- ============ 3. PRICING ============ -->
-  <section class="pricing" id="pricing">
-    <div class="wrap">
-      <div class="kicker reveal">Pricing</div>
-      <h2 class="reveal" style="--d: 0.08s">Three services. No surprises.</h2>
+  <!-- ============ PRICING ============ -->
+  <section class="pad pricing" id="pricing">
+    <div class="shell">
+      <div class="eyebrow reveal">Pricing</div>
+      <h2 class="section-title reveal" style="--d: 0.08s">Three services.</h2>
 
       <div class="plans">
-        <div class="plan reveal" style="--d: 0.15s">
+        <div class="plan reveal" style="--d: 0.16s">
           <h3>Mini Detail</h3>
-          <div class="plan-price"><strong>€80</strong><span>one-off</span></div>
+          <div class="price"><strong>€80</strong><span>one-off</span></div>
           <ul>
             <li>Deeper interior clean</li>
             <li>Deeper exterior clean</li>
           </ul>
-          <a class="btn btn-line" href="https://wa.me/353830166325">Text to Book</a>
+          <a class="btn btn-quiet" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Mini%20Detail">Text to Book</a>
         </div>
 
-        <div class="plan plan-flag reveal" style="--d: 0.05s">
-          <div class="plan-tag">Every week</div>
+        <div class="plan plan-flag reveal" style="--d: 0.06s">
+          <span class="tag">Every week</span>
           <h3>Maintenance Wash</h3>
-          <div class="plan-price"><strong>€30</strong><span>per week</span></div>
+          <div class="price"><strong>€30</strong><span>per week</span></div>
+          <p class="price-alt">€45 as a one-off if you're not subscribing.</p>
           <ul>
             <li>Exterior wash and dry</li>
             <li>Interior hoover</li>
             <li>Tyre shine</li>
-            <li>About 40 minutes</li>
+            <li>Under an hour</li>
           </ul>
-          <a class="btn btn-solid" href="https://wa.me/353830166325">Text to Book</a>
+          <a class="btn" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20the%20weekly%20Maintenance%20Wash">Text to Book</a>
         </div>
 
-        <div class="plan reveal" style="--d: 0.25s">
+        <div class="plan reveal" style="--d: 0.26s">
           <h3>Full Detail</h3>
-          <div class="plan-price"><strong>€140</strong><span>one-off</span></div>
+          <div class="price"><strong>€140</strong><span>one-off</span></div>
           <ul>
             <li>Complete interior detail</li>
             <li>Complete exterior detail</li>
           </ul>
-          <a class="btn btn-line" href="https://wa.me/353830166325">Text to Book</a>
+          <a class="btn btn-quiet" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Full%20Detail">Text to Book</a>
         </div>
       </div>
 
-      <!-- Multi-car offer -->
-      <div class="multicar reveal" style="--d: 0.1s">
-        <div>
-          <h3>Two cars, same visit — <span class="accent-word">10% off both</span>.</h3>
-          <p>Bring the second car to the same slot: one drop-off, both done together, and it works out cheaper.</p>
+      <p class="anchor-line reveal">A standard valet in Ennis runs around €100. Weekly maintenance keeps your car at that standard for <span class="mark">€30</span>.</p>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE BUILDER ============ -->
+  <section class="pad on-dark" id="quote">
+    <div class="shell">
+      <div class="eyebrow reveal">Build a quote</div>
+      <h2 class="section-title reveal" style="--d: 0.08s">Work out your price.</h2>
+
+      <div class="quote-shell">
+        <div class="steps reveal" style="--d: 0.14s">
+          <div>
+            <div class="step-label"><span class="n">01</span> How many cars?</div>
+            <div class="opts" id="qCars" role="group" aria-label="Number of cars">
+              <button class="opt" type="button" data-val="1" aria-pressed="true">1 car</button>
+              <button class="opt" type="button" data-val="2" aria-pressed="false">2 cars</button>
+              <button class="opt" type="button" data-val="3" aria-pressed="false">3+ cars</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="step-label"><span class="n">02</span> Which service?</div>
+            <div class="opts" id="qService" role="group" aria-label="Service">
+              <button class="opt" type="button" data-val="maintenance" aria-pressed="true">Maintenance Wash</button>
+              <button class="opt" type="button" data-val="mini" aria-pressed="false">Mini Detail</button>
+              <button class="opt" type="button" data-val="full" aria-pressed="false">Full Detail</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="step-label"><span class="n">03</span> How often?</div>
+            <div class="opts" id="qFreq" role="group" aria-label="Frequency">
+              <button class="opt" type="button" data-val="weekly" aria-pressed="true">Weekly</button>
+              <button class="opt" type="button" data-val="fortnightly" aria-pressed="false">Fortnightly</button>
+              <button class="opt" type="button" data-val="oneoff" aria-pressed="false">One-off</button>
+            </div>
+          </div>
         </div>
-        <a class="btn btn-line" href="https://wa.me/353830166325">Text to Book</a>
+
+        <div class="quote-out reveal" style="--d: 0.22s">
+          <span class="k">Your price</span>
+          <div class="quote-total" id="qTotal" aria-live="polite">
+            <strong>€30</strong><span class="per">per week</span>
+          </div>
+          <p class="quote-summary" id="qSummary">1 car &middot; Maintenance Wash &middot; weekly</p>
+          <p class="quote-saving" id="qSaving"></p>
+          <a class="btn" id="qBook" href="https://wa.me/353830166325">Text to Book</a>
+          <p class="quote-note">Opens WhatsApp with your selections filled in.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 4. SLOT 2 — BEFORE / AFTER ============ -->
-  <section class="ba">
-    <div class="ba-grid">
-      <div class="ba-panel ba-before reveal">
-        <div class="ba-media">
-          <!-- Drop photo here: <img src="media/before.jpg" alt="Car before detail"> -->
-          <span class="bleed-hint">Photo — Before</span>
-        </div>
-        <span class="ba-label">Before</span>
+  <!-- ============ BEFORE / AFTER SLIDER ============ -->
+  <section>
+    <div class="ba" id="ba" role="slider" tabindex="0"
+         aria-label="Before and after comparison"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <div class="ba-half ba-before">
+        <!-- <img src="media/before.jpg" alt="Car before"> -->
       </div>
-      <div class="ba-panel ba-after reveal" style="--d: 0.12s">
-        <div class="ba-media">
-          <!-- Drop photo here: <img src="media/after.jpg" alt="Car after detail"> -->
-          <span class="bleed-hint">Photo — After</span>
-        </div>
-        <span class="ba-label">After</span>
+      <div class="ba-half ba-after">
+        <!-- <img src="media/after.jpg" alt="Car after"> -->
       </div>
+      <span class="ba-tag l">Before</span>
+      <span class="ba-tag r">After</span>
+      <div class="ba-handle"><span class="ba-knob"><i></i><i></i></span></div>
+      <span class="ba-hint">Drag to compare</span>
     </div>
-    <div class="wrap">
-      <p class="bleed-caption reveal">Same car, one visit</p>
+    <div class="shell">
+      <p class="media-caption reveal">Same car, one visit</p>
     </div>
   </section>
 
-  <section class="statement">
-    <div class="wrap">
-      <p class="reveal">Your Saturday back.<br>Your car sorted.</p>
+  <!-- ============ SECONDARY CTA ============ -->
+  <section class="snap-cta">
+    <div class="shell snap-inner reveal">
+      <p>Not sure what your car needs? Send a photo and I'll price it.</p>
+      <a class="btn btn-quiet" href="https://wa.me/353830166325?text=Hi%2C%20here%27s%20a%20photo%20of%20my%20car%20%E2%80%94%20could%20you%20price%20it%3F">Send a Photo</a>
     </div>
   </section>
 
-  <!-- ============ 5. HOW IT WORKS ============ -->
-  <section class="how" id="how">
-    <div class="wrap">
-      <div class="kicker reveal">How it works</div>
-      <div class="how-line reveal" style="--d: 0.05s">
-        <span class="how-num">01</span>
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="pad" id="how">
+    <div class="shell">
+      <div class="eyebrow reveal">How it works</div>
+      <div class="how-row reveal" style="--d: 0.06s">
+        <span class="n">01</span>
         <p>Text to book your slot.</p>
       </div>
-      <div class="how-line reveal" style="--d: 0.15s">
-        <span class="how-num">02</span>
+      <div class="how-row reveal" style="--d: 0.16s">
+        <span class="n">02</span>
         <p>Drop the car.</p>
       </div>
-      <div class="how-line reveal" style="--d: 0.25s">
-        <span class="how-num">03</span>
-        <p>Collect it in 40 minutes.</p>
+      <div class="how-row reveal" style="--d: 0.26s">
+        <span class="n">03</span>
+        <p>Collect it in under an hour.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ 6. REVIEWS ============ -->
-  <section class="reviews" id="reviews">
-    <div class="wrap">
-      <div class="kicker reveal">Reviews</div>
-      <h2 class="reveal" style="--d: 0.08s">What people say.</h2>
-
-      <!-- PLACEHOLDER REVIEWS — swap each name, service and quote for real ones. -->
-      <div class="review-grid">
-        <div class="review reveal" style="--d: 0.05s">
-          <div class="review-stars" aria-label="5 stars">★★★★★</div>
-          <blockquote>[Placeholder — short quote about the weekly wash. Real review going in here this week.]</blockquote>
-          <div><span class="review-who">Customer name</span><span class="review-service">Maintenance Wash</span></div>
+  <!-- ============ ABOUT ============ -->
+  <section class="pad on-dark" id="about">
+    <div class="shell">
+      <div class="eyebrow reveal">About</div>
+      <div class="about-grid">
+        <div class="founder reveal" style="--d: 0.1s">
+          <!-- Founder photo: <img src="media/eduard.jpg" alt="Eduard, EMCleen"> -->
+          <span>Photo — Eduard</span>
         </div>
-        <div class="review reveal" style="--d: 0.12s">
-          <div class="review-stars" aria-label="5 stars">★★★★★</div>
-          <blockquote>[Placeholder — short quote about a full detail. Real review going in here this week.]</blockquote>
-          <div><span class="review-who">Customer name</span><span class="review-service">Full Detail</span></div>
-        </div>
-        <div class="review reveal" style="--d: 0.19s">
-          <div class="review-stars" aria-label="5 stars">★★★★★</div>
-          <blockquote>[Placeholder — short quote about booking by text and the quick turnaround.]</blockquote>
-          <div><span class="review-who">Customer name</span><span class="review-service">Maintenance Wash</span></div>
-        </div>
-        <div class="review reveal" style="--d: 0.05s">
-          <div class="review-stars" aria-label="5 stars">★★★★★</div>
-          <blockquote>[Placeholder — short quote about a mini detail. Real review going in here this week.]</blockquote>
-          <div><span class="review-who">Customer name</span><span class="review-service">Mini Detail</span></div>
-        </div>
-        <div class="review reveal" style="--d: 0.12s">
-          <div class="review-stars" aria-label="5 stars">★★★★★</div>
-          <blockquote>[Placeholder — short quote about the multi-car discount or a family's weekly slot.]</blockquote>
-          <div><span class="review-who">Customer name</span><span class="review-service">Maintenance Wash</span></div>
-        </div>
-        <div class="review reveal" style="--d: 0.19s">
-          <div class="review-stars" aria-label="5 stars">★★★★★</div>
-          <blockquote>[Placeholder — short quote about the condition the car came back in.]</blockquote>
-          <div><span class="review-who">Customer name</span><span class="review-service">Full Detail</span></div>
+        <div class="about-copy reveal" style="--d: 0.18s">
+          <p>I'm Eduard, I'm 20, and I'm from Ennis. This started with my own car — friends noticed, asked me to do theirs, and it turned out I was good at it. I've always liked cars, I find the work satisfying, and I'd rather do this properly than do something else badly. Every car gets treated like it's mine.</p>
+          <div class="about-sign">Eduard — EMCleen, Ennis</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 7. SLOT 3 — FULL-BLEED IMAGE (TWO CARS) ============ -->
-  <section class="bleed">
-    <div class="bleed-frame" data-parallax>
-      <div class="bleed-media">
-        <!-- Drop photo here: <img src="media/two-cars.jpg" alt="Two cars washed in the same visit"> -->
-        <span class="bleed-hint">Photo — Two Cars</span>
+  <!-- ============ REVIEWS ============ -->
+  <section class="pad" id="reviews">
+    <div class="shell">
+      <div class="eyebrow reveal">Reviews</div>
+      <h2 class="section-title reveal" style="--d: 0.08s">What people say.</h2>
+      <p class="rev-note reveal" style="--d: 0.12s">Placeholder cards — real reviews go in as they come.</p>
+
+      <!-- PLACEHOLDER REVIEWS — replace name, service and quote with real ones. -->
+      <div class="rev-track" id="revTrack">
+        <article class="rev reveal" style="--d: 0.06s">
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote>[Placeholder — a line here about the weekly wash and what it's like keeping the car on a set slot.]</blockquote>
+          <div><span class="who">Customer name</span><span class="svc">Maintenance Wash</span></div>
+        </article>
+        <article class="rev reveal" style="--d: 0.14s">
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote>[Placeholder — a line here about a full detail and the state the car came back in.]</blockquote>
+          <div><span class="who">Customer name</span><span class="svc">Full Detail</span></div>
+        </article>
+        <article class="rev reveal" style="--d: 0.22s">
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote>[Placeholder — a line here about booking by text and how quick the turnaround was.]</blockquote>
+          <div><span class="who">Customer name</span><span class="svc">Mini Detail</span></div>
+        </article>
       </div>
-    </div>
-    <div class="wrap">
-      <p class="bleed-caption reveal">Two cars, one slot — 10% off both</p>
+      <div class="dots" id="revDots" role="tablist" aria-label="Reviews"></div>
     </div>
   </section>
 
-  <!-- ============ 8. FAQ ============ -->
-  <section class="faq" id="faq">
-    <div class="wrap">
-      <div class="kicker reveal">FAQ</div>
-      <h2 class="reveal" style="--d: 0.08s">Questions.</h2>
+  <!-- ============ TWO-CAR BLEED ============ -->
+  <section>
+    <div class="media" data-parallax>
+      <div class="media-layer">
+        <!-- <img src="media/two-cars.jpg" alt="Two cars cleaned in the same slot"> -->
+      </div>
+      <div class="media-scrim"></div>
+      <span class="media-tag">Photo — two cars</span>
+    </div>
+    <div class="shell">
+      <p class="media-caption reveal">Two cars, one slot — 10% off both</p>
+    </div>
+  </section>
 
-      <div class="faq-list reveal" style="--d: 0.16s">
-        <details class="faq-item">
-          <summary>Where are you based?<span class="faq-mark"></span></summary>
-          <p>Ennis, Co. Clare.</p>
+  <!-- ============ FAQ ============ -->
+  <section class="pad" id="faq">
+    <div class="shell">
+      <div class="eyebrow reveal">FAQ</div>
+      <h2 class="section-title reveal" style="--d: 0.08s">Questions.</h2>
+
+      <div class="faq-list reveal" style="--d: 0.14s">
+        <details class="qa">
+          <summary>Where are you based?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Ennis, Co. Clare. Drop the car to me, park up, and either collect it when it's done or wait the hour.</p>
         </details>
-        <details class="faq-item">
-          <summary>What's the difference between the weekly wash and a detail?<span class="faq-mark"></span></summary>
-          <p>The weekly maintenance wash keeps a clean car clean — exterior wash and dry, interior hoover, tyre shine, done in about 40 minutes. A detail is a one-off deep clean that resets the car: the mini detail goes deeper inside and out, and the full detail is a complete interior and exterior restoration.</p>
+        <details class="qa">
+          <summary>What's the difference between the weekly wash and a detail?<span class="plus" aria-hidden="true"></span></summary>
+          <p>The weekly maintenance wash keeps an already-clean car clean: exterior wash and dry, interior hoover, tyre shine, done in under an hour. A detail is a one-off deep clean that resets the car — the mini detail goes deeper inside and out, and the full detail is a complete interior and exterior job. Most people start with a detail and then keep it there with the weekly wash.</p>
         </details>
-        <details class="faq-item">
-          <summary>How long does it take?<span class="faq-mark"></span></summary>
-          <p>The weekly wash takes about 40 minutes. Details take longer — we'll give you a time when you book.</p>
+        <details class="qa">
+          <summary>How long does it take?<span class="plus" aria-hidden="true"></span></summary>
+          <p>The weekly wash is under an hour. Details take longer — you'll get a time when you book.</p>
         </details>
-        <details class="faq-item">
-          <summary>How does the weekly subscription work?<span class="faq-mark"></span></summary>
-          <p>You get a set slot at the same time every week. Drop the car, collect it 40 minutes later, €30 a week. Text us to pause or change your slot any time.</p>
+        <details class="qa">
+          <summary>How does the weekly subscription work?<span class="plus" aria-hidden="true"></span></summary>
+          <p>You get a set slot at the same time each week for €30. Manage it online — pause, reschedule or cancel any time.</p>
         </details>
-        <details class="faq-item">
-          <summary>Do you detail all cars?<span class="faq-mark"></span></summary>
-          <p>Yes — any car, any condition.</p>
+        <details class="qa">
+          <summary>What if it rains?<span class="plus" aria-hidden="true"></span></summary>
+          <p>It's a covered setup, so the weather doesn't stop your slot.</p>
+        </details>
+        <details class="qa">
+          <summary>Can I pause or cancel?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Yes, any time, no notice period.</p>
+        </details>
+        <details class="qa">
+          <summary>What if my car is badly soiled — pet hair, smoke, spills?<span class="plus" aria-hidden="true"></span></summary>
+          <p>All doable, but priced separately since it's more work. Send a photo on WhatsApp and I'll quote it.</p>
+        </details>
+        <details class="qa">
+          <summary>How do I pay?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Cash, card, Revolut, or Stripe.</p>
+        </details>
+        <details class="qa">
+          <summary>Do you detail all cars?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Any car, any condition.</p>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- ============ 9. FOOTER ============ -->
+  <!-- ============ FOOTER ============ -->
   <footer>
-    <div class="wrap foot">
-      <div>
-        <div class="foot-brand">EMCleen</div>
-        <div class="foot-loc">Ennis, Co. Clare, Ireland</div>
+    <div class="shell">
+      <div class="foot-top">
+        <div>
+          <div class="foot-brand">EMCleen</div>
+          <p class="foot-loc">Weekly car care<br>Ennis, Co. Clare, Ireland</p>
+        </div>
+        <div class="foot-col">
+          <h4>Contact</h4>
+          <a href="tel:+353830166325">083 016 6325</a>
+          <a href="https://wa.me/353830166325">WhatsApp</a>
+          <a href="mailto:eduard@emcleen.com">eduard@emcleen.com</a>
+        </div>
+        <div class="foot-col">
+          <h4>Follow</h4>
+          <a href="https://instagram.com/1.eduardm">Instagram — @1.eduardm</a>
+          <span>TikTok <span class="pending">— account coming</span></span>
+          <span>Facebook <span class="pending">— account coming</span></span>
+        </div>
       </div>
-      <div class="foot-links">
-        <a href="tel:+353830166325">083 016 6325</a>
-        <a href="https://wa.me/353830166325">WhatsApp — Text to Book</a>
+      <div class="foot-base">
+        <span>&copy; <span id="yr">2026</span> EMCleen</span>
+        <span>Ennis, Co. Clare</span>
       </div>
     </div>
   </footer>
 
 <script>
-  // Reveal on scroll
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    }
-  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+(function () {
+  'use strict';
 
-  // Subtle parallax on full-bleed media
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const frames = Array.from(document.querySelectorAll('[data-parallax]'));
+  var WA = 'https://wa.me/353830166325';
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- reveal on scroll ---------- */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  /* ---------- header disclosure panels ---------- */
+  var panels = [
+    { btn: document.getElementById('contactBtn'), panel: document.getElementById('contactPanel') },
+    { btn: document.getElementById('socialBtn'), panel: document.getElementById('socialPanel') }
+  ];
+  panels.forEach(function (p, i) {
+    p.btn.addEventListener('click', function () {
+      var willOpen = p.btn.getAttribute('aria-expanded') !== 'true';
+      panels.forEach(function (q, j) {
+        var open = (j === i) && willOpen;
+        q.btn.setAttribute('aria-expanded', String(open));
+        q.panel.classList.toggle('open', open);
+      });
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    panels.forEach(function (p) {
+      p.btn.setAttribute('aria-expanded', 'false');
+      p.panel.classList.remove('open');
+    });
+  });
+
+  /* ---------- parallax on full-bleed media ---------- */
+  var frames = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
   if (!reduceMotion && frames.length) {
-    let ticking = false;
-    const update = () => {
-      const vh = window.innerHeight;
-      for (const frame of frames) {
-        const r = frame.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > vh) continue;
-        // progress: -1 (below viewport) → 1 (above viewport)
-        const progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
-        const shift = progress * -5; // percent, gentle
-        frame.firstElementChild.style.transform = 'translateY(' + shift.toFixed(2) + '%)';
-      }
+    var ticking = false;
+    var paint = function () {
+      var vh = window.innerHeight;
+      frames.forEach(function (frame) {
+        var r = frame.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        var layer = frame.querySelector('.media-layer');
+        if (!layer) return;
+        var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+        layer.style.transform = 'translateY(' + (progress * -5).toFixed(2) + '%)';
+      });
       ticking = false;
     };
-    window.addEventListener('scroll', () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
     }, { passive: true });
-    update();
+    window.addEventListener('resize', paint, { passive: true });
+    paint();
   }
+
+  /* ---------- quote builder ---------- */
+  var SERVICES = {
+    maintenance: { label: 'Maintenance Wash', recurring: 30, oneoff: 45 },
+    mini:        { label: 'Mini Detail',      recurring: 80, oneoff: 80 },
+    full:        { label: 'Full Detail',      recurring: 140, oneoff: 140 }
+  };
+  var FREQ = {
+    weekly:      { label: 'weekly',      per: 'per week',            recurring: true },
+    fortnightly: { label: 'fortnightly', per: 'per visit',           recurring: true },
+    oneoff:      { label: 'one-off',     per: 'one-off',             recurring: false }
+  };
+
+  var pick = { cars: 1, service: 'maintenance', freq: 'weekly' };
+
+  var elTotal = document.getElementById('qTotal');
+  var elSummary = document.getElementById('qSummary');
+  var elSaving = document.getElementById('qSaving');
+  var elBook = document.getElementById('qBook');
+
+  function wire(groupId, key, cast) {
+    var group = document.getElementById(groupId);
+    group.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('.opt');
+      if (!btn || !group.contains(btn)) return;
+      group.querySelectorAll('.opt').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      pick[key] = cast ? cast(btn.dataset.val) : btn.dataset.val;
+      render();
+    });
+  }
+  wire('qCars', 'cars', Number);
+  wire('qService', 'service');
+  wire('qFreq', 'freq');
+
+  function render() {
+    var svc = SERVICES[pick.service];
+    var freq = FREQ[pick.freq];
+    var carsWord = pick.cars === 1 ? '1 car' : (pick.cars >= 3 ? '3+ cars' : '2 cars');
+
+    elSummary.textContent = carsWord + ' · ' + svc.label + ' · ' + freq.label;
+
+    if (pick.cars >= 3) {
+      elTotal.innerHTML = '<span class="quote-custom">Text for a custom quote.</span>';
+      elSaving.classList.remove('show');
+      elBook.href = WA + '?text=' + encodeURIComponent(
+        "Hi, I'd like a quote for 3+ cars, " + freq.label + ' ' + svc.label.toLowerCase() + '.'
+      );
+      return;
+    }
+
+    var unit = freq.recurring ? svc.recurring : svc.oneoff;
+    var total = unit * pick.cars;
+    var saving = 0;
+    if (pick.cars === 2) {
+      saving = Math.round(total * 0.1);
+      total = total - saving;
+    }
+
+    elTotal.innerHTML = '<strong>€' + total + '</strong><span class="per">' + freq.per + '</span>';
+
+    if (pick.cars === 2) {
+      elSaving.textContent = 'Saves €' + saving + ' — 10% off both cars in the same slot.';
+      elSaving.classList.add('show');
+    } else if (pick.service === 'maintenance' && freq.recurring) {
+      elSaving.textContent = '€15 less than a one-off wash at €45.';
+      elSaving.classList.add('show');
+    } else {
+      elSaving.classList.remove('show');
+    }
+
+    elBook.href = WA + '?text=' + encodeURIComponent(
+      "Hi, I'd like " + carsWord + ', ' + freq.label + ' ' + svc.label.toLowerCase() + '.'
+    );
+  }
+  render();
+
+  /* ---------- before / after slider ---------- */
+  var ba = document.getElementById('ba');
+  if (ba) {
+    var dragging = false;
+
+    var setSplit = function (pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      ba.style.setProperty('--split', pct + '%');
+      ba.setAttribute('aria-valuenow', String(Math.round(pct)));
+    };
+    var fromEvent = function (clientX) {
+      var r = ba.getBoundingClientRect();
+      setSplit(((clientX - r.left) / r.width) * 100);
+    };
+
+    ba.addEventListener('pointerdown', function (e) {
+      dragging = true;
+      ba.setPointerCapture(e.pointerId);
+      fromEvent(e.clientX);
+    });
+    ba.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      e.preventDefault();
+      fromEvent(e.clientX);
+    });
+    var stop = function (e) {
+      if (!dragging) return;
+      dragging = false;
+      if (e.pointerId != null && ba.hasPointerCapture(e.pointerId)) ba.releasePointerCapture(e.pointerId);
+    };
+    ba.addEventListener('pointerup', stop);
+    ba.addEventListener('pointercancel', stop);
+
+    ba.addEventListener('keydown', function (e) {
+      var now = Number(ba.getAttribute('aria-valuenow')) || 50;
+      var step = e.shiftKey ? 10 : 4;
+      if (e.key === 'ArrowLeft') { setSplit(now - step); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { setSplit(now + step); e.preventDefault(); }
+      else if (e.key === 'Home') { setSplit(0); e.preventDefault(); }
+      else if (e.key === 'End') { setSplit(100); e.preventDefault(); }
+    });
+
+    setSplit(50);
+  }
+
+  /* ---------- reviews: dots for the mobile swipe track ---------- */
+  var track = document.getElementById('revTrack');
+  var dotWrap = document.getElementById('revDots');
+  if (track && dotWrap) {
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.rev'));
+    cards.forEach(function (card, i) {
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-label', 'Review ' + (i + 1));
+      d.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+      d.addEventListener('click', function () {
+        track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      });
+      dotWrap.appendChild(d);
+    });
+
+    var dots = Array.prototype.slice.call(dotWrap.children);
+    var syncing = false;
+    track.addEventListener('scroll', function () {
+      if (syncing) return;
+      syncing = true;
+      requestAnimationFrame(function () {
+        var mid = track.scrollLeft + track.clientWidth / 2;
+        var active = 0;
+        var best = Infinity;
+        cards.forEach(function (card, i) {
+          var c = card.offsetLeft - track.offsetLeft + card.offsetWidth / 2;
+          var dist = Math.abs(c - mid);
+          if (dist < best) { best = dist; active = i; }
+        });
+        dots.forEach(function (d, i) { d.setAttribute('aria-current', String(i === active)); });
+        syncing = false;
+      });
+    }, { passive: true });
+  }
+
+  /* ---------- footer year ---------- */
+  document.getElementById('yr').textContent = String(new Date().getFullYear());
+})();
 </script>
 </body>
 </html>
