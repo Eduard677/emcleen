@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EMCleen — Weekly Car Care, Ennis</title>
-<meta name="description" content="Weekly car care in Ennis, Co. Clare. €30 Maintenance Detail every week, one-off details available. Text to book on WhatsApp.">
+<title>EMCleen — Regular Car Care, Ennis</title>
+<meta name="description" content="Regular car care in Ennis, Co. Clare. Maintenance Detail from €35 a visit, fortnightly or monthly. One-off details available. Text to book on WhatsApp.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,8 +47,26 @@
 
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
     --t-fast: 0.2s;
-    --t: 0.45s;
-    --t-slow: 0.75s;
+    --t: 0.4s;
+    --t-slow: 0.7s;
+
+    /* radii — cards sit at the top of the scale, controls a step below */
+    --r-card: 22px;
+    --r-md: 14px;
+    --r-sm: 10px;
+    --r-pill: 999px;
+
+    /* diffuse shadows — cards float, they don't sit in a box.
+       Two layers: a wide soft pool and a tighter contact shadow. */
+    --lift-0: 0 18px 44px -26px rgba(0, 0, 0, 0.9), 0 4px 12px -8px rgba(0, 0, 0, 0.55);
+    --lift-1: 0 30px 64px -28px rgba(0, 0, 0, 0.95), 0 8px 20px -10px rgba(0, 0, 0, 0.6);
+    --lift-light-0: 0 16px 40px -28px rgba(22, 21, 19, 0.4), 0 3px 10px -7px rgba(22, 21, 19, 0.16);
+    --lift-light-1: 0 28px 58px -30px rgba(22, 21, 19, 0.46), 0 6px 16px -9px rgba(22, 21, 19, 0.2);
+
+    /* card edge — a hairline, not a border */
+    --edge: rgba(247, 245, 241, 0.06);
+    --edge-strong: rgba(247, 245, 241, 0.11);
+    --edge-light: rgba(22, 21, 19, 0.07);
 
     /* spacing scale */
     --s1: 0.5rem;
@@ -110,7 +128,7 @@
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    opacity: 0.16;
+    opacity: 0.12;
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
   }
@@ -134,13 +152,13 @@
         rgba(7, 7, 6, 0.09) 7px,
         rgba(7, 7, 6, 0.04) 30px,
         rgba(7, 7, 6, 0) 120px),
-      radial-gradient(115% 65% at 84% 7%, rgba(255, 255, 255, 0.55), transparent 62%),
-      radial-gradient(85% 55% at 15% 93%, rgba(255, 255, 255, 0.36), transparent 64%),
+      radial-gradient(115% 65% at 84% 7%, rgba(255, 255, 255, 0.42), transparent 64%),
+      radial-gradient(85% 55% at 15% 93%, rgba(255, 255, 255, 0.26), transparent 66%),
       linear-gradient(78deg,
-        transparent 36%,
-        rgba(255, 255, 255, 0.45) 45%,
-        rgba(255, 255, 255, 0.15) 53%,
-        transparent 61%),
+        transparent 30%,
+        rgba(255, 255, 255, 0.3) 46%,
+        rgba(255, 255, 255, 0.1) 56%,
+        transparent 66%),
       radial-gradient(110% 70% at 8% 4%, rgba(7, 7, 6, 0.05), transparent 60%),
       radial-gradient(110% 70% at 93% 97%, rgba(7, 7, 6, 0.04), transparent 60%);
   }
@@ -161,6 +179,71 @@
         rgba(255, 255, 255, 0.055) 45%,
         rgba(255, 255, 255, 0.016) 53%,
         transparent 61%);
+  }
+
+  /* ---------- card surfaces ----------
+     Cards float: soft diffuse shadow, hairline edge, no hard box.
+
+     The material is three stacked background layers, blended inside the
+     element itself so no pseudo-element is needed and nothing can sit on
+     top of the content:
+       1. a fine anisotropic grain, soft-light blended — a weave read, not a
+          pattern. It should never resolve into anything you can name.
+       2. a broad directional sheen across one corner.
+       3. the graphite base.
+     Anything stronger than this starts to look like a texture swatch. */
+  .surface {
+    position: relative;
+    border-radius: var(--r-card);
+    border: 1px solid var(--edge);
+    box-shadow: var(--lift-0);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68 1.05' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23w)' opacity='0.42'/%3E%3C/svg%3E"),
+      linear-gradient(157deg,
+        rgba(255, 255, 255, 0.032) 0%,
+        rgba(255, 255, 255, 0.010) 32%,
+        rgba(255, 255, 255, 0) 56%),
+      linear-gradient(180deg, var(--graphite-3) 0%, var(--graphite-2) 58%, #131312 100%);
+    background-blend-mode: soft-light, normal, normal;
+    transition: box-shadow var(--t) var(--ease), border-color var(--t) var(--ease),
+                transform var(--t) var(--ease), background-color var(--t) var(--ease);
+  }
+  /* a card sitting on the near-black sections needs a shade less lift in the base */
+  .darker .surface {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68 1.05' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23w)' opacity='0.42'/%3E%3C/svg%3E"),
+      linear-gradient(157deg,
+        rgba(255, 255, 255, 0.030) 0%,
+        rgba(255, 255, 255, 0.009) 32%,
+        rgba(255, 255, 255, 0) 56%),
+      linear-gradient(180deg, var(--graphite-2) 0%, #131312 60%, #0e0e0d 100%);
+  }
+  /* gentle lift on hover — the Revolut micro-interaction */
+  @media (min-width: 761px) {
+    .surface.lift:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--lift-1);
+      border-color: var(--edge-strong);
+    }
+  }
+
+  /* an inset surface — a panel inside a card, one step quieter */
+  .inset {
+    border-radius: var(--r-md);
+    border: 1px solid var(--edge);
+    background:
+      linear-gradient(157deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0) 52%),
+      rgba(0, 0, 0, 0.22);
+  }
+
+  /* the bordeaux selected state — an inner glow, never a flat fill */
+  /* An inset shadow emanates from the edges, so a negative spread tightens it
+     into a neon outline. Zero spread + a wide blur + low alpha keeps it a glow. */
+  .glow-sel {
+    color: var(--on-dark);
+    border-color: rgba(143, 45, 64, 0.48);
+    background-color: rgba(143, 45, 64, 0.09);
+    box-shadow: inset 0 0 30px rgba(143, 45, 64, 0.2);
   }
 
   /* ---------- reveal ---------- */
@@ -252,10 +335,11 @@
     background: var(--on-dark);
     color: var(--black);
     border: 1px solid transparent;
-    border-radius: 1px;
+    border-radius: var(--r-md);
+    box-shadow: 0 8px 20px -14px rgba(0, 0, 0, 0.8);
     transition: background var(--t) var(--ease), color var(--t) var(--ease),
                 border-color var(--t) var(--ease), transform var(--t) var(--ease),
-                box-shadow var(--t) var(--ease);
+                box-shadow var(--t) var(--ease), opacity var(--t) var(--ease);
   }
   /* bordeaux lands here, on the primary action */
   .btn:hover {
@@ -263,29 +347,37 @@
     color: var(--on-dark);
     border-color: var(--wine);
     transform: translateY(-2px);
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.75);
   }
-  .btn:active { transform: translateY(0); }
+  .btn:active { transform: translateY(0) scale(0.985); box-shadow: 0 4px 12px -10px rgba(0, 0, 0, 0.8); }
   .btn:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; }
+  .btn[disabled], .btn[aria-disabled="true"] {
+    opacity: 0.34;
+    pointer-events: none;
+  }
 
   .btn-quiet {
-    background: transparent;
+    background: rgba(247, 245, 241, 0.03);
     color: var(--on-dark);
-    border-color: var(--rule-strong-dark);
+    border-color: var(--edge-strong);
+    box-shadow: none;
   }
   .btn-quiet:hover {
-    background: transparent;
+    background: rgba(247, 245, 241, 0.07);
     color: var(--on-dark);
-    border-color: var(--on-dark);
+    border-color: rgba(247, 245, 241, 0.24);
     box-shadow: none;
     transform: translateY(-2px);
   }
-  .on-light .btn { background: var(--black); color: var(--bone); }
+  .on-light .btn { background: var(--black); color: var(--bone); box-shadow: var(--lift-light-0); }
+  .on-light .btn:hover { box-shadow: var(--lift-light-1); }
   .on-light .btn-quiet {
-    background: transparent;
+    background: rgba(22, 21, 19, 0.02);
     color: var(--ink);
     border-color: var(--rule-strong);
+    box-shadow: none;
   }
+  .on-light .btn-quiet:hover { background: rgba(22, 21, 19, 0.05); box-shadow: none; }
   .on-light .btn-quiet:hover { border-color: var(--ink); }
   .on-light .btn:focus-visible { outline-color: var(--ink); }
 
@@ -333,13 +425,16 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--on-dark);
-    background: transparent;
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
+    background: rgba(247, 245, 241, 0.03);
+    border: 1px solid var(--edge);
+    border-radius: var(--r-pill);
     cursor: pointer;
-    transition: border-color var(--t) var(--ease);
+    transition: border-color var(--t) var(--ease), background var(--t) var(--ease);
   }
-  .disclose:hover, .disclose[aria-expanded="true"] { border-color: var(--rule-strong-dark); }
+  .disclose:hover, .disclose[aria-expanded="true"] {
+    border-color: var(--edge-strong);
+    background: rgba(247, 245, 241, 0.07);
+  }
   .disclose:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
   .disclose .chev {
     width: 6px; height: 6px;
@@ -497,6 +592,7 @@
     text-transform: uppercase;
     color: rgba(247, 245, 241, 0.42);
     border: 1px solid rgba(247, 245, 241, 0.16);
+    border-radius: var(--r-pill);
     padding: 0.55rem 1.1rem;
     white-space: nowrap;
   }
@@ -538,7 +634,7 @@
     margin-top: var(--s6);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--s2);
+    gap: var(--s3);
     align-items: stretch;
   }
   /* DOM order is flagship-first (so the mobile carousel leads with it);
@@ -548,16 +644,9 @@
   .plans .p-ext { order: 3; }
 
   .plan {
-    position: relative;
-    background: var(--graphite-2);
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
     padding: var(--s5) var(--s4);
     display: flex;
     flex-direction: column;
-    transition: border-color var(--t-slow) var(--ease),
-                box-shadow var(--t-slow) var(--ease),
-                background var(--t-slow) var(--ease);
   }
   .tag {
     align-self: flex-start;
@@ -565,11 +654,14 @@
     font-weight: 500;
     letter-spacing: var(--track);
     text-transform: uppercase;
-    color: var(--on-dark-faint);
-    border: 1px solid var(--rule-strong-dark);
-    border-radius: 1px;
-    padding: 0.45rem 0.9rem;
+    color: var(--on-dark-dim);
+    border: 1px solid var(--edge-strong);
+    background: rgba(247, 245, 241, 0.03);
+    border-radius: var(--r-pill);
+    padding: 0.45rem 0.95rem;
     margin-bottom: var(--s3);
+    transition: color var(--t) var(--ease), border-color var(--t) var(--ease),
+                background var(--t) var(--ease);
   }
   .plan h3 {
     font-family: var(--font-display);
@@ -627,25 +719,31 @@
     color: var(--on-dark-dim);
   }
 
-  /* selection is colour only — no size change anywhere */
+  /* selection is an inner bordeaux glow — no size change, no flat fill */
   .plan.is-active {
-    border-color: var(--wine-line);
-    background: #1c1615;
+    border-color: rgba(143, 45, 64, 0.32);
+    background-color: rgba(143, 45, 64, 0.04);
+    box-shadow: var(--lift-0), inset 0 0 110px rgba(143, 45, 64, 0.13);
   }
   .plan.is-active .price strong { color: var(--wine-soft); }
+  .plan.is-active .tag { color: var(--wine-soft); border-color: rgba(143, 45, 64, 0.45); }
 
   @media (min-width: 761px) {
     /* flagship is marked by default; hovering any card moves the mark */
     .plans:hover .plan {
-      border-color: var(--rule-dark);
-      background: var(--graphite-2);
+      border-color: var(--edge);
+      background-color: transparent;
+      box-shadow: var(--lift-0);
     }
     .plans:hover .plan .price strong { color: var(--on-dark); }
+    .plans:hover .plan .tag { color: var(--on-dark-dim); border-color: var(--edge-strong); }
     .plans:hover .plan:hover {
-      border-color: var(--wine-line);
-      background: #1c1615;
+      border-color: rgba(143, 45, 64, 0.32);
+      background-color: rgba(143, 45, 64, 0.04);
+      box-shadow: var(--lift-1), inset 0 0 110px rgba(143, 45, 64, 0.13);
     }
     .plans:hover .plan:hover .price strong { color: var(--wine-soft); }
+    .plans:hover .plan:hover .tag { color: var(--wine-soft); border-color: rgba(143, 45, 64, 0.45); }
   }
 
   /* ---------- carousel controls (mobile only) ---------- */
@@ -655,14 +753,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    border: 1px solid var(--rule-strong-dark);
-    border-radius: 1px;
+    background: rgba(247, 245, 241, 0.03);
+    border: 1px solid var(--edge-strong);
+    border-radius: var(--r-pill);
     cursor: pointer;
     flex-shrink: 0;
-    transition: border-color var(--t) var(--ease), opacity var(--t) var(--ease);
+    transition: border-color var(--t) var(--ease), opacity var(--t) var(--ease),
+                background var(--t) var(--ease), transform var(--t) var(--ease);
   }
-  .cnav:hover:not(:disabled) { border-color: var(--on-dark); }
+  .cnav:hover:not(:disabled) { border-color: rgba(247, 245, 241, 0.3); background: rgba(247, 245, 241, 0.07); }
+  .cnav:active:not(:disabled) { transform: scale(0.94); }
   .cnav:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
   .cnav:disabled { opacity: 0.25; cursor: default; }
   .cnav .arw {
@@ -678,34 +778,129 @@
 
   .dots { display: none; }
 
-  /* ---------- quote builder ---------- */
-  .quote-shell {
-    margin-top: var(--s6);
+  /* ---------- booking flow ---------- */
+  /* progress rail — four segments, bordeaux marks only the current one */
+  .progress {
+    list-style: none;
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: var(--s5);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: var(--s5);
+  }
+  .progress li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    transition: color var(--t) var(--ease);
+  }
+  .progress li::before {
+    content: "";
+    height: 3px;
+    border-radius: var(--r-pill);
+    background: rgba(247, 245, 241, 0.09);
+    transition: background var(--t) var(--ease), box-shadow var(--t) var(--ease);
+  }
+  .progress li .n { opacity: 0.65; margin-right: 0.5em; }
+  .progress li.done { color: var(--on-dark-dim); }
+  .progress li.done::before { background: rgba(247, 245, 241, 0.26); }
+  .progress li.now { color: var(--on-dark); }
+  .progress li.now::before {
+    background: var(--wine-mid);
+    box-shadow: 0 0 12px rgba(143, 45, 64, 0.5);
+  }
+  /* completed steps are clickable to go back */
+  .progress li .go {
+    all: unset;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    transition: color var(--t) var(--ease);
+  }
+  .progress li.done .go { cursor: pointer; }
+  .progress li.done .go:hover { color: var(--on-dark); }
+  .progress li .go:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; border-radius: 3px; }
+  .progress li:not(.done) .go { cursor: default; }
+
+  .flow { margin-top: var(--s4); }
+  .step-panel { display: none; }
+  .step-panel.is-active { display: block; animation: stepIn 0.5s var(--ease); }
+  @keyframes stepIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .step-panel.is-active { animation: none; }
+  }
+
+  .book-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: var(--s3);
     align-items: start;
   }
-  .steps { display: flex; flex-direction: column; gap: var(--s4); }
-  .step[hidden] { display: none; }
+  .book-grid.solo { grid-template-columns: 1fr; }
+  .book-grid.solo .quote-out { display: none; }
+  /* grid items default to min-width:auto, which would let the day strip's
+     intrinsic width push the whole column wider than the page instead of
+     scrolling inside itself */
+  .book-grid > * { min-width: 0; }
+
+  /* the step card itself */
+  .step-card { padding: var(--s5) var(--s4); }
+  .step-head { margin-bottom: var(--s4); }
   .step-label {
     display: flex;
     align-items: baseline;
-    gap: 0.9rem;
-    font-size: 0.56rem;
+    gap: 0.8rem;
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+  }
+  .step-card h3 {
+    margin-top: 0.7rem;
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-size: clamp(1.3rem, 3.4vw, 1.85rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: var(--on-dark);
+  }
+  .step-sub { margin-top: 0.6rem; font-size: 0.88rem; color: var(--on-dark-dim); max-width: 46ch; }
+
+  /* a labelled block inside a step — hairline separated */
+  .field-group + .field-group {
+    margin-top: var(--s4);
+    padding-top: var(--s4);
+    border-top: 1px solid var(--rule-dark);
+  }
+  .field-group[hidden] { display: none; }
+  .group-label {
+    display: block;
+    font-size: 0.54rem;
     font-weight: 500;
     letter-spacing: var(--track);
     text-transform: uppercase;
     color: var(--on-dark-faint);
     margin-bottom: var(--s2);
   }
-  .step-label .n { color: var(--on-dark-dim); }
-  .opts { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+  /* option pills */
+  .opts { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+  .opts.stack { flex-direction: column; }
   .opt, .car-input {
     flex: 1 1 auto;
-    min-width: 110px;
-    min-height: 48px;
-    padding: 0.9rem 1rem;
+    min-width: 104px;
+    min-height: 52px;
+    padding: 0.9rem 1.1rem;
     font-family: var(--font-display);
     font-stretch: 125%;
     font-size: 0.6rem;
@@ -713,49 +908,545 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-align: center;
-    color: var(--on-dark);
-    background: transparent;
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
+    color: var(--on-dark-dim);
+    background: rgba(247, 245, 241, 0.035);
+    border: 1px solid var(--edge-strong);
+    border-radius: var(--r-md);
     transition: color var(--t) var(--ease), border-color var(--t) var(--ease),
-                background var(--t) var(--ease);
+                background var(--t) var(--ease), box-shadow var(--t) var(--ease),
+                transform var(--t) var(--ease);
   }
   .opt { cursor: pointer; }
-  .opt:hover { border-color: var(--rule-strong-dark); }
+  .opt:hover { border-color: var(--edge-strong); background: rgba(247, 245, 241, 0.055); color: var(--on-dark); }
+  .opt:active { transform: scale(0.985); }
   .opt:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
+  /* selected — inner bordeaux glow, not a fill */
   .opt[aria-pressed="true"] {
-    color: var(--black);
-    background: var(--on-dark);
-    border-color: var(--on-dark);
+    color: var(--on-dark);
+    border-color: rgba(143, 45, 64, 0.48);
+    background: rgba(143, 45, 64, 0.09);
+    box-shadow: inset 0 0 30px rgba(143, 45, 64, 0.2);
   }
-  .car-input { -moz-appearance: textfield; letter-spacing: 0.06em; }
+
+  /* option with a price under the name */
+  .opt.tall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1.1rem 1.1rem;
+  }
+  .opt .p {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--on-dark-faint);
+    transition: color var(--t) var(--ease);
+  }
+  .opt[aria-pressed="true"] .p { color: var(--wine-soft); }
+
+  .car-input { -moz-appearance: textfield; letter-spacing: 0.06em; color: var(--on-dark); }
   .car-input::-webkit-outer-spin-button,
   .car-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   .car-input::placeholder { color: var(--on-dark-faint); }
-  .car-input:focus { outline: none; border-color: var(--rule-strong-dark); }
+  .car-input:focus { outline: none; border-color: var(--edge-strong); background: rgba(247, 245, 241, 0.055); }
   .car-input.active {
-    color: var(--black);
-    background: var(--on-dark);
-    border-color: var(--on-dark);
+    color: var(--on-dark);
+    border-color: rgba(143, 45, 64, 0.48);
+    background: rgba(143, 45, 64, 0.09);
+    box-shadow: inset 0 0 30px rgba(143, 45, 64, 0.2);
   }
-  .step-hint {
-    margin-top: 0.8rem;
-    font-size: 0.78rem;
+  .step-hint { margin-top: 0.9rem; font-size: 0.78rem; color: var(--on-dark-faint); }
+
+  /* step actions */
+  .step-actions {
+    margin-top: var(--s4);
+    padding-top: var(--s4);
+    border-top: 1px solid var(--rule-dark);
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .step-actions .grow { flex: 1 1 auto; }
+
+  /* ---------- step 2: details ---------- */
+  .fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s3);
+  }
+  .field { display: flex; flex-direction: column; gap: 0.6rem; }
+  .field.wide { grid-column: 1 / -1; }
+  .field label {
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+  }
+  .field input {
+    min-height: 54px;
+    padding: 0.95rem 1.1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--on-dark);
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--edge);
+    border-radius: var(--r-md);
+    transition: border-color var(--t) var(--ease), background var(--t) var(--ease),
+                box-shadow var(--t) var(--ease);
+  }
+  .field input::placeholder { color: var(--on-dark-faint); }
+  .field input:hover { border-color: var(--edge-strong); }
+  .field input:focus {
+    outline: none;
+    border-color: rgba(143, 45, 64, 0.45);
+    background: rgba(0, 0, 0, 0.28);
+    box-shadow: inset 0 0 26px rgba(143, 45, 64, 0.14);
+  }
+  #bReg { text-transform: uppercase; letter-spacing: 0.1em; }
+  .field.err input { border-color: rgba(180, 84, 84, 0.6); }
+  .field.err input:focus { box-shadow: inset 0 0 26px rgba(180, 84, 84, 0.16); border-color: rgba(180, 84, 84, 0.7); }
+  .field .msg { display: none; font-size: 0.72rem; color: #cf9090; }
+  .field.err .msg { display: block; }
+
+  /* mock reg confirm — styled like an insurer's "is this your car?" step */
+  .carcheck {
+    display: none;
+    margin-top: var(--s4);
+    padding: var(--s3) var(--s3) var(--s3);
+    border-radius: var(--r-md);
+    border: 1px solid rgba(143, 45, 64, 0.4);
+    background:
+      linear-gradient(157deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0) 52%),
+      rgba(143, 45, 64, 0.06);
+    box-shadow: inset 0 0 60px rgba(143, 45, 64, 0.12);
+  }
+  .carcheck.show { display: block; animation: stepIn 0.45s var(--ease); }
+  @media (prefers-reduced-motion: reduce) { .carcheck.show { animation: none; } }
+  .carcheck h4 {
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    color: var(--on-dark);
+  }
+  .carcheck-body {
+    margin-top: var(--s3);
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    flex-wrap: wrap;
+  }
+  /* an Irish plate — the one place a hard light surface is right */
+  .plate {
+    display: inline-flex;
+    align-items: stretch;
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    background: linear-gradient(176deg, #ffffff 0%, #f2efe9 55%, #e4e0d8 100%);
+    border: 1px solid #cfcac2;
+    box-shadow: 0 8px 20px -14px rgba(0, 0, 0, 0.9);
+    flex-shrink: 0;
+  }
+  .plate .eu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5rem;
+    background: linear-gradient(180deg, #0f45c0 0%, #0b3aa8 100%);
+    color: #f7d117;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .plate .reg {
+    padding: 0.6rem 1rem;
+    color: #111;
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .carcheck-what { font-size: 0.98rem; color: var(--on-dark); line-height: 1.5; }
+  .carcheck-what span {
+    display: block;
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    margin-bottom: 0.25rem;
+  }
+  .carcheck-actions { margin-top: var(--s3); display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .carcheck-actions .btn { min-height: 46px; padding: 0.75rem 1.6rem; font-size: 0.58rem; }
+  .carcheck.ok {
+    border-color: var(--edge-strong);
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: none;
+  }
+  .carcheck.ok .carcheck-actions { display: none; }
+  .carcheck-done {
+    display: none;
+    margin-top: var(--s3);
+    padding-top: var(--s3);
+    border-top: 1px solid var(--rule-dark);
+    font-size: 0.56rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--wine-soft);
+  }
+  .carcheck.ok .carcheck-done { display: flex; align-items: center; gap: 0.6rem; }
+  .carcheck.ok .carcheck-done::before {
+    content: "";
+    width: 12px; height: 7px;
+    border-left: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg) translate(1px, -2px);
+    flex-shrink: 0;
+  }
+  .carcheck-edit {
+    all: unset;
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 0.56rem;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    border-bottom: 1px solid var(--rule-strong-dark);
+    transition: color var(--t) var(--ease), border-color var(--t) var(--ease);
+  }
+  .carcheck-edit:hover { color: var(--on-dark); border-color: var(--on-dark); }
+  .carcheck-edit:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; }
+
+  /* ---------- step 3: slot picker ---------- */
+  .cal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s2);
+    margin-bottom: var(--s3);
+  }
+  .cal-range {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-dim);
+    text-align: center;
+  }
+  .cnav.sm { width: 42px; height: 42px; }
+
+  /* desktop: the week grid */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: 54px repeat(7, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .cal-day {
+    text-align: center;
+    padding-bottom: 0.6rem;
+    font-size: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    line-height: 1.5;
+  }
+  .cal-day b {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--on-dark-dim);
+    letter-spacing: 0;
+  }
+  .cal-day.is-today b { color: var(--wine-soft); }
+  .cal-time {
+    display: flex;
+    align-items: center;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--on-dark-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .slot {
+    height: 46px;
+    padding: 0;
+    background: rgba(247, 245, 241, 0.04);
+    border: 1px solid var(--edge-strong);
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    color: var(--on-dark-faint);
+    transition: background var(--t) var(--ease), border-color var(--t) var(--ease),
+                color var(--t) var(--ease), box-shadow var(--t) var(--ease),
+                transform var(--t) var(--ease);
+  }
+  .slot:hover:not(:disabled) {
+    border-color: var(--edge-strong);
+    background: rgba(247, 245, 241, 0.07);
+    color: var(--on-dark);
+  }
+  .slot:active:not(:disabled) { transform: scale(0.95); }
+  .slot:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
+  .slot.taken {
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, 0.3);
+    border-color: transparent;
+    color: #b25b63;
+    font-size: 1.05rem;
+  }
+  .slot.closed { cursor: not-allowed; background: transparent; border-color: transparent; color: transparent; }
+  .slot.past { cursor: not-allowed; background: rgba(0, 0, 0, 0.16); border-color: transparent; color: transparent; }
+  .slot.sel {
+    color: var(--on-dark);
+    border-color: rgba(143, 45, 64, 0.75);
+    background: rgba(143, 45, 64, 0.22);
+    box-shadow: inset 0 0 20px rgba(143, 45, 64, 0.34);
+  }
+
+  /* mobile: day strip + time list. Built from the same state, shown by media query. */
+  .cal-mobile { display: none; }
+  .daystrip {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.25rem;
+    scroll-snap-type: x proximity;
+  }
+  .daystrip::-webkit-scrollbar { display: none; }
+  .daychip {
+    flex: 1 0 auto;
+    min-width: 58px;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.7rem 0.5rem;
+    background: rgba(247, 245, 241, 0.035);
+    border: 1px solid var(--edge-strong);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    transition: background var(--t) var(--ease), border-color var(--t) var(--ease),
+                color var(--t) var(--ease), box-shadow var(--t) var(--ease);
+  }
+  .daychip b { font-size: 1rem; font-weight: 500; letter-spacing: 0; color: var(--on-dark-dim); }
+  .daychip .free { font-size: 0.46rem; letter-spacing: 0.08em; opacity: 0.8; }
+  .daychip[aria-pressed="true"] {
+    color: var(--on-dark);
+    border-color: rgba(143, 45, 64, 0.48);
+    background: rgba(143, 45, 64, 0.09);
+    box-shadow: inset 0 0 30px rgba(143, 45, 64, 0.2);
+  }
+  .daychip[aria-pressed="true"] b { color: var(--on-dark); }
+  .daychip:disabled { opacity: 0.3; cursor: not-allowed; }
+  .daychip:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
+
+  .timelist { margin-top: var(--s3); display: flex; flex-direction: column; gap: 0.45rem; }
+  .timeslot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s2);
+    min-height: 56px;
+    padding: 0.9rem 1.2rem;
+    background: rgba(247, 245, 241, 0.035);
+    border: 1px solid var(--edge-strong);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--on-dark);
+    transition: background var(--t) var(--ease), border-color var(--t) var(--ease),
+                color var(--t) var(--ease), box-shadow var(--t) var(--ease),
+                transform var(--t) var(--ease);
+  }
+  .timeslot .state {
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+  }
+  .timeslot:active:not(:disabled) { transform: scale(0.99); }
+  .timeslot:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
+  .timeslot.taken {
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, 0.25);
+    border-color: transparent;
+    color: var(--on-dark-faint);
+  }
+  .timeslot.taken .state { color: #b25b63; }
+  .timeslot.sel {
+    border-color: rgba(143, 45, 64, 0.75);
+    background: rgba(143, 45, 64, 0.2);
+    box-shadow: inset 0 0 34px rgba(143, 45, 64, 0.28);
+  }
+  .timeslot.sel .state { color: var(--wine-soft); }
+  .cal-empty {
+    padding: var(--s4) var(--s2);
+    text-align: center;
+    font-size: 0.88rem;
     color: var(--on-dark-faint);
   }
 
+  .cal-legend {
+    margin-top: var(--s3);
+    display: flex;
+    gap: var(--s3);
+    flex-wrap: wrap;
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+  }
+  .cal-legend span { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .cal-legend i {
+    width: 15px; height: 15px;
+    border: 1px solid var(--edge-strong);
+    background: rgba(247, 245, 241, 0.04);
+    border-radius: 5px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .cal-legend i.t { border-color: transparent; background: rgba(0, 0, 0, 0.3); position: relative; }
+  .cal-legend i.t::after {
+    content: "\00d7";
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #b25b63; font-size: 0.85rem;
+  }
+  .cal-legend i.s {
+    border-color: rgba(143, 45, 64, 0.75);
+    background: rgba(143, 45, 64, 0.22);
+    box-shadow: inset 0 0 8px rgba(143, 45, 64, 0.5);
+  }
+  .cal-note { margin-top: var(--s2); font-size: 0.76rem; color: var(--on-dark-faint); }
+
+  /* ---------- step 4: confirmation ---------- */
+  .confirm-card {
+    padding: var(--s5) var(--s4);
+    border-color: rgba(143, 45, 64, 0.34);
+    box-shadow: var(--lift-0), inset 0 0 140px rgba(143, 45, 64, 0.12);
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .ok-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--wine-soft);
+  }
+  .ok-mark::before {
+    content: "";
+    width: 13px; height: 8px;
+    border-left: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg) translate(1px, -2px);
+    flex-shrink: 0;
+  }
+  .confirm-card h3 {
+    margin-top: var(--s2);
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-size: clamp(1.5rem, 4.4vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: var(--on-dark);
+  }
+  .confirm-rows { margin-top: var(--s4); }
+  .confirm-rows div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--s3);
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--rule-dark);
+    font-size: 0.92rem;
+  }
+  .confirm-rows div:last-child { border-bottom: none; }
+  .confirm-rows div[hidden] { display: none; }
+  .confirm-rows .k2 {
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    flex-shrink: 0;
+  }
+  .confirm-rows .v2 { text-align: right; color: var(--on-dark); }
+  .confirm-rows .v2.money {
+    color: var(--wine-soft);
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+  }
+  .confirm-actions { margin-top: var(--s4); display: flex; flex-direction: column; gap: 0.6rem; }
+  .confirm-actions .btn { width: 100%; }
+  .confirm-note {
+    margin-top: var(--s3);
+    font-size: 0.78rem;
+    color: var(--on-dark-faint);
+    text-align: center;
+  }
+
+  /* whatsapp — the escape hatch, and the primary action on the summary.
+     It carries the glyph, not the brand green: bordeaux stays the only accent. */
+  .btn-wa { gap: 0.75rem; }
+  .btn-wa svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+  /* always-available escape hatch under the flow */
+  .flow-bail {
+    margin-top: var(--s3);
+    padding: var(--s3) var(--s4);
+    border-radius: var(--r-card);
+    border: 1px solid var(--edge);
+    background: rgba(247, 245, 241, 0.018);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3);
+    flex-wrap: wrap;
+  }
+  .flow-bail p { font-size: 0.88rem; color: var(--on-dark-dim); }
+  .flow-bail .btn { min-height: 46px; padding: 0.75rem 1.5rem; font-size: 0.58rem; }
+
+  /* ---------- live price panel ---------- */
   .quote-out {
-    background: var(--graphite-2);
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
     padding: var(--s4);
     position: sticky;
     top: 100px;
-    transition: border-color var(--t-slow) var(--ease);
   }
-  .quote-out:hover { border-color: var(--rule-strong-dark); }
   .quote-out .k {
-    font-size: 0.55rem;
+    font-size: 0.54rem;
     font-weight: 500;
     letter-spacing: var(--track);
     text-transform: uppercase;
@@ -772,14 +1463,14 @@
   .quote-total strong {
     font-family: var(--font-display);
     font-stretch: 125%;
-    font-size: clamp(2.8rem, 6vw, 3.8rem);
+    font-size: clamp(2.6rem, 5.5vw, 3.4rem);
     font-weight: 700;
     letter-spacing: -0.035em;
     color: var(--on-dark);
     line-height: 1;
   }
   .quote-total .per {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     font-weight: 500;
     letter-spacing: var(--track);
     text-transform: uppercase;
@@ -794,12 +1485,33 @@
   }
   .quote-saving {
     margin-top: 0.8rem;
-    font-size: 0.84rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: var(--r-sm);
+    font-size: 0.8rem;
     color: var(--wine-soft);
+    background: rgba(143, 45, 64, 0.08);
+    box-shadow: inset 0 0 26px rgba(143, 45, 64, 0.16);
     display: none;
   }
   .quote-saving.show { display: block; }
-  .quote-out .btn { margin-top: var(--s4); width: 100%; }
+  .quote-when {
+    margin-top: var(--s3);
+    padding-top: var(--s3);
+    border-top: 1px solid var(--rule-dark);
+    font-size: 0.86rem;
+    color: var(--on-dark);
+    display: none;
+  }
+  .quote-when.show { display: block; }
+  .quote-when span {
+    display: block;
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--on-dark-faint);
+    margin-bottom: 0.35rem;
+  }
 
   /* ---------- before / after slider ----------
      Drop real photos into .ba-before / .ba-after:
@@ -846,7 +1558,10 @@
     text-transform: uppercase;
     color: rgba(247, 245, 241, 0.9);
     background: rgba(7, 7, 6, 0.55);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(247, 245, 241, 0.16);
+    border-radius: var(--r-pill);
     padding: 0.5rem 1rem;
     pointer-events: none;
   }
@@ -919,7 +1634,7 @@
     border-top: 1px solid var(--rule);
     transition: padding-left var(--t-slow) var(--ease), background var(--t-slow) var(--ease);
   }
-  .how-row:hover { padding-left: var(--s3); background: rgba(22, 21, 19, 0.03); }
+  .how-row:hover { padding-left: var(--s3); background: rgba(22, 21, 19, 0.035); border-radius: var(--r-md); }
   .how-row:last-of-type { border-bottom: 1px solid var(--rule); }
   .how-row .n {
     font-size: 0.56rem;
@@ -948,15 +1663,9 @@
   .founder {
     position: relative;
     aspect-ratio: 4 / 5;
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
+    border-radius: var(--r-card);
     overflow: hidden;
-    background:
-      radial-gradient(105% 75% at 60% 20%, rgba(247, 245, 241, 0.08), transparent 58%),
-      linear-gradient(165deg, var(--graphite-3) 0%, var(--graphite-2) 55%, #0a0a09 100%);
-    transition: border-color var(--t-slow) var(--ease);
   }
-  .founder:hover { border-color: var(--rule-strong-dark); }
   /* Founder photo: <img src="media/eduard.jpg" alt="Eduard"> */
   .founder img {
     position: absolute;
@@ -976,6 +1685,7 @@
     text-transform: uppercase;
     color: rgba(247, 245, 241, 0.34);
     border: 1px solid rgba(247, 245, 241, 0.14);
+    border-radius: var(--r-pill);
     padding: 0.6rem 1.1rem;
     white-space: nowrap;
   }
@@ -1011,32 +1721,29 @@
     margin-top: var(--s6);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--s2);
+    gap: var(--s3);
   }
   .rev {
-    position: relative;
-    background: var(--graphite-2);
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
-    padding: var(--s4);
+    padding: var(--s4) var(--s4) var(--s4);
     display: flex;
     flex-direction: column;
     gap: var(--s2);
-    transition: transform var(--t-slow) var(--ease), border-color var(--t-slow) var(--ease);
   }
-  /* the second bordeaux moment */
-  .rev::before {
+  /* the second bordeaux moment — a hairline drawn across the top of the card */
+  .rev::after {
     content: "";
     position: absolute;
-    top: -1px; left: -1px; right: -1px;
+    top: -1px; left: var(--s4); right: var(--s4);
     height: 2px;
+    border-radius: var(--r-pill);
     background: var(--wine-mid);
+    box-shadow: 0 0 12px rgba(143, 45, 64, 0.5);
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform var(--t-slow) var(--ease);
     pointer-events: none;
   }
-  .rev.from-right::before { transform-origin: right center; }
+  .rev.from-right::after { transform-origin: right center; }
   .stars { color: var(--on-dark-faint); font-size: 0.7rem; letter-spacing: 0.24em; }
   .rev blockquote { font-size: 0.92rem; line-height: 1.75; color: var(--on-dark-dim); flex-grow: 1; }
   .rev .who { font-size: 0.82rem; font-weight: 500; color: var(--on-dark); }
@@ -1050,8 +1757,7 @@
     color: var(--on-dark-faint);
   }
   @media (min-width: 761px) {
-    .rev:hover { transform: translateY(-4px); border-color: var(--rule-strong-dark); }
-    .rev:hover::before { transform: scaleX(1); }
+    .rev:hover::after { transform: scaleX(1); }
   }
 
   /* ---------- faq ---------- */
@@ -1072,7 +1778,8 @@
     transition: background var(--t-slow) var(--ease), padding-left var(--t-slow) var(--ease);
   }
   .qa summary:hover {
-    background: rgba(247, 245, 241, 0.03);
+    background: rgba(247, 245, 241, 0.035);
+    border-radius: var(--r-md);
     padding-left: 1.2rem;
   }
   .qa summary::-webkit-details-marker { display: none; }
@@ -1151,8 +1858,9 @@
 
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
-    .quote-shell { grid-template-columns: 1fr; gap: var(--s4); }
-    .quote-out { position: static; }
+    .book-grid { grid-template-columns: 1fr; gap: var(--s3); }
+    /* the price panel leads on narrow screens — it's the answer, not a sidebar */
+    .book-grid .quote-out { position: static; order: -1; }
     .about-grid { grid-template-columns: 1fr; gap: var(--s4); }
     .founder { max-width: 280px; aspect-ratio: 1 / 1; }
     .foot-top { grid-template-columns: 1fr; gap: var(--s4); }
@@ -1199,8 +1907,26 @@
 
     .plan { padding: var(--s4) 1.5rem; }
     .rev { padding: var(--s4) 1.5rem; }
+    .rev::after { left: 1.5rem; right: 1.5rem; }
     .quote-out { padding: var(--s4) 1.5rem; }
     .anchor-line { margin-top: var(--s5); font-size: 0.92rem; }
+
+    /* ---- booking flow, mobile ---- */
+    .step-card { padding: var(--s4) 1.4rem; }
+    .confirm-card { padding: var(--s4) 1.4rem; }
+    .fields { grid-template-columns: 1fr; gap: var(--s3); }
+    .field.wide { grid-column: auto; }
+    /* only the current step keeps its label — the rails carry the rest */
+    .progress { gap: 0.4rem; }
+    .progress li .t { display: none; }
+    .progress li.now .t { display: inline; }
+    .progress li .n { margin-right: 0; }
+    .progress li.now .n { margin-right: 0.5em; }
+    .step-actions .btn { flex: 1 1 100%; }
+    .flow-bail { padding: var(--s3) 1.4rem; flex-direction: column; align-items: stretch; text-align: center; }
+    .flow-bail .btn { width: 100%; }
+    .carcheck-actions .btn { flex: 1 1 100%; }
+    .carcheck-body { gap: var(--s2); }
 
     .qa summary { font-size: 0.92rem; gap: var(--s2); }
     .qa p { padding-right: var(--s2); font-size: 0.88rem; }
@@ -1226,7 +1952,8 @@
       scroll-snap-align: start;
       scroll-snap-stop: always;
     }
-    .rev.is-active::before { transform: scaleX(1); }
+    /* the swiped-to card carries the mark, since there's no hover on touch */
+    .rev.is-active::after { transform: scaleX(1); }
 
     .carousel-nav {
       display: flex;
@@ -1270,15 +1997,30 @@
     .on-light .dots button[aria-current="true"]::before { background: var(--ink); border-color: var(--ink); }
   }
 
+  /* ---------- slot picker: below this width a 7-column week grid stops
+     having usable tap targets, so the same week becomes a day strip and a
+     list of times. Same state, same week arrows — just a layout that fits. */
+  @media (max-width: 620px) {
+    .cal-grid { display: none; }
+    .cal-mobile { display: block; }
+  }
+  @media (min-width: 621px) {
+    .cal-mobile { display: none; }
+  }
+
   @media (max-width: 420px) {
     .wordmark { font-size: 0.72rem; letter-spacing: 0.18em; }
     .disclose { padding: 0.55rem 0.7rem; font-size: 0.52rem; letter-spacing: 0.1em; }
     .bar-actions { gap: 0.35rem; }
     .btn { font-size: 0.6rem; letter-spacing: 0.12em; padding: 0.95rem 1.4rem; }
-    .opt, .car-input { min-width: 0; flex: 1 1 30%; font-size: 0.55rem; letter-spacing: 0.08em; padding: 0.85rem 0.3rem; }
-    #qService .opt { flex: 1 1 100%; }
+    .opt, .car-input { min-width: 0; flex: 1 1 30%; font-size: 0.55rem; letter-spacing: 0.08em; padding: 0.85rem 0.4rem; }
+    #bService .opt { flex: 1 1 100%; }
+    #bFreq .opt { flex: 1 1 calc(50% - 0.3rem); }
     .media-tag { font-size: 0.5rem; padding: 0.5rem 0.9rem; }
     .plan li { font-size: 0.84rem; }
+    .daychip { min-width: 52px; padding: 0.6rem 0.35rem; }
+    .timeslot { padding: 0.85rem 1rem; font-size: 0.92rem; }
+    .cal-range { font-size: 0.56rem; letter-spacing: 0.14em; }
   }
 </style>
 </head>
@@ -1324,7 +2066,7 @@
     <div class="shell hero-inner">
       <h1 class="reveal">EMCleen</h1>
       <div class="hero-rule reveal" style="--d: 0.08s"></div>
-      <p class="hero-lead reveal" style="--d: 0.14s">Weekly car care in Ennis, Co.&nbsp;Clare.</p>
+      <p class="hero-lead reveal" style="--d: 0.14s">Regular car care in Ennis, Co.&nbsp;Clare.</p>
       <div class="hero-cta reveal" style="--d: 0.2s">
         <a class="btn" href="https://wa.me/353830166325">Text to Book</a>
         <a class="btn btn-quiet" href="#pricing">View Pricing</a>
@@ -1332,8 +2074,8 @@
 
       <div class="hero-meta reveal" style="--d: 0.28s">
         <div class="meta-row">
-          <span class="k">Weekly detail</span>
-          <span class="v">€30 &mdash; about an hour</span>
+          <span class="k">Maintenance detail</span>
+          <span class="v">From &euro;35 &mdash; about an hour</span>
         </div>
         <div class="meta-row">
           <span class="k">Where</span>
@@ -1358,7 +2100,7 @@
     <div class="media-scrim"></div>
     <span class="media-tag">Video — the wash</span>
     <div class="media-copy">
-      <p class="reveal">Clean once, it fades.<br>Clean weekly, it lasts.</p>
+      <p class="reveal">Clean once, it fades.<br>Clean regularly, it lasts.</p>
     </div>
   </section>
 
@@ -1370,11 +2112,11 @@
 
       <!-- flagship sits first in the DOM so the mobile carousel leads with it -->
       <div class="plans" id="planTrack">
-        <div class="plan plan-flag is-active reveal" style="--d: 0.06s">
-          <span class="tag">Every week</span>
+        <div class="plan plan-flag surface lift is-active reveal" style="--d: 0.06s">
+          <span class="tag">On a set slot</span>
           <h3>Maintenance Detail</h3>
-          <div class="price"><strong>€30</strong><span>per week</span></div>
-          <p class="price-alt">€45 as a one-off if you're not subscribing.</p>
+          <div class="price"><strong>&euro;35</strong><span>a visit, fortnightly</span></div>
+          <p class="price-alt">&euro;45 a visit if you go monthly instead.</p>
           <ul>
             <li>Snow foam pre-wash</li>
             <li>Two-bucket contact wash</li>
@@ -1384,10 +2126,10 @@
             <li>Hand dried</li>
             <li>About an hour</li>
           </ul>
-          <a class="btn" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20the%20weekly%20Maintenance%20Detail">Text to Book</a>
+          <a class="btn" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20the%20fortnightly%20Maintenance%20Detail">Text to Book</a>
         </div>
 
-        <div class="plan p-detail reveal" style="--d: 0.14s">
+        <div class="plan p-detail surface lift reveal" style="--d: 0.14s">
           <h3>Detail</h3>
           <div class="price"><strong>€80</strong><span>one-off</span></div>
           <ul>
@@ -1401,7 +2143,7 @@
           <a class="btn btn-quiet" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Detail">Text to Book</a>
         </div>
 
-        <div class="plan p-ext reveal" style="--d: 0.22s">
+        <div class="plan p-ext surface lift reveal" style="--d: 0.22s">
           <h3>Extensive Detail</h3>
           <div class="price"><strong>€140</strong><span>one-off</span></div>
           <ul>
@@ -1427,56 +2169,236 @@
         </button>
       </div>
 
-      <p class="anchor-line reveal">A valet in Ennis runs about €100. Weekly maintenance holds that standard for <span class="mark">€30</span>.</p>
+      <p class="anchor-line reveal">A valet in Ennis runs about €100. Regular maintenance holds that standard for <span class="mark">€35</span>.</p>
     </div>
   </section>
 
-  <!-- ============ QUOTE BUILDER ============ -->
+  <!-- ============ BOOKING FLOW ============
+       Visual demo only — nothing is sent anywhere. The final step hands the
+       whole booking to WhatsApp as a pre-filled message. -->
   <section class="pad darker gloss" id="quote">
     <div class="shell">
       <div class="eyebrow reveal">Build a quote</div>
-      <h2 class="section-title reveal" style="--d: 0.08s">Work out your price.</h2>
+      <h2 class="section-title reveal" style="--d: 0.08s">Book your slot.</h2>
 
-      <div class="quote-shell">
-        <div class="steps reveal" style="--d: 0.14s" id="qSteps">
-          <div class="step">
-            <div class="step-label"><span class="n">01</span> How many cars?</div>
-            <div class="opts" id="qCars" role="group" aria-label="Number of cars">
-              <button class="opt" type="button" data-val="1" aria-pressed="true">1 car</button>
-              <button class="opt" type="button" data-val="2" aria-pressed="false">2 cars</button>
-              <input class="car-input" id="qCarsNum" type="number" min="1" max="99" step="1"
-                     inputmode="numeric" placeholder="3+" aria-label="Or enter a number of cars">
+      <ol class="progress reveal" style="--d: 0.12s" id="bProgress">
+        <li class="now" data-step="1"><button class="go" type="button" data-goto="1"><span class="n">01</span><span class="t">Service</span></button></li>
+        <li data-step="2"><button class="go" type="button" data-goto="2"><span class="n">02</span><span class="t">Details</span></button></li>
+        <li data-step="3"><button class="go" type="button" data-goto="3"><span class="n">03</span><span class="t">Slot</span></button></li>
+        <li data-step="4"><button class="go" type="button" data-goto="4"><span class="n">04</span><span class="t">Confirm</span></button></li>
+      </ol>
+
+      <div class="flow reveal" style="--d: 0.16s" id="bookFlow">
+        <div class="book-grid" id="bookGrid">
+          <div class="flow-main">
+
+            <!-- ---------- STEP 1 — service & frequency ---------- -->
+            <div class="step-panel is-active surface" data-panel="1" id="bStep1">
+              <div class="step-card">
+                <div class="step-head">
+                  <div class="step-label"><span class="n">Step 01</span> Service</div>
+                  <h3>What are we cleaning?</h3>
+                  <p class="step-sub">Pick the cars and the service. The price on the right updates as you go.</p>
+                </div>
+
+                <div class="field-group">
+                  <span class="group-label" id="lblCars">How many cars</span>
+                  <div class="opts" id="bCars" role="group" aria-labelledby="lblCars">
+                    <button class="opt" type="button" data-val="1" aria-pressed="true">1 car</button>
+                    <button class="opt" type="button" data-val="2" aria-pressed="false">2 cars</button>
+                    <input class="car-input" id="bCarsNum" type="number" min="1" max="20" step="1"
+                           inputmode="numeric" placeholder="3+" aria-label="Or enter a number of cars">
+                  </div>
+                  <p class="step-hint">10% off when two or more cars are done in the same visit.</p>
+                </div>
+
+                <div class="field-group">
+                  <span class="group-label" id="lblService">Service</span>
+                  <div class="opts" id="bService" role="group" aria-labelledby="lblService">
+                    <button class="opt tall" type="button" data-val="maintenance" aria-pressed="true">
+                      Maintenance Detail<span class="p">from &euro;35</span>
+                    </button>
+                    <button class="opt tall" type="button" data-val="detail" aria-pressed="false">
+                      Detail<span class="p">&euro;80</span>
+                    </button>
+                    <button class="opt tall" type="button" data-val="extensive" aria-pressed="false">
+                      Extensive Detail<span class="p">&euro;140</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- frequency only exists for the maintenance detail -->
+                <div class="field-group" id="bFreqGroup">
+                  <span class="group-label" id="lblFreq">How often</span>
+                  <div class="opts" id="bFreq" role="group" aria-labelledby="lblFreq">
+                    <button class="opt tall" type="button" data-val="fortnightly" aria-pressed="true">
+                      Fortnightly<span class="p">&euro;35 a visit</span>
+                    </button>
+                    <button class="opt tall" type="button" data-val="monthly" aria-pressed="false">
+                      Monthly<span class="p">&euro;45 a visit</span>
+                    </button>
+                  </div>
+                  <p class="step-hint">Same slot each time. Pause, move or cancel any time.</p>
+                </div>
+
+                <div class="step-actions">
+                  <button class="btn grow" type="button" data-next="2">Next — your details</button>
+                </div>
+              </div>
             </div>
-            <p class="step-hint">10% off when two or more cars are done in the same visit.</p>
+
+            <!-- ---------- STEP 2 — details ---------- -->
+            <div class="step-panel surface" data-panel="2" id="bStep2">
+              <div class="step-card">
+                <div class="step-head">
+                  <div class="step-label"><span class="n">Step 02</span> Details</div>
+                  <h3>Who and what.</h3>
+                  <p class="step-sub">So I know whose car is coming and what I'm looking at.</p>
+                </div>
+
+                <div class="fields">
+                  <div class="field">
+                    <label for="bName">Name</label>
+                    <input id="bName" type="text" autocomplete="name" placeholder="Your name">
+                    <span class="msg">Enter your name.</span>
+                  </div>
+                  <div class="field">
+                    <label for="bPhone">Phone</label>
+                    <input id="bPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="083 016 6325">
+                    <span class="msg">Enter a phone number.</span>
+                  </div>
+                  <div class="field">
+                    <label for="bReg">Car registration</label>
+                    <input id="bReg" type="text" autocomplete="off" spellcheck="false" placeholder="12 C 3456">
+                    <span class="msg">Enter your reg.</span>
+                  </div>
+                  <div class="field">
+                    <label for="bCar">Make and model</label>
+                    <input id="bCar" type="text" autocomplete="off" placeholder="Volkswagen Golf">
+                    <span class="msg">Enter the make and model.</span>
+                  </div>
+                </div>
+
+                <!-- confirm line, styled the way an insurer asks it -->
+                <div class="carcheck" id="bCarCheck">
+                  <h4>Is this your car?</h4>
+                  <div class="carcheck-body">
+                    <span class="plate"><span class="eu">IRL</span><span class="reg" id="bPlate">12 C 3456</span></span>
+                    <div class="carcheck-what">
+                      <span>Make and model</span>
+                      <em id="bCarWhat" style="font-style: normal">Volkswagen Golf</em>
+                    </div>
+                  </div>
+                  <div class="carcheck-actions">
+                    <button class="btn" type="button" id="bCarYes">Yes, that's it</button>
+                    <button class="btn btn-quiet" type="button" id="bCarNo">No, edit</button>
+                  </div>
+                  <p class="carcheck-done">
+                    Car confirmed
+                    <button class="carcheck-edit" type="button" id="bCarEdit">Change</button>
+                  </p>
+                </div>
+
+                <div class="step-actions">
+                  <button class="btn btn-quiet" type="button" data-back="1">Back</button>
+                  <button class="btn grow" type="button" data-next="3">Next — pick a slot</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ---------- STEP 3 — slot picker ---------- -->
+            <div class="step-panel surface" data-panel="3" id="bStep3">
+              <div class="step-card">
+                <div class="step-head">
+                  <div class="step-label"><span class="n">Step 03</span> Slot</div>
+                  <h3>Pick a time.</h3>
+                  <p class="step-sub">Greyed slots are already taken. Times shown are the drop-off.</p>
+                </div>
+
+                <div class="cal">
+                  <div class="cal-head">
+                    <button class="cnav sm" type="button" id="bWeekPrev" aria-label="Previous week">
+                      <span class="arw l" aria-hidden="true"></span>
+                    </button>
+                    <span class="cal-range" id="bWeekRange" aria-live="polite">&nbsp;</span>
+                    <button class="cnav sm" type="button" id="bWeekNext" aria-label="Next week">
+                      <span class="arw r" aria-hidden="true"></span>
+                    </button>
+                  </div>
+
+                  <!-- desktop: the week grid -->
+                  <div class="cal-grid" id="bCalGrid" role="group" aria-label="Available slots this week"></div>
+
+                  <!-- narrow: day strip + list of that day's times -->
+                  <div class="cal-mobile" id="bCalMobile">
+                    <div class="daystrip" id="bDayStrip" role="group" aria-label="Day"></div>
+                    <div class="timelist" id="bTimeList"></div>
+                  </div>
+
+                  <div class="cal-legend">
+                    <span><i></i> Free</span>
+                    <span><i class="t"></i> Taken</span>
+                    <span><i class="s"></i> Selected</span>
+                  </div>
+                  <p class="cal-note" id="bCalNote">Nothing is booked until you send the message on the last step.</p>
+                </div>
+
+                <div class="step-actions">
+                  <button class="btn btn-quiet" type="button" data-back="2">Back</button>
+                  <button class="btn grow" type="button" data-next="4">Confirm booking</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ---------- STEP 4 — confirmation ---------- -->
+            <div class="step-panel" data-panel="4" id="bStep4">
+              <div class="confirm-card surface">
+                <span class="ok-mark">Ready to send</span>
+                <h3>Your booking.</h3>
+
+                <div class="confirm-rows">
+                  <div><span class="k2">Service</span><span class="v2" id="cService">&mdash;</span></div>
+                  <div id="cFreqRow"><span class="k2">Frequency</span><span class="v2" id="cFreq">&mdash;</span></div>
+                  <div><span class="k2">Cars</span><span class="v2" id="cCars">&mdash;</span></div>
+                  <div><span class="k2">Car</span><span class="v2" id="cCar">&mdash;</span></div>
+                  <div><span class="k2">Slot</span><span class="v2" id="cSlot">&mdash;</span></div>
+                  <div><span class="k2">Name</span><span class="v2" id="cName">&mdash;</span></div>
+                  <div><span class="k2">Phone</span><span class="v2" id="cPhone">&mdash;</span></div>
+                  <div><span class="k2">Price</span><span class="v2 money" id="cPrice">&mdash;</span></div>
+                </div>
+
+                <div class="confirm-actions">
+                  <a class="btn btn-wa" id="cSend" href="https://wa.me/353830166325">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.21.89 2.39 1.01 2.55.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+                    Send on WhatsApp
+                  </a>
+                  <button class="btn btn-quiet" type="button" data-back="3">Back to slots</button>
+                </div>
+                <p class="confirm-note">Opens WhatsApp with the whole booking written out. I'll reply to confirm the slot.</p>
+              </div>
+            </div>
+
           </div>
 
-          <div class="step">
-            <div class="step-label"><span class="n">02</span> Which service?</div>
-            <div class="opts" id="qService" role="group" aria-label="Service">
-              <button class="opt" type="button" data-val="maintenance" aria-pressed="true">Maintenance Detail</button>
-              <button class="opt" type="button" data-val="detail" aria-pressed="false">Detail</button>
-              <button class="opt" type="button" data-val="extensive" aria-pressed="false">Extensive Detail</button>
+          <!-- live price — visible on steps 1 to 3 -->
+          <aside class="quote-out surface" id="bQuote">
+            <span class="k">Your price</span>
+            <div class="quote-total" id="bTotal" aria-live="polite">
+              <strong>&euro;35</strong><span class="per">per visit</span>
             </div>
-          </div>
-
-          <div class="step" id="qFreqStep">
-            <div class="step-label"><span class="n">03</span> How often?</div>
-            <div class="opts" id="qFreq" role="group" aria-label="Frequency">
-              <button class="opt" type="button" data-val="weekly" aria-pressed="true">Weekly</button>
-              <button class="opt" type="button" data-val="fortnightly" aria-pressed="false">Fortnightly</button>
-              <button class="opt" type="button" data-val="oneoff" aria-pressed="false">One-off</button>
-            </div>
-          </div>
+            <p class="quote-summary" id="bSummary">1 car &middot; Maintenance Detail &middot; fortnightly</p>
+            <p class="quote-saving" id="bSaving"></p>
+            <p class="quote-when" id="bWhen"><span>Your slot</span><em id="bWhenText" style="font-style: normal"></em></p>
+          </aside>
         </div>
 
-        <div class="quote-out reveal" style="--d: 0.2s">
-          <span class="k">Your price</span>
-          <div class="quote-total" id="qTotal" aria-live="polite">
-            <strong>€30</strong><span class="per">per week</span>
-          </div>
-          <p class="quote-summary" id="qSummary">1 car &middot; Maintenance Detail &middot; weekly</p>
-          <p class="quote-saving" id="qSaving"></p>
-          <a class="btn" id="qBook" href="https://wa.me/353830166325">Text to Book</a>
+        <!-- escape hatch, on every step -->
+        <div class="flow-bail">
+          <p>Rather just text? Skip the form.</p>
+          <a class="btn btn-quiet btn-wa" href="https://wa.me/353830166325">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.21.89 2.39 1.01 2.55.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+            WhatsApp
+          </a>
         </div>
       </div>
     </div>
@@ -1539,7 +2461,7 @@
     <div class="shell">
       <div class="eyebrow reveal">About</div>
       <div class="about-grid">
-        <div class="founder reveal" style="--d: 0.08s">
+        <div class="founder surface reveal" style="--d: 0.08s">
           <!-- Founder photo: <img src="media/eduard.jpg" alt="Eduard, EMCleen"> -->
           <span>Photo — Eduard</span>
         </div>
@@ -1562,17 +2484,17 @@
 
       <!-- PLACEHOLDER REVIEWS — replace name, service and quote with real ones. -->
       <div class="rev-track" id="revTrack">
-        <article class="rev reveal" style="--d: 0.06s">
+        <article class="rev surface lift reveal" style="--d: 0.06s">
           <div class="stars" aria-label="5 out of 5">★★★★★</div>
-          <blockquote>[Placeholder — a line here about the weekly Maintenance Detail and what it's like keeping the car on a set slot.]</blockquote>
+          <blockquote>[Placeholder — a line here about the Maintenance Detail and what it's like keeping the car on a set slot.]</blockquote>
           <div><span class="who">Customer name</span><span class="svc">Maintenance Detail</span></div>
         </article>
-        <article class="rev reveal" style="--d: 0.14s">
+        <article class="rev surface lift reveal" style="--d: 0.14s">
           <div class="stars" aria-label="5 out of 5">★★★★★</div>
           <blockquote>[Placeholder — a line here about an Extensive Detail and the state the car came back in.]</blockquote>
           <div><span class="who">Customer name</span><span class="svc">Extensive Detail</span></div>
         </article>
-        <article class="rev reveal" style="--d: 0.22s">
+        <article class="rev surface lift reveal" style="--d: 0.22s">
           <div class="stars" aria-label="5 out of 5">★★★★★</div>
           <blockquote>[Placeholder — a line here about booking by text and how quick the turnaround was.]</blockquote>
           <div><span class="who">Customer name</span><span class="svc">Detail</span></div>
@@ -1618,19 +2540,19 @@
         </details>
         <details class="qa">
           <summary>Do you have slots free?<span class="plus" aria-hidden="true"></span></summary>
-          <p>There are only so many weekly slots, and they go first come, first served. Text me and I'll tell you what's open — if your preferred time is taken I'll offer you the nearest one.</p>
+          <p>There are only so many slots, and they go first come, first served. Text me and I'll tell you what's open — if your preferred time is taken I'll offer you the nearest one.</p>
         </details>
         <details class="qa">
           <summary>What's the difference between the Maintenance Detail and a one-off detail?<span class="plus" aria-hidden="true"></span></summary>
-          <p>The Maintenance Detail keeps an already-clean car clean: snow foam pre-wash, two-bucket contact wash, wheels and tyres, interior vacuum, dash and plastics wiped, hand dried — about an hour. The Detail adds the work a weekly wash doesn't reach: wheel arches and door shuts, a deep interior clean down to the trim, seat rails and seat belts, mats deep cleaned, the boot detailed and the glass polished. The Extensive Detail goes further again on the paint — clay bar decontamination, tar removal, and a wax or sealant, with the alloys done including the barrels and every interior surface detailed and dressed. Most people start with a Detail or Extensive Detail and then hold it there with the weekly Maintenance Detail.</p>
+          <p>The Maintenance Detail keeps an already-clean car clean: snow foam pre-wash, two-bucket contact wash, wheels and tyres, interior vacuum, dash and plastics wiped, hand dried — about an hour. The Detail adds the work a maintenance wash doesn't reach: wheel arches and door shuts, a deep interior clean down to the trim, seat rails and seat belts, mats deep cleaned, the boot detailed and the glass polished. The Extensive Detail goes further again on the paint — clay bar decontamination, tar removal, and a wax or sealant, with the alloys done including the barrels and every interior surface detailed and dressed. Most people start with a Detail or Extensive Detail and then hold it there with the Maintenance Detail.</p>
         </details>
         <details class="qa">
           <summary>How long does it take?<span class="plus" aria-hidden="true"></span></summary>
           <p>The Maintenance Detail is about an hour. The Detail and Extensive Detail take longer — you'll get a time when you book.</p>
         </details>
         <details class="qa">
-          <summary>How does the weekly subscription work?<span class="plus" aria-hidden="true"></span></summary>
-          <p>You get a set slot at the same time each week for €30. Text me any time to pause, move or cancel your slot.</p>
+          <summary>How does the subscription work?<span class="plus" aria-hidden="true"></span></summary>
+          <p>You get a set slot at the same time on a set cycle &mdash; every fortnight at &euro;35 a visit, or monthly at &euro;45. Text me any time to pause, move or cancel your slot.</p>
         </details>
         <details class="qa">
           <summary>What if it rains?<span class="plus" aria-hidden="true"></span></summary>
@@ -1662,7 +2584,7 @@
       <div class="foot-top">
         <div>
           <div class="foot-brand">EMCleen</div>
-          <p class="foot-loc">Weekly car care<br>Ennis, Co. Clare, Ireland</p>
+          <p class="foot-loc">Regular car care<br>Ennis, Co. Clare, Ireland</p>
         </div>
         <div class="foot-col">
           <h4>Contact</h4>
@@ -1746,123 +2668,486 @@
     });
   });
 
-  /* ---------- quote builder ---------- */
+  /* ---------- booking flow ----------
+     Four steps, no backend. Everything lives in `state`; every render is
+     driven off it, and the last step writes the whole thing into a WhatsApp
+     message. Nothing is persisted and nothing is sent from here. */
+
   var SERVICES = {
-    maintenance: { label: 'Maintenance Detail', recurring: 30, oneoff: 45, subscribable: true },
-    detail:      { label: 'Detail',             recurring: 80, oneoff: 80, subscribable: false },
-    extensive:   { label: 'Extensive Detail',   recurring: 140, oneoff: 140, subscribable: false }
+    maintenance: { label: 'Maintenance Detail', recurring: true },
+    detail:      { label: 'Detail',             recurring: false, price: 80 },
+    extensive:   { label: 'Extensive Detail',   recurring: false, price: 140 }
   };
   var FREQ = {
-    weekly:      { label: 'weekly',      per: 'per week',  recurring: true },
-    fortnightly: { label: 'fortnightly', per: 'per visit', recurring: true },
-    oneoff:      { label: 'one-off',     per: 'one-off',   recurring: false }
+    fortnightly: { label: 'Fortnightly', price: 35 },
+    monthly:     { label: 'Monthly',     price: 45 }
   };
 
-  var pick = { cars: 1, service: 'maintenance', freq: 'weekly' };
+  var HOURS = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
+  var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var CLOSED_DAY = 6; /* Sunday */
 
-  var elTotal = document.getElementById('qTotal');
-  var elSummary = document.getElementById('qSummary');
-  var elSaving = document.getElementById('qSaving');
-  var elBook = document.getElementById('qBook');
-  var freqStep = document.getElementById('qFreqStep');
-  var stepsWrap = document.getElementById('qSteps');
-  var carInput = document.getElementById('qCarsNum');
-  var carBtns = Array.prototype.slice.call(document.querySelectorAll('#qCars .opt'));
+  var state = {
+    step: 1,
+    cars: 1,
+    service: 'maintenance',
+    freq: 'fortnightly',
+    name: '', phone: '', reg: '', car: '',
+    carOk: false,
+    week: 0,
+    day: 0,      /* which day the narrow layout is showing */
+    slot: null   /* { key, label, iso } */
+  };
 
-  function renumberSteps() {
-    var n = 0;
-    Array.prototype.slice.call(stepsWrap.querySelectorAll('.step')).forEach(function (step) {
-      if (step.hidden) return;
-      n += 1;
-      var label = step.querySelector('.step-label .n');
-      if (label) label.textContent = n < 10 ? '0' + n : String(n);
-    });
-  }
+  var flow = document.getElementById('bookFlow');
+  if (flow) {
+    var $ = function (id) { return document.getElementById(id); };
+    var panels = Array.prototype.slice.call(flow.querySelectorAll('.step-panel'));
+    var progress = $('bProgress');
+    var progressItems = Array.prototype.slice.call(progress.querySelectorAll('li'));
+    var grid = $('bookGrid');
 
-  function syncCarControls() {
-    carBtns.forEach(function (b) {
-      b.setAttribute('aria-pressed', String(Number(b.dataset.val) === pick.cars));
-    });
-    var typed = pick.cars !== 1 && pick.cars !== 2;
-    carInput.classList.toggle('active', typed);
-    if (document.activeElement !== carInput) {
-      carInput.value = typed ? String(pick.cars) : '';
+    /* ---------- pricing ---------- */
+    function unitPrice() {
+      var svc = SERVICES[state.service];
+      return svc.recurring ? FREQ[state.freq].price : svc.price;
     }
-  }
+    function priceParts() {
+      var gross = unitPrice() * state.cars;
+      var saving = state.cars >= 2 ? Math.round(gross * 0.1) : 0;
+      return { gross: gross, saving: saving, total: gross - saving };
+    }
+    function perLabel() {
+      return SERVICES[state.service].recurring ? 'per visit' : 'one-off';
+    }
+    function carsWord() {
+      return state.cars === 1 ? '1 car' : state.cars + ' cars';
+    }
+    function freqWord() {
+      return SERVICES[state.service].recurring ? FREQ[state.freq].label.toLowerCase() : 'one-off';
+    }
 
-  function wire(groupId, key) {
-    var group = document.getElementById(groupId);
-    group.addEventListener('click', function (ev) {
-      var btn = ev.target.closest('.opt');
-      if (!btn || !group.contains(btn)) return;
-      group.querySelectorAll('.opt').forEach(function (b) {
-        b.setAttribute('aria-pressed', String(b === btn));
+    /* ---------- step 1 ---------- */
+    var carInput = $('bCarsNum');
+    var carBtns = Array.prototype.slice.call(document.querySelectorAll('#bCars .opt'));
+    var freqGroup = $('bFreqGroup');
+
+    function syncCarControls() {
+      var typed = state.cars !== 1 && state.cars !== 2;
+      carBtns.forEach(function (b) {
+        b.setAttribute('aria-pressed', String(!typed && Number(b.dataset.val) === state.cars));
       });
-      pick[key] = btn.dataset.val;
-      render();
-    });
-  }
-  wire('qService', 'service');
-  wire('qFreq', 'freq');
-
-  document.getElementById('qCars').addEventListener('click', function (ev) {
-    var btn = ev.target.closest('.opt');
-    if (!btn) return;
-    pick.cars = Number(btn.dataset.val);
-    syncCarControls();
-    render();
-  });
-
-  carInput.addEventListener('input', function () {
-    var v = parseInt(carInput.value, 10);
-    if (!isFinite(v) || v < 1) return;
-    if (v > 99) { v = 99; carInput.value = '99'; }
-    pick.cars = v;
-    carBtns.forEach(function (b) {
-      b.setAttribute('aria-pressed', String(Number(b.dataset.val) === pick.cars));
-    });
-    carInput.classList.add('active');
-    render();
-  });
-  carInput.addEventListener('blur', syncCarControls);
-
-  function render() {
-    var svc = SERVICES[pick.service];
-
-    // Frequency only applies to the subscribable service; the details are one-off.
-    freqStep.hidden = !svc.subscribable;
-    renumberSteps();
-
-    var freq = svc.subscribable ? FREQ[pick.freq] : FREQ.oneoff;
-    var carsWord = pick.cars === 1 ? '1 car' : pick.cars + ' cars';
-
-    elSummary.textContent = carsWord + ' · ' + svc.label + ' · ' + freq.label;
-
-    var unit = freq.recurring ? svc.recurring : svc.oneoff;
-    var gross = unit * pick.cars;
-    var saving = pick.cars >= 2 ? Math.round(gross * 0.1) : 0;
-    var total = gross - saving;
-
-    elTotal.innerHTML = '<strong>€' + total + '</strong><span class="per">' + freq.per + '</span>';
-
-    if (saving > 0) {
-      elSaving.textContent = 'Saves €' + saving + ' — 10% off with ' + pick.cars + ' cars in the same visit.';
-      elSaving.classList.add('show');
-    } else if (pick.service === 'maintenance' && freq.recurring) {
-      elSaving.textContent = '€15 less than a one-off at €45.';
-      elSaving.classList.add('show');
-    } else {
-      elSaving.classList.remove('show');
+      carInput.classList.toggle('active', typed);
+      if (document.activeElement !== carInput) carInput.value = typed ? String(state.cars) : '';
     }
 
-    elBook.href = WA + '?text=' + encodeURIComponent(
-      "Hi, I'd like " + carsWord + ', ' +
-      (svc.subscribable ? freq.label + ' ' : '') +
-      svc.label.toLowerCase() + '.'
-    );
+    function pressGroup(groupId, key) {
+      var group = $(groupId);
+      group.addEventListener('click', function (ev) {
+        var btn = ev.target.closest('.opt');
+        if (!btn || !group.contains(btn)) return;
+        group.querySelectorAll('.opt').forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        state[key] = btn.dataset.val;
+        renderQuote();
+      });
+    }
+    pressGroup('bService', 'service');
+    pressGroup('bFreq', 'freq');
+
+    $('bCars').addEventListener('click', function (ev) {
+      var btn = ev.target.closest('.opt');
+      if (!btn) return;
+      state.cars = Number(btn.dataset.val);
+      syncCarControls();
+      renderQuote();
+    });
+    carInput.addEventListener('input', function () {
+      var v = parseInt(carInput.value, 10);
+      if (!isFinite(v) || v < 1) return;
+      if (v > 20) { v = 20; carInput.value = '20'; }
+      state.cars = v;
+      carBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      carInput.classList.add('active');
+      renderQuote();
+    });
+    carInput.addEventListener('blur', syncCarControls);
+
+    /* ---------- step 2 ---------- */
+    var fName = $('bName'), fPhone = $('bPhone'), fReg = $('bReg'), fCar = $('bCar');
+    var check = $('bCarCheck');
+
+    function fieldOf(input) { return input.closest('.field'); }
+    function clearErr(input) { fieldOf(input).classList.remove('err'); }
+
+    [fName, fPhone, fReg, fCar].forEach(function (input) {
+      input.addEventListener('input', function () {
+        clearErr(input);
+        state.name = fName.value.trim();
+        state.phone = fPhone.value.trim();
+        state.reg = fReg.value.trim().toUpperCase();
+        state.car = fCar.value.trim();
+        if (input === fReg || input === fCar) {
+          /* editing either one invalidates a previous confirmation */
+          state.carOk = false;
+          check.classList.remove('ok');
+        }
+        renderCarCheck();
+        renderQuote();
+      });
+    });
+
+    function renderCarCheck() {
+      var ready = state.reg.length >= 4 && state.car.length >= 2;
+      check.classList.toggle('show', ready);
+      if (!ready) return;
+      $('bPlate').textContent = state.reg;
+      $('bCarWhat').textContent = state.car;
+    }
+
+    $('bCarYes').addEventListener('click', function () {
+      state.carOk = true;
+      check.classList.add('ok');
+      renderQuote();
+    });
+    function backToReg() {
+      state.carOk = false;
+      check.classList.remove('ok');
+      fReg.focus();
+      fReg.select();
+    }
+    $('bCarNo').addEventListener('click', backToReg);
+    $('bCarEdit').addEventListener('click', backToReg);
+
+    function validateDetails() {
+      var bad = null;
+      [[fName, state.name.length >= 2], [fPhone, state.phone.replace(/\D/g, '').length >= 7],
+       [fReg, state.reg.length >= 4], [fCar, state.car.length >= 2]].forEach(function (pair) {
+        var ok = pair[1];
+        fieldOf(pair[0]).classList.toggle('err', !ok);
+        if (!ok && !bad) bad = pair[0];
+      });
+      if (bad) { bad.focus(); return false; }
+      if (!state.carOk) {
+        renderCarCheck();
+        check.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        $('bCarYes').focus();
+        return false;
+      }
+      return true;
+    }
+
+    /* ---------- step 3: the week ---------- */
+    function startOfWeek(offset) {
+      var d = new Date();
+      d.setHours(0, 0, 0, 0);
+      var shift = (d.getDay() + 6) % 7; /* Monday = 0 */
+      d.setDate(d.getDate() - shift + offset * 7);
+      return d;
+    }
+    function addDays(d, n) {
+      var c = new Date(d.getTime());
+      c.setDate(c.getDate() + n);
+      return c;
+    }
+    function isoDay(d) {
+      return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    }
+    function slotDate(d, hour) {
+      var c = new Date(d.getTime());
+      c.setHours(Number(hour.slice(0, 2)), 0, 0, 0);
+      return c;
+    }
+
+    /* xorshift32 keyed off the week — so the same week always shows the same
+       six taken slots, and moving weeks shows a different but stable pattern. */
+    function rngFrom(seed) {
+      var s = (seed >>> 0) || 1;
+      return function () {
+        s ^= s << 13; s >>>= 0;
+        s ^= s >>> 17;
+        s ^= s << 5;  s >>>= 0;
+        return s / 4294967296;
+      };
+    }
+    var takenCache = {};
+    function takenFor(weekStart) {
+      var key = isoDay(weekStart);
+      if (takenCache[key]) return takenCache[key];
+      var rnd = rngFrom(Math.floor(weekStart.getTime() / 86400000) * 2654435761);
+      var set = {}, n = 0, guard = 0;
+      while (n < 6 && guard++ < 400) {
+        var d = Math.floor(rnd() * CLOSED_DAY);       /* Mon–Sat */
+        var h = Math.floor(rnd() * HOURS.length);
+        var k = d + ':' + h;
+        if (!set[k]) { set[k] = true; n += 1; }
+      }
+      takenCache[key] = set;
+      return set;
+    }
+
+    function slotState(weekStart, dayIdx, hourIdx) {
+      if (dayIdx === CLOSED_DAY) return 'closed';
+      var date = slotDate(addDays(weekStart, dayIdx), HOURS[hourIdx]);
+      if (date.getTime() <= Date.now()) return 'past';
+      if (takenFor(weekStart)[dayIdx + ':' + hourIdx]) return 'taken';
+      return 'free';
+    }
+    function slotKey(weekStart, dayIdx, hourIdx) {
+      return isoDay(addDays(weekStart, dayIdx)) + 'T' + HOURS[hourIdx];
+    }
+    function slotLabel(weekStart, dayIdx, hourIdx) {
+      var d = addDays(weekStart, dayIdx);
+      return DAY_NAMES[dayIdx] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()] + ', ' + HOURS[hourIdx];
+    }
+
+    var CAL_NOTE = 'Nothing is booked until you send the message on the last step.';
+    function chooseSlot(weekStart, dayIdx, hourIdx) {
+      $('bCalNote').textContent = CAL_NOTE;
+      state.slot = {
+        key: slotKey(weekStart, dayIdx, hourIdx),
+        label: slotLabel(weekStart, dayIdx, hourIdx),
+        iso: slotDate(addDays(weekStart, dayIdx), HOURS[hourIdx]).toISOString()
+      };
+      renderCalendar();
+      renderQuote();
+    }
+
+    var calGrid = $('bCalGrid');
+    var dayStrip = $('bDayStrip');
+    var timeList = $('bTimeList');
+
+    function renderCalendar() {
+      var weekStart = startOfWeek(state.week);
+      var weekEnd = addDays(weekStart, 6);
+
+      $('bWeekRange').textContent =
+        weekStart.getDate() + ' ' + MONTHS[weekStart.getMonth()] + ' — ' +
+        weekEnd.getDate() + ' ' + MONTHS[weekEnd.getMonth()];
+      $('bWeekPrev').disabled = state.week <= 0;
+      $('bWeekNext').disabled = state.week >= 8;
+
+      var todayKey = isoDay(new Date());
+
+      /* --- week grid --- */
+      calGrid.textContent = '';
+      calGrid.appendChild(document.createElement('div'));
+      for (var d = 0; d < 7; d++) {
+        var date = addDays(weekStart, d);
+        var head = document.createElement('div');
+        head.className = 'cal-day' + (isoDay(date) === todayKey ? ' is-today' : '');
+        head.innerHTML = DAY_NAMES[d] + '<b>' + date.getDate() + '</b>';
+        calGrid.appendChild(head);
+      }
+      HOURS.forEach(function (hour, h) {
+        var t = document.createElement('div');
+        t.className = 'cal-time';
+        t.textContent = hour;
+        calGrid.appendChild(t);
+        for (var d = 0; d < 7; d++) {
+          calGrid.appendChild(buildSlot(weekStart, d, h));
+        }
+      });
+
+      /* --- narrow layout: day strip --- */
+      dayStrip.textContent = '';
+      var firstOpen = -1;
+      for (var i = 0; i < 7; i++) {
+        var free = 0;
+        for (var h2 = 0; h2 < HOURS.length; h2++) {
+          if (slotState(weekStart, i, h2) === 'free') free += 1;
+        }
+        if (free > 0 && firstOpen < 0) firstOpen = i;
+
+        var date2 = addDays(weekStart, i);
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'daychip';
+        chip.disabled = free === 0;
+        chip.dataset.day = String(i);
+        chip.innerHTML = DAY_NAMES[i] + '<b>' + date2.getDate() + '</b>' +
+                         '<span class="free">' + (free ? free + ' free' : 'none') + '</span>';
+        dayStrip.appendChild(chip);
+      }
+      /* land on a day that actually has something */
+      var freeOnDay = 0;
+      for (var h3 = 0; h3 < HOURS.length; h3++) {
+        if (slotState(weekStart, state.day, h3) === 'free') freeOnDay += 1;
+      }
+      if (!freeOnDay && firstOpen >= 0) state.day = firstOpen;
+      Array.prototype.forEach.call(dayStrip.children, function (chip, i) {
+        chip.setAttribute('aria-pressed', String(i === state.day));
+      });
+
+      /* --- narrow layout: that day's times --- */
+      timeList.textContent = '';
+      if (firstOpen < 0) {
+        var empty = document.createElement('p');
+        empty.className = 'cal-empty';
+        empty.textContent = 'Nothing left this week — try the next one.';
+        timeList.appendChild(empty);
+      } else {
+        HOURS.forEach(function (hour, h) {
+          var st = slotState(weekStart, state.day, h);
+          if (st === 'past' || st === 'closed') return;
+          var key = slotKey(weekStart, state.day, h);
+          var row = document.createElement('button');
+          row.type = 'button';
+          row.className = 'timeslot' + (st === 'taken' ? ' taken' : '') +
+                          (state.slot && state.slot.key === key ? ' sel' : '');
+          row.disabled = st === 'taken';
+          row.innerHTML = '<span>' + hour + '</span><span class="state">' +
+                          (st === 'taken' ? '× Taken'
+                            : (state.slot && state.slot.key === key ? 'Selected' : 'Free')) + '</span>';
+          if (st === 'free') {
+            row.addEventListener('click', function () { chooseSlot(weekStart, state.day, h); });
+          }
+          timeList.appendChild(row);
+        });
+      }
+    }
+
+    function buildSlot(weekStart, d, h) {
+      var st = slotState(weekStart, d, h);
+      var key = slotKey(weekStart, d, h);
+      var selected = state.slot && state.slot.key === key;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'slot' + (st !== 'free' ? ' ' + st : '') + (selected ? ' sel' : '');
+      b.disabled = st !== 'free';
+      if (st === 'taken') {
+        b.textContent = '×';
+        b.setAttribute('aria-label', slotLabel(weekStart, d, h) + ' — taken');
+      } else if (st === 'free') {
+        b.setAttribute('aria-label', slotLabel(weekStart, d, h) + (selected ? ' — selected' : ''));
+        b.setAttribute('aria-pressed', String(!!selected));
+        b.addEventListener('click', function () { chooseSlot(weekStart, d, h); });
+      } else {
+        b.setAttribute('aria-hidden', 'true');
+        b.tabIndex = -1;
+      }
+      return b;
+    }
+
+    dayStrip.addEventListener('click', function (ev) {
+      var chip = ev.target.closest('.daychip');
+      if (!chip || chip.disabled) return;
+      state.day = Number(chip.dataset.day);
+      renderCalendar();
+    });
+    $('bWeekPrev').addEventListener('click', function () {
+      if (state.week <= 0) return;
+      state.week -= 1;
+      renderCalendar();
+    });
+    $('bWeekNext').addEventListener('click', function () {
+      if (state.week >= 8) return;
+      state.week += 1;
+      renderCalendar();
+    });
+
+    /* ---------- live price panel ---------- */
+    function renderQuote() {
+      var svc = SERVICES[state.service];
+      freqGroup.hidden = !svc.recurring;
+
+      var p = priceParts();
+      $('bTotal').innerHTML = '<strong>€' + p.total + '</strong><span class="per">' + perLabel() + '</span>';
+      $('bSummary').textContent = carsWord() + ' · ' + svc.label +
+        (svc.recurring ? ' · ' + freqWord() : '');
+
+      var saving = $('bSaving');
+      if (p.saving > 0) {
+        saving.textContent = 'Saves €' + p.saving + ' — 10% off with ' + state.cars + ' cars in the same visit.';
+        saving.classList.add('show');
+      } else {
+        saving.classList.remove('show');
+      }
+
+      var when = $('bWhen');
+      if (state.slot) {
+        $('bWhenText').textContent = state.slot.label;
+        when.classList.add('show');
+      } else {
+        when.classList.remove('show');
+      }
+    }
+
+    /* ---------- confirmation ---------- */
+    function renderConfirm() {
+      var svc = SERVICES[state.service];
+      var p = priceParts();
+
+      $('cService').textContent = svc.label;
+      $('cFreqRow').hidden = !svc.recurring;
+      $('cFreq').textContent = svc.recurring ? FREQ[state.freq].label + ' — €' + FREQ[state.freq].price + ' a visit' : '';
+      $('cCars').textContent = carsWord();
+      $('cCar').textContent = state.reg + ' — ' + state.car;
+      $('cSlot').textContent = state.slot ? state.slot.label : 'Not picked';
+      $('cName').textContent = state.name;
+      $('cPhone').textContent = state.phone;
+      $('cPrice').textContent = '€' + p.total + ' ' + perLabel();
+
+      var lines = [
+        "Hi Eduard — I'd like to book:",
+        '',
+        'Service: ' + svc.label + (svc.recurring ? ' (' + freqWord() + ')' : ''),
+        'Cars: ' + carsWord(),
+        'Car: ' + state.reg + ' — ' + state.car,
+        'Slot: ' + (state.slot ? state.slot.label : 'flexible'),
+        'Price: €' + p.total + ' ' + perLabel() +
+          (p.saving > 0 ? ' (10% multi-car saving applied)' : ''),
+        '',
+        'Name: ' + state.name,
+        'Phone: ' + state.phone
+      ];
+      $('cSend').href = WA + '?text=' + encodeURIComponent(lines.join('\n'));
+    }
+
+    /* ---------- step machine ---------- */
+    function goTo(n, skipChecks) {
+      if (!skipChecks && n > state.step) {
+        if (state.step === 2 && !validateDetails()) return;
+        if (state.step === 3 && !state.slot) {
+          $('bCalNote').textContent = 'Pick a time first — tap one of the free slots above.';
+          return;
+        }
+      }
+      state.step = n;
+      panels.forEach(function (p) { p.classList.toggle('is-active', Number(p.dataset.panel) === n); });
+      progressItems.forEach(function (li) {
+        var i = Number(li.dataset.step);
+        li.classList.toggle('now', i === n);
+        li.classList.toggle('done', i < n);
+      });
+      grid.classList.toggle('solo', n === 4);
+
+      if (n === 3) renderCalendar();
+      if (n === 4) renderConfirm();
+
+      var top = flow.getBoundingClientRect().top + window.pageYOffset - 120;
+      window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+
+    flow.addEventListener('click', function (ev) {
+      var next = ev.target.closest('[data-next]');
+      if (next) { goTo(Number(next.dataset.next)); return; }
+      var back = ev.target.closest('[data-back]');
+      if (back) { goTo(Number(back.dataset.back), true); }
+    });
+    progress.addEventListener('click', function (ev) {
+      var go = ev.target.closest('.go');
+      if (!go) return;
+      var target = Number(go.dataset.goto);
+      if (target < state.step) goTo(target, true);
+    });
+
+    syncCarControls();
+    renderQuote();
+    renderCalendar();
   }
-  syncCarControls();
-  render();
 
   /* ---------- before / after slider ---------- */
   var ba = document.getElementById('ba');
