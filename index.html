@@ -244,17 +244,18 @@ p { font-size: var(--fs-body); }
 }
 .hero-media, .hero-shade { position: absolute; inset: 0; }
 .hero-media { z-index: -3; overflow: hidden; }
+.hero-media picture { display: block; width: 100%; height: 100%; }
 .hero-media img {
   width: 100%; height: 100%; max-width: none; object-fit: cover;
   object-position: 50% 59%; transform: scale(1.035);
-  filter: saturate(.82) contrast(1.08) brightness(.84);
+  filter: saturate(.94) contrast(1.04) brightness(1.08);
   will-change: transform;
 }
 .hero-shade {
   z-index: -2; pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(4,4,4,.92) 0%, rgba(4,4,4,.72) 38%, rgba(4,4,4,.2) 72%, rgba(4,4,4,.35) 100%),
-    linear-gradient(180deg, rgba(4,4,4,.3) 0%, rgba(4,4,4,.04) 38%, rgba(4,4,4,.86) 100%);
+    linear-gradient(90deg, rgba(4,4,4,.88) 0%, rgba(4,4,4,.7) 38%, rgba(4,4,4,.1) 72%, rgba(4,4,4,.18) 100%),
+    linear-gradient(180deg, rgba(4,4,4,.14) 0%, rgba(4,4,4,.02) 42%, rgba(4,4,4,.52) 100%);
 }
 .hero::after {
   content: ""; position: absolute; left: 0; top: 0; z-index: 3;
@@ -1075,11 +1076,11 @@ p { font-size: var(--fs-body); }
   .hero .flag { margin-bottom: var(--s2); }
   .hero .lede { font-size: .9rem; line-height: 1.55; }
   .hero-cta { margin-top: var(--s3); }
-  .hero-media img { object-position: 56% 56%; }
+  .hero-media img { object-position: 50% 50%; }
   .hero-shade {
     background:
-      linear-gradient(180deg, rgba(4,4,4,.76) 0%, rgba(4,4,4,.28) 42%, rgba(4,4,4,.86) 100%),
-      linear-gradient(90deg, rgba(4,4,4,.72), rgba(4,4,4,.08));
+      linear-gradient(180deg, rgba(4,4,4,.7) 0%, rgba(4,4,4,.22) 50%, rgba(4,4,4,.66) 100%),
+      linear-gradient(90deg, rgba(4,4,4,.5), rgba(4,4,4,.03));
   }
   .hero-meta { gap: .65rem; padding: .85rem; }
   .hero-meta .label { font-size: .62rem; letter-spacing: .08em; }
@@ -1180,7 +1181,12 @@ p { font-size: var(--fs-body); }
 <main id="top">
 
   <section class="hero" aria-labelledby="heroTitle">
-    <div class="hero-media" aria-hidden="true"><img src="/media/hero-night-v2.webp" alt="" fetchpriority="high"></div>
+    <div class="hero-media" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 559px)" srcset="/media/hero-studio-mobile.webp">
+        <img src="/media/hero-night-v2.webp" alt="" fetchpriority="high">
+      </picture>
+    </div>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="shell hero-in">
       <div class="hero-copy">
