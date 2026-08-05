@@ -350,7 +350,6 @@ p { font-size: var(--fs-body); }
 .ba-wrap { padding: var(--pad-y) 0; }
 .ba {
   position: relative; width: 100%; height: auto; min-height: 0;
-  aspect-ratio: 4 / 3;
   border-radius: var(--r-card); overflow: hidden;
   background: var(--black);
   touch-action: pan-y;
@@ -361,6 +360,24 @@ p { font-size: var(--fs-body); }
 .ba-half img {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; pointer-events: none; -webkit-user-drag: none;
+}
+.comparison-slider {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 760px;
+  overflow: hidden;
+}
+.comparison-slider img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+}
+@media (max-width: 700px) {
+  .comparison-slider { aspect-ratio: 4 / 3; }
+  .comparison-slider img { object-position: 50% 52%; }
 }
 .ba-before {
   background:
@@ -958,7 +975,6 @@ p { font-size: var(--fs-body); }
   .inv-meta { grid-column: auto; }
   .m-row-top { align-items: center; }
   .m-row-actions { margin-top: 0; }
-  .ba { aspect-ratio: auto; height: min(54svh, 520px); min-height: 400px; }
 }
 
 /* Laptop: 860–1199px */
@@ -980,7 +996,6 @@ p { font-size: var(--fs-body); }
   .revs { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .m-cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .book-slab, .foot-slab { padding-left: clamp(2rem, 4vw, var(--s5)); padding-right: clamp(2rem, 4vw, var(--s5)); }
-  .ba { height: min(56svh, 560px); min-height: 420px; }
   .btn-wide { width: auto; max-width: 320px; }
   .m-login-card .btn-wide { width: 100%; max-width: none; }
   .m-dash.live { display: grid; grid-template-columns: 220px 1fr; align-items: start; }
@@ -1137,7 +1152,7 @@ p { font-size: var(--fs-body); }
         <span class="label label-accent" data-rv>Result</span>
         <h2 data-rv>One vehicle. One considered visit.</h2>
       </div>
-      <div class="ba" id="ba" role="slider" tabindex="0"
+      <div class="ba comparison-slider" id="ba" role="slider" tabindex="0"
            aria-label="Before and after comparison"
            aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-rv>
         <div class="ba-half ba-before"><img src="/media/preview.webp" alt="Mercedes before detailing" draggable="false"></div>
