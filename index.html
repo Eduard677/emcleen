@@ -3,1899 +3,1724 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EMCleen — Weekly Car Care, Ennis</title>
-<meta name="description" content="Weekly car care in Ennis, Co. Clare. €30 Maintenance Detail every week, one-off details available. Text to book on WhatsApp.">
+<title>EMCleen — Subscription Car Care, Ennis</title>
+<meta name="description" content="Subscription car care in Ennis, Co. Clare. Maintenance Detail from €35 a visit, fortnightly or monthly. One-off details available.">
+<meta name="theme-color" content="#f4f1ec">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,600;125,700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,600;125,700&family=Inter:opsz,wght@14..32,400..500&display=swap" rel="stylesheet">
 
 <style>
-  :root {
-    /* light — one contrast section only */
-    --bone: #f4f1ea;
-    --bone-2: #e8e4db;
-    /* dark — the page, with real depth between tones */
-    --black: #070706;
-    --graphite: #0f0f0e;
-    --graphite-2: #171716;
-    --graphite-3: #222120;
-    /* ink on light */
-    --ink: #161513;
-    --ink-dim: #55514b;
-    --ink-faint: #86807a;
-    /* ink on dark — brighter highlights for sharper contrast */
-    --on-dark: #f7f5f1;
-    --on-dark-dim: #a8a29a;
-    --on-dark-faint: #6e6a64;
-    /* bordeaux — now sitting almost entirely against black */
-    --wine: #4a1e28;
-    --wine-mid: #8f2d40;
-    --wine-soft: #cf8fa0;
-    --wine-line: rgba(143, 45, 64, 0.55);
-    /* hairlines */
-    --rule: rgba(22, 21, 19, 0.1);
-    --rule-dark: rgba(247, 245, 241, 0.1);
-    --rule-strong: rgba(22, 21, 19, 0.22);
-    --rule-strong-dark: rgba(247, 245, 241, 0.24);
+/* ============================================================ TOKENS */
+:root {
+  /* brighter off-white, for the rare light moments */
+  --paper:   #f7f4ee;
+  --paper-2: #ebe6dd;
+  --paper-3: #ded7cb;
+  --white:   #fffefb;
 
-    /* type */
-    --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-    --font-body: "Jost", "Futura", "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --track: 0.16em;
-    --track-wide: 0.24em;
+  /* the page: near-black through graphite */
+  --black:   #0c0c0b;
+  --graphite-1: #131312;
+  --graphite-2: #1b1b19;
+  --graphite-3: #262523;
 
-    --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --t-fast: 0.2s;
-    --t: 0.45s;
-    --t-slow: 0.75s;
+  --ink:   #100f0d;
+  --ink-2: #55514a;
+  --ink-3: #837d74;
 
-    /* spacing scale */
-    --s1: 0.5rem;
-    --s2: 1rem;
-    --s3: 1.5rem;
-    --s4: 2.25rem;
-    --s5: 3.25rem;
-    --s6: 4.5rem;
-    --s7: 6.5rem;
-    --s8: 9rem;
-    --section-y: clamp(8rem, 17vh, 12.5rem);
-    --cap-y: clamp(4rem, 9vh, 6.5rem);
+  /* the one accent — burnt sienna, muted */
+  --accent:      #a8482c;
+  --accent-hot:  #bd5535;
+  --accent-deep: #8a3922;
+  --accent-soft: #d18f74;
+  --accent-tint: rgba(168, 72, 44, 0.16);
 
-    --gutter: clamp(2rem, 7vw, 6rem);
-    --shell-max: 1180px;
-  }
+  /* contextual — dark is the default, .on-light is the exception */
+  --bg:      var(--black);
+  --surface: var(--graphite-1);
+  --sunk:    var(--graphite-2);
+  --text:    var(--paper);
+  --text-2:  #a5a099;
+  --text-3:  #8a847b;
+  --line:    rgba(247, 244, 238, 0.13);
+  --line-2:  rgba(247, 244, 238, 0.26);
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* shape — 16 for cards, 8 for controls. No exceptions. */
+  --r-card: 16px;
+  --r-ctl:  8px;
 
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-  }
+  /* type */
+  --f-head: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --fs-hero:  clamp(2.9rem, 8vw, 6rem);
+  --fs-h2:    clamp(2.15rem, 5vw, 3.75rem);
+  --fs-h3:    1.25rem;
+  --fs-body:  1rem;
+  --fs-sm:    0.95rem;
+  --fs-label: 0.75rem;
+  --track:    0.12em;
 
-  body {
-    background: var(--graphite);
-    color: var(--on-dark);
-    font-family: var(--font-body);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    overflow-x: hidden;
-  }
+  --ease:  cubic-bezier(0.22, 1, 0.36, 1);
+  --t:     0.35s;
+  --t-mid: 0.5s;
 
-  ::selection { background: var(--on-dark); color: var(--black); }
+  --s1: 0.5rem; --s2: 1rem; --s3: 1.5rem; --s4: 2.25rem;
+  --s5: 3.25rem; --s6: 4.5rem; --s7: 6rem;
+  --pad-y: clamp(5rem, 13vh, 9rem);
+  --gutter: 1.25rem;
+  --shell: 1180px;
+}
 
-  .shell {
-    width: min(var(--shell-max), calc(100% - var(--gutter) * 2));
-    margin-inline: auto;
-  }
+.on-dark {
+  --bg:      var(--black);
+  --surface: var(--graphite-2);
+  --sunk:    var(--graphite-3);
+  --text:    var(--paper);
+  --text-2:  #a5a099;
+  --text-3:  #8a847b;
+  --line:    rgba(247, 244, 238, 0.13);
+  --line-2:  rgba(247, 244, 238, 0.26);
+  color: var(--text);
+}
 
-  /* tabular figures so prices align down the page */
-  .price strong, .price span, .price-alt,
-  .quote-total strong, .meta-row .v, .quote-summary, .quote-saving {
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum" 1;
-  }
+/* the rare contrast moment */
+.on-light {
+  --bg:      var(--paper);
+  --surface: var(--white);
+  --sunk:    var(--paper-2);
+  --text:    var(--ink);
+  --text-2:  var(--ink-2);
+  --text-3:  var(--ink-3);
+  --line:    rgba(16, 15, 13, 0.13);
+  --line-2:  rgba(16, 15, 13, 0.26);
+  background: var(--paper);
+  color: var(--ink);
+}
 
-  /* ---------- texture zones ----------
-     Light sections are matte (grain). Dark sections are gloss (specular).
-     The two never appear in the same section. */
-  .matte { position: relative; }
-  .matte > .shell { position: relative; z-index: 1; }
-  .matte::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0.16;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
-  }
+/* ============================================================ BASE */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--paper);
+  font-family: var(--f-body);
+  font-optical-sizing: auto;
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body.locked { overflow: hidden; }
+::selection { background: var(--accent); color: #fff; }
+img, svg, video { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+.shell { width: min(var(--shell), calc(100% - var(--gutter) * 2)); margin-inline: auto; }
 
-  /* The one light section mirrors the sheen of the dark sections above and
-     below it, so each seam reads as one surface catching light. */
-  .on-light::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      linear-gradient(180deg,
-        rgba(7, 7, 6, 0.14) 0,
-        rgba(7, 7, 6, 0.09) 7px,
-        rgba(7, 7, 6, 0.04) 30px,
-        rgba(7, 7, 6, 0) 120px),
-      linear-gradient(0deg,
-        rgba(7, 7, 6, 0.14) 0,
-        rgba(7, 7, 6, 0.09) 7px,
-        rgba(7, 7, 6, 0.04) 30px,
-        rgba(7, 7, 6, 0) 120px),
-      radial-gradient(115% 65% at 84% 7%, rgba(255, 255, 255, 0.55), transparent 62%),
-      radial-gradient(85% 55% at 15% 93%, rgba(255, 255, 255, 0.36), transparent 64%),
-      linear-gradient(78deg,
-        transparent 36%,
-        rgba(255, 255, 255, 0.45) 45%,
-        rgba(255, 255, 255, 0.15) 53%,
-        transparent 61%),
-      radial-gradient(110% 70% at 8% 4%, rgba(7, 7, 6, 0.05), transparent 60%),
-      radial-gradient(110% 70% at 93% 97%, rgba(7, 7, 6, 0.04), transparent 60%);
-  }
+h1, h2, h3, h4 {
+  font-family: var(--f-head);
+  font-stretch: 125%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+h1 { font-size: var(--fs-hero); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); line-height: 1.25; }
+p { font-size: var(--fs-body); }
+.lede { font-size: var(--fs-body); color: var(--text-2); max-width: 54ch; line-height: 1.7; }
+.small { font-size: var(--fs-sm); color: var(--text-2); }
 
-  .gloss { position: relative; }
-  .gloss > .shell { position: relative; z-index: 1; }
-  .gloss::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(115% 65% at 20% 6%, rgba(255, 255, 255, 0.08), transparent 62%),
-      radial-gradient(85% 55% at 88% 94%, rgba(255, 255, 255, 0.042), transparent 64%),
-      linear-gradient(102deg,
-        transparent 36%,
-        rgba(255, 255, 255, 0.055) 45%,
-        rgba(255, 255, 255, 0.016) 53%,
-        transparent 61%);
-  }
+.label {
+  font-family: var(--f-head);
+  font-stretch: 125%;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.label-accent { color: var(--accent-soft); }
+.on-light .label-accent { color: var(--accent); }
+.hl { color: var(--accent-soft); }
+.on-light .hl { color: var(--accent); }
+.num, .cal-grid, .cal-m, .quote, .conf-rows, .buy-price, .acc-p,
+#v-members .m-main, #v-members .m-login-card, .plate, .inv, .m-plate, .m-stat {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
 
-  /* ---------- reveal ---------- */
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
-    transition-delay: var(--d, 0s);
-  }
-  .reveal.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .reveal { opacity: 1; transform: none; transition: none; }
-    .media-layer { transform: none !important; }
-    .rev-track, .plans { scroll-behavior: auto; }
-  }
+/* ============================================================ BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+  min-height: 48px; padding: 0.8rem 1.4rem;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  text-decoration: none; text-align: center; cursor: pointer;
+  color: #fff; background: var(--accent);
+  border: 1px solid transparent; border-radius: var(--r-ctl);
+  transition: background var(--t) var(--ease), color var(--t) var(--ease),
+              border-color var(--t) var(--ease), transform var(--t) var(--ease),
+              opacity var(--t) var(--ease);
+}
+.btn:hover { background: var(--accent-hot); transform: translateY(-1px); }
+.btn:active { background: var(--accent-deep); transform: translateY(0); transition-duration: 0.08s; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.btn[disabled] { opacity: 0.4; pointer-events: none; }
+.btn-line { background: transparent; color: var(--text); border-color: var(--line-2); }
+.btn-line:hover { background: var(--accent-tint); border-color: var(--accent); color: var(--text); }
+.btn-line:active { background: var(--accent-tint); }
+.btn-sm { min-height: 40px; padding: 0.5rem 0.95rem; }
+.btn-wide { width: 100%; }
+.btn svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
 
-  /* ---------- type ----------
-     Wide grotesk, set low and tight. Weight carries the emphasis. */
-  h1, h2 {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.02;
-    text-transform: uppercase;
-  }
-  h3 {
-    font-family: var(--font-body);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    line-height: 1.4;
-  }
+/* ============================================================ HEADER */
+.bar {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(12, 12, 11, 0.82);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.bar-in { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); height: 62px; }
+.wordmark {
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: 1.05rem; font-weight: 700; letter-spacing: 0.02em;
+  text-transform: uppercase; color: var(--paper); text-decoration: none;
+}
+.menu-btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  min-height: 42px; padding: 0.5rem 0.95rem;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  background: var(--paper); color: var(--black);
+  border: 1px solid var(--paper); border-radius: var(--r-ctl); cursor: pointer;
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+.menu-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.menu-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.menu-btn .bars { position: relative; width: 14px; height: 10px; flex-shrink: 0; }
+.menu-btn .bars::before, .menu-btn .bars::after {
+  content: ""; position: absolute; left: 0; width: 100%; height: 1.5px;
+  background: currentColor; border-radius: 2px;
+}
+.menu-btn .bars::before { top: 0; }
+.menu-btn .bars::after { bottom: 0; }
 
-  .eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    font-size: 0.64rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-    margin-bottom: var(--s3);
-  }
-  .eyebrow::before {
-    content: "";
-    width: 28px;
-    height: 1px;
-    background: var(--rule-strong-dark);
-    flex-shrink: 0;
-  }
-  .on-light .eyebrow { color: var(--ink-faint); }
-  .on-light .eyebrow::before { background: var(--rule-strong); }
+/* ============================================================ HERO */
+.hero { padding: var(--s6) 0 var(--pad-y); }
+.hero h1 { max-width: 15ch; }
+.hero .lede { margin-top: var(--s3); }
+.hero-cta { margin-top: var(--s4); display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hero-cta .btn { flex: 1 1 100%; }
+.hero-meta {
+  margin-top: var(--s5); padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+  display: grid; gap: var(--s3);
+}
+.hero-meta div span { display: block; }
+.hero-meta .v { margin-top: 0.3rem; font-size: var(--fs-body); color: var(--text); }
+.hero-meta a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line-2); }
+.hero-meta a:hover { color: var(--accent-soft); border-color: var(--accent-soft); }
+.flag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--accent); border-radius: var(--r-ctl);
+  background: var(--accent-tint); color: var(--accent-soft);
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  margin-bottom: var(--s3);
+}
 
-  .section-title {
-    font-size: clamp(2.1rem, 6vw, 4.2rem);
-    max-width: 16ch;
-  }
+/* ============================================================ SECTIONS */
+.sec { padding: var(--pad-y) 0; }
+.sec-head { margin-bottom: var(--s4); }
+.sec-head h2 { margin-top: 0.6rem; }
+.sec-head .lede { margin-top: var(--s2); }
+.slab {
+  position: relative;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background:
+    radial-gradient(115% 80% at 18% 0%, rgba(247,244,238,.055), transparent 58%),
+    radial-gradient(120% 95% at 90% 100%, rgba(0,0,0,.55), transparent 64%),
+    var(--graphite-1);
+  box-shadow:
+    inset 0 1px 0 rgba(247,244,238,.06),
+    0 40px 90px -50px rgba(0,0,0,.95);
+}
 
-  /* the accent — almost entirely against black now */
-  .mark { color: var(--wine-soft); }
-  .on-light .mark { color: var(--wine); }
+/* directional lighting on the full-width dark sections, so they have depth */
+.lit { position: relative; }
+.lit > * { position: relative; z-index: 1; }
+.lit::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(85% 55% at 50% -6%, rgba(247,244,238,.06), transparent 62%),
+    radial-gradient(130% 100% at 50% 108%, rgba(0,0,0,.55), transparent 68%);
+}
 
-  /* ---------- sections ---------- */
-  section { position: relative; }
-  .pad { padding: var(--section-y) 0; }
-  .dark { background: var(--graphite); color: var(--on-dark); }
-  .darker { background: var(--black); color: var(--on-dark); }
-  .on-light { background: var(--bone); color: var(--ink); }
-  .rule-top { border-top: 1px solid var(--rule-dark); }
-  .on-light.rule-top { border-top-color: var(--rule); }
+/* ============================================================ SERVICES ACCORDION */
+.acc { border-top: 1px solid var(--line); }
+.acc-item { border-bottom: 1px solid var(--line); }
+.acc-head {
+  display: flex; align-items: center; gap: var(--s2);
+  width: 100%; padding: var(--s3) 0.25rem;
+  background: none; border: none; border-radius: var(--r-ctl);
+  cursor: pointer; text-align: left; color: var(--text);
+  transition: background var(--t) var(--ease), padding-left var(--t-mid) var(--ease);
+}
+.acc-head:hover { background: var(--accent-tint); padding-left: 0.8rem; }
+.acc-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.acc-n {
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track);
+  color: var(--accent-soft); flex-shrink: 0; font-variant-numeric: tabular-nums;
+}
+.on-light .acc-n { color: var(--accent); }
+.acc-t {
+  flex: 1; min-width: 0;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: clamp(1.15rem, 3.2vw, 1.6rem);
+  font-weight: 600; letter-spacing: -0.015em;
+}
+.acc-p {
+  flex-shrink: 0;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-sm); font-weight: 600;
+  color: var(--text-2); font-variant-numeric: tabular-nums;
+}
+.acc-item[data-open="true"] .acc-p { color: var(--accent-soft); }
+.on-light .acc-item[data-open="true"] .acc-p { color: var(--accent); }
+.acc-x { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+.acc-x::before, .acc-x::after {
+  content: ""; position: absolute; top: 50%; left: 0;
+  width: 100%; height: 1.5px; background: currentColor; border-radius: 2px;
+  transition: transform var(--t-mid) var(--ease);
+}
+.acc-x::after { transform: rotate(90deg); }
+.acc-item[data-open="true"] .acc-x::after { transform: rotate(0deg); }
+.acc-item[data-open="true"] .acc-x { color: var(--accent-soft); }
+.on-light .acc-item[data-open="true"] .acc-x { color: var(--accent); }
 
-  /* ---------- buttons ---------- */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px;
-    padding: 1rem 2.4rem;
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    background: var(--on-dark);
-    color: var(--black);
-    border: 1px solid transparent;
-    border-radius: 1px;
-    transition: background var(--t) var(--ease), color var(--t) var(--ease),
-                border-color var(--t) var(--ease), transform var(--t) var(--ease),
-                box-shadow var(--t) var(--ease);
-  }
-  /* bordeaux lands here, on the primary action */
-  .btn:hover {
-    background: var(--wine);
-    color: var(--on-dark);
-    border-color: var(--wine);
-    transform: translateY(-2px);
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
-  }
-  .btn:active { transform: translateY(0); }
-  .btn:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; }
+.acc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--t-mid) var(--ease); }
+.acc-item[data-open="true"] .acc-panel { grid-template-rows: 1fr; }
+.acc-panel-in { overflow: hidden; }
+.acc-body { display: grid; gap: var(--s4); padding: 0 0.25rem var(--s4); }
+.acc-desc { color: var(--text-2); max-width: 52ch; }
+.feat { list-style: none; margin-top: var(--s3); }
+.feat li {
+  display: flex; gap: 0.7rem; padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-2); font-size: var(--fs-sm);
+}
+.feat li:last-child { border-bottom: none; }
+.feat li::before {
+  content: ""; width: 5px; height: 5px; margin-top: 0.55rem;
+  border-radius: 50%; background: var(--accent); flex-shrink: 0;
+}
+.buy {
+  align-self: start; padding: var(--s3);
+  border: 1px solid var(--line); border-radius: var(--r-card);
+  background: var(--surface);
+}
+.buy-price { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.buy-price strong {
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  color: var(--accent-soft); font-variant-numeric: tabular-nums;
+}
+.on-light .buy-price strong { color: var(--accent); }
+.buy-price span { font-size: var(--fs-sm); color: var(--text-2); }
+.buy-alt { margin-top: 0.7rem; font-size: var(--fs-sm); color: var(--text-2); }
+.buy .btn { margin-top: var(--s3); width: 100%; }
 
-  .btn-quiet {
-    background: transparent;
-    color: var(--on-dark);
-    border-color: var(--rule-strong-dark);
-  }
-  .btn-quiet:hover {
-    background: transparent;
-    color: var(--on-dark);
-    border-color: var(--on-dark);
-    box-shadow: none;
-    transform: translateY(-2px);
-  }
-  .on-light .btn { background: var(--black); color: var(--bone); }
-  .on-light .btn-quiet {
-    background: transparent;
-    color: var(--ink);
-    border-color: var(--rule-strong);
-  }
-  .on-light .btn-quiet:hover { border-color: var(--ink); }
-  .on-light .btn:focus-visible { outline-color: var(--ink); }
+/* ============================================================ BEFORE / AFTER */
+.ba-wrap { padding: var(--pad-y) 0; }
+.ba {
+  position: relative; height: 58svh; min-height: 320px;
+  border-radius: var(--r-card); overflow: hidden;
+  background: var(--black);
+  touch-action: pan-y;
+  -webkit-user-select: none; user-select: none;
+  cursor: ew-resize;
+}
+.ba-half { position: absolute; inset: 0; }
+.ba-half img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; pointer-events: none; -webkit-user-drag: none;
+}
+.ba-before {
+  background:
+    repeating-linear-gradient(112deg, transparent 0 60px, rgba(0,0,0,.26) 60px 62px),
+    linear-gradient(165deg, #2f2b25 0%, #1d1a16 55%, #100f0c 100%);
+}
+.ba-after {
+  background:
+    radial-gradient(110% 78% at 62% 22%, rgba(244,241,236,.14), transparent 55%),
+    linear-gradient(165deg, #2a2520 0%, #1b1815 55%, #0f0e0c 100%);
+  clip-path: inset(0 0 0 var(--split, 50%));
+}
+.ba-tag {
+  position: absolute; top: var(--s3); z-index: 4;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  color: var(--paper);
+  background: rgba(15,14,12,.6);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid rgba(244,241,236,.2); border-radius: var(--r-ctl);
+  padding: 0.4rem 0.7rem; pointer-events: none;
+}
+.ba-tag.l { left: var(--s3); }
+.ba-tag.r { right: var(--s3); }
+.ba-handle {
+  position: absolute; top: 0; bottom: 0; left: var(--split, 50%);
+  z-index: 4; width: 2px; background: var(--accent); pointer-events: none;
+}
+.ba-knob {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 4px 18px rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  transition: transform var(--t) var(--ease);
+}
+.ba:hover .ba-knob { transform: translate(-50%, -50%) scale(1.08); }
+.ba-knob i { width: 6px; height: 6px; display: block; border-top: 1.5px solid #fff; border-left: 1.5px solid #fff; }
+.ba-knob i:first-child { transform: rotate(-45deg); }
+.ba-knob i:last-child { transform: rotate(135deg); }
+.ba:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+.ba-hint {
+  position: absolute; left: 50%; bottom: var(--s3); z-index: 4;
+  transform: translateX(-50%);
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); letter-spacing: var(--track);
+  text-transform: uppercase; color: rgba(244,241,236,.6);
+  pointer-events: none; white-space: nowrap;
+}
+.ba-cap { margin-top: var(--s2); }
 
-  /* ---------- header ---------- */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 200;
-    background: rgba(7, 7, 6, 0.6);
-    -webkit-backdrop-filter: blur(18px) saturate(1.3);
-    backdrop-filter: blur(18px) saturate(1.3);
-    border-bottom: 1px solid var(--rule-dark);
-  }
-  .bar {
-    height: 78px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--s2);
-  }
-  .wordmark {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: var(--track-wide);
-    text-transform: uppercase;
-    color: var(--on-dark);
-    text-decoration: none;
-    padding-right: 0.24em;
-  }
+/* ============================================================ BOOKING (dark slab) */
+.book-slab { padding: var(--s5) var(--gutter); }
+.progress { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.35rem; margin-top: var(--s4); }
+.progress li { display: flex; flex-direction: column; gap: 0.55rem; }
+.progress li::before {
+  content: ""; height: 2px; border-radius: 2px;
+  background: var(--line); transition: background var(--t) var(--ease);
+}
+.progress li.done::before { background: var(--line-2); }
+.progress li.now::before { background: var(--accent); }
+.progress .go {
+  all: unset;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  color: var(--text-3); transition: color var(--t) var(--ease);
+}
+.progress li.done .go { cursor: pointer; color: var(--text-2); }
+.progress li.done .go:hover { color: var(--text); }
+.progress li.now .go { color: var(--text); }
+.progress .go:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-  .bar-actions { display: flex; align-items: center; gap: 0.5rem; }
-  .disclose {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    min-height: 44px;
-    padding: 0.6rem 1.15rem;
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: 0.58rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--on-dark);
-    background: transparent;
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
-    cursor: pointer;
-    transition: border-color var(--t) var(--ease);
-  }
-  .disclose:hover, .disclose[aria-expanded="true"] { border-color: var(--rule-strong-dark); }
-  .disclose:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
-  .disclose .chev {
-    width: 6px; height: 6px;
-    border-right: 1px solid currentColor;
-    border-bottom: 1px solid currentColor;
-    transform: rotate(45deg) translate(-1px, -1px);
-    transition: transform var(--t-fast) var(--ease);
-  }
-  .disclose[aria-expanded="true"] .chev { transform: rotate(-135deg) translate(-2px, -2px); }
+.flow { margin-top: var(--s4); }
+.step { display: none; }
+.step.on { display: block; }
+.book-grid { display: grid; gap: var(--s3); align-items: start; }
+.book-grid > * { min-width: 0; }
+.book-grid.solo .quote { display: none; }
 
-  .panel {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows var(--t-slow) var(--ease);
-    border-top: 0 solid var(--rule-dark);
-  }
-  .panel.open { grid-template-rows: 1fr; border-top-width: 1px; }
-  .panel-inner { overflow: hidden; }
-  .panel-rows {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem var(--s6);
-    padding: var(--s2) 0 var(--s3);
-    opacity: 0;
-    transform: translateY(-6px);
-    transition: opacity var(--t-slow) var(--ease) 0.08s, transform var(--t-slow) var(--ease) 0.08s;
-  }
-  .panel.open .panel-rows { opacity: 1; transform: none; }
-  .panel-rows a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    min-height: 44px;
-    color: var(--on-dark);
-    text-decoration: none;
-    font-size: 0.92rem;
-    transition: opacity var(--t) var(--ease);
-  }
-  .panel-rows a:hover { opacity: 0.6; }
-  .panel-rows .lbl {
-    font-size: 0.56rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-  }
-  .panel-rows .soon { color: var(--on-dark-faint); font-size: 0.75rem; }
+.card { border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); padding: var(--s3); }
+.step-card h3 { margin-top: 0.5rem; }
+.step-sub { margin-top: 0.5rem; font-size: var(--fs-sm); color: var(--text-2); max-width: 46ch; }
+.grp + .grp { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line); }
+.grp[hidden] { display: none; }
+.grp > .label { display: block; margin-bottom: 0.7rem; }
 
-  /* ---------- hero ---------- */
-  .hero {
-    position: relative;
-    overflow: hidden;
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    padding: 12rem 0 var(--s7);
-    background: linear-gradient(180deg, #0b0b0a 0%, var(--graphite) 55%, #131312 100%);
-  }
-  .hero::before { z-index: 0; }
-  .hero-inner { position: relative; z-index: 2; }
-  .hero h1 {
-    font-size: clamp(3rem, 14.5vw, 12.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 0.92;
-  }
-  .hero-rule {
-    width: 64px;
-    height: 2px;
-    background: var(--wine-mid);
-    margin: var(--s4) 0 var(--s3);
-  }
-  .hero-lead {
-    font-size: clamp(1.02rem, 1.9vw, 1.25rem);
-    color: var(--on-dark-dim);
-    max-width: 30ch;
-    line-height: 1.7;
-  }
-  .hero-cta {
-    margin-top: var(--s5);
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .hero-meta {
-    margin-top: var(--s7);
-    padding-top: var(--s4);
-    border-top: 1px solid var(--rule-dark);
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--s3);
-    max-width: 680px;
-  }
-  .meta-row { display: flex; flex-direction: column; gap: 0.5rem; }
-  .meta-row .k {
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-  }
-  .meta-row .v { font-size: 0.92rem; line-height: 1.5; }
-  .meta-row a { color: inherit; text-decoration: none; transition: opacity var(--t) var(--ease); }
-  .meta-row a:hover { opacity: 0.6; }
+.opts { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+.opt, .numin {
+  flex: 1 1 auto; min-width: 88px; min-height: 48px;
+  padding: 0.7rem 0.8rem;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase; text-align: center;
+  color: var(--text-2); background: transparent;
+  border: 1px solid var(--line); border-radius: var(--r-ctl);
+  transition: color var(--t) var(--ease), border-color var(--t) var(--ease), background var(--t) var(--ease);
+}
+.opt { cursor: pointer; }
+.opt:hover { border-color: var(--line-2); color: var(--text); }
+.opt:active { background: var(--accent-tint); transition-duration: 0.08s; }
+.opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.opt[aria-pressed="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+.opt.tall { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem; padding: 0.85rem 0.8rem; }
+.opt .p { font-family: var(--f-body); font-size: var(--fs-sm); font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--text-3); }
+.opt[aria-pressed="true"] .p { color: rgba(255,255,255,.85); }
+.numin { -moz-appearance: textfield; color: var(--text); }
+.numin::-webkit-outer-spin-button, .numin::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.numin::placeholder { color: var(--text-3); }
+.numin:focus { outline: none; border-color: var(--accent); }
+.numin.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+.hint { margin-top: 0.7rem; font-size: var(--fs-sm); color: var(--text-3); }
 
-  /* ---------- full-bleed media ----------
-     Real media drops straight in:
-       video → <video autoplay muted loop playsinline poster="media/wash-poster.jpg">
-                 <source src="media/wash.mp4" type="video/mp4"></video>
-       image → <img src="media/two-cars.jpg" alt="...">
-     Placed inside .media-layer; the placeholder texture sits behind it. */
-  .media {
-    position: relative;
-    height: 86svh;
-    min-height: 420px;
-    overflow: hidden;
-    background: var(--graphite);
-  }
-  .media::before { z-index: 3; }
-  .media-layer {
-    position: absolute;
-    left: 0; right: 0;
-    top: -8%;
-    height: 116%;
-    z-index: 1;
-    will-change: transform;
-    background:
-      radial-gradient(115% 80% at 72% 18%, rgba(247, 245, 241, 0.07), transparent 55%),
-      linear-gradient(165deg, var(--graphite-3) 0%, var(--graphite-2) 52%, #0a0a09 100%);
-  }
-  .media-layer img,
-  .media-layer video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .media-scrim {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(180deg, rgba(5, 5, 4, 0.46) 0%, rgba(5, 5, 4, 0.2) 42%, rgba(5, 5, 4, 0.76) 100%);
-    pointer-events: none;
-  }
-  .media-tag {
-    position: absolute;
-    top: var(--s4); left: 50%;
-    z-index: 4;
-    transform: translateX(-50%);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: rgba(247, 245, 241, 0.42);
-    border: 1px solid rgba(247, 245, 241, 0.16);
-    padding: 0.55rem 1.1rem;
-    white-space: nowrap;
-  }
-  .media-copy {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--gutter);
-    text-align: center;
-  }
-  .media-copy p {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--on-dark);
-    font-size: clamp(1.6rem, 5.6vw, 3.8rem);
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.6);
-  }
+.actions { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.actions .btn { flex: 1 1 100%; }
 
-  /* caption strip below a media block */
-  .cap { padding: 0 0 var(--cap-y); }
-  .media-caption {
-    padding-top: var(--s3);
-    font-size: 0.56rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-  }
+.fields { display: grid; gap: var(--s3); }
+.field { display: flex; flex-direction: column; gap: 0.45rem; }
+.field input, .m-in {
+  min-height: 48px; padding: 0.7rem 0.85rem;
+  font-size: var(--fs-body); color: var(--text);
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: var(--r-ctl);
+  transition: border-color var(--t) var(--ease);
+}
+.field input::placeholder, .m-in::placeholder { color: var(--text-3); }
+.field input:focus, .m-in:focus { outline: none; border-color: var(--accent); }
+#bReg { text-transform: uppercase; letter-spacing: 0.05em; }
+.field.err input { border-color: #d0553f; }
+.field .msg { display: none; font-size: var(--fs-sm); color: #e08573; }
+.field.err .msg { display: block; }
 
-  /* ---------- pricing ---------- */
-  .plans {
-    margin-top: var(--s6);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--s2);
-    align-items: stretch;
-  }
-  /* DOM order is flagship-first (so the mobile carousel leads with it);
-     these put it back in the middle on desktop. */
-  .plans .p-detail { order: 1; }
-  .plans .plan-flag { order: 2; }
-  .plans .p-ext { order: 3; }
+.check { display: none; margin-top: var(--s3); padding: var(--s3); border: 1px solid var(--accent); border-radius: var(--r-card); background: var(--accent-tint); }
+.check.show { display: block; }
+.check h4 { font-size: var(--fs-h3); }
+.check-body { margin-top: var(--s2); display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
+.plate {
+  display: inline-flex; align-items: stretch; overflow: hidden;
+  border: 1px solid rgba(20,18,15,.3); border-radius: var(--r-ctl);
+  background: #fffdfa; flex-shrink: 0;
+}
+.plate .eu { display: flex; align-items: center; padding: 0 0.45rem; background: #0b3aa8; color: #f7d117; font-size: var(--fs-label); font-weight: 500; }
+.plate .reg { padding: 0.45rem 0.7rem; color: #111; font-family: var(--f-head); font-stretch: 125%; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.check-what { font-size: var(--fs-body); }
+.check-actions { margin-top: var(--s3); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.check-actions .btn { flex: 1 1 100%; }
+.check.ok { border-color: var(--line-2); background: transparent; }
+.check.ok .check-actions { display: none; }
+.check-done { display: none; margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line); align-items: center; gap: 0.6rem; }
+.check.ok .check-done { display: flex; }
+.check-edit { all: unset; margin-left: auto; cursor: pointer; font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--accent-soft); border-bottom: 1px solid var(--accent); }
+.check-edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  .plan {
-    position: relative;
-    background: var(--graphite-2);
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
-    padding: var(--s5) var(--s4);
-    display: flex;
-    flex-direction: column;
-    transition: border-color var(--t-slow) var(--ease),
-                box-shadow var(--t-slow) var(--ease),
-                background var(--t-slow) var(--ease);
-  }
-  .tag {
-    align-self: flex-start;
-    font-size: 0.54rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-    border: 1px solid var(--rule-strong-dark);
-    border-radius: 1px;
-    padding: 0.45rem 0.9rem;
-    margin-bottom: var(--s3);
-  }
-  .plan h3 {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-dim);
-  }
-  .price {
-    margin-top: var(--s2);
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-  }
-  .price strong {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: clamp(2.8rem, 5vw, 3.6rem);
-    font-weight: 700;
-    letter-spacing: -0.035em;
-    line-height: 1;
-    color: var(--on-dark);
-    transition: color var(--t-slow) var(--ease);
-  }
-  .price span {
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-  }
-  .price-alt {
-    margin-top: 0.9rem;
-    font-size: 0.8rem;
-    color: var(--on-dark-faint);
-  }
-  .plan ul { list-style: none; margin-top: var(--s4); flex-grow: 1; }
-  .plan li {
-    font-size: 0.86rem;
-    line-height: 1.6;
-    color: var(--on-dark-dim);
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--rule-dark);
-  }
-  .plan li:last-child { border-bottom: none; }
-  .plan .btn { margin-top: var(--s4); }
-  .anchor-line {
-    margin: var(--s6) auto 0;
-    max-width: 44ch;
-    text-align: center;
-    font-size: 0.98rem;
-    color: var(--on-dark-dim);
-  }
+.cal-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); margin-bottom: var(--s3); }
+.cal-range { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-2); text-align: center; font-variant-numeric: tabular-nums; }
+.rnd {
+  width: 42px; height: 42px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--line-2);
+  border-radius: var(--r-ctl); cursor: pointer;
+  transition: border-color var(--t) var(--ease), background var(--t) var(--ease), opacity var(--t) var(--ease);
+}
+.rnd:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-tint); }
+.rnd:disabled { opacity: 0.3; cursor: default; }
+.rnd:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.rnd .arw { width: 8px; height: 8px; border-top: 1.5px solid var(--text); border-right: 1.5px solid var(--text); }
+.rnd .arw.r { transform: rotate(45deg) translate(-1px, 1px); }
+.rnd .arw.l { transform: rotate(-135deg) translate(-1px, 1px); }
 
-  /* selection is colour only — no size change anywhere */
-  .plan.is-active {
-    border-color: var(--wine-line);
-    background: #1c1615;
-  }
-  .plan.is-active .price strong { color: var(--wine-soft); }
+.cal-grid { display: none; }
+.cal-day { text-align: center; padding-bottom: 0.45rem; font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); }
+.cal-day b { display: block; font-size: var(--fs-sm); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.cal-day.today b { color: var(--accent-soft); }
+.cal-time { display: flex; align-items: center; font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.slot {
+  height: 42px; padding: 0; background: transparent;
+  border: 1px solid var(--line); border-radius: var(--r-ctl);
+  cursor: pointer; font-size: var(--fs-sm); color: var(--text-3);
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+.slot:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-tint); color: var(--text); }
+.slot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.slot.taken { cursor: not-allowed; background: var(--sunk); border-color: transparent; color: #c96a52; }
+.slot.closed { cursor: not-allowed; background: transparent; border-color: transparent; color: transparent; }
+.slot.past { cursor: not-allowed; background: var(--sunk); border-color: transparent; color: transparent; opacity: 0.5; }
+.slot.sel, .slot.sel:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  @media (min-width: 761px) {
-    /* flagship is marked by default; hovering any card moves the mark */
-    .plans:hover .plan {
-      border-color: var(--rule-dark);
-      background: var(--graphite-2);
-    }
-    .plans:hover .plan .price strong { color: var(--on-dark); }
-    .plans:hover .plan:hover {
-      border-color: var(--wine-line);
-      background: #1c1615;
-    }
-    .plans:hover .plan:hover .price strong { color: var(--wine-soft); }
-  }
+.cal-m { display: block; }
+.daystrip { display: flex; gap: 0.35rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.25rem; }
+.daystrip::-webkit-scrollbar { display: none; }
+.daychip {
+  flex: 1 0 auto; min-width: 56px;
+  display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+  padding: 0.55rem 0.4rem;
+  background: transparent; border: 1px solid var(--line);
+  border-radius: var(--r-ctl); cursor: pointer;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3);
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+.daychip b { font-size: var(--fs-body); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.daychip .free { font-size: var(--fs-label); font-weight: 500; opacity: .9; }
+.daychip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.daychip[aria-pressed="true"] b { color: #fff; }
+.daychip:disabled { opacity: 0.35; cursor: not-allowed; }
+.daychip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  /* ---------- carousel controls (mobile only) ---------- */
-  .carousel-nav { display: none; }
-  .cnav {
-    width: 48px; height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 1px solid var(--rule-strong-dark);
-    border-radius: 1px;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: border-color var(--t) var(--ease), opacity var(--t) var(--ease);
-  }
-  .cnav:hover:not(:disabled) { border-color: var(--on-dark); }
-  .cnav:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
-  .cnav:disabled { opacity: 0.25; cursor: default; }
-  .cnav .arw {
-    width: 9px; height: 9px;
-    border-top: 1px solid var(--on-dark);
-    border-right: 1px solid var(--on-dark);
-  }
-  .cnav .arw.r { transform: rotate(45deg) translate(-1px, 1px); }
-  .cnav .arw.l { transform: rotate(-135deg) translate(-1px, 1px); }
-  .on-light .cnav { border-color: var(--rule-strong); }
-  .on-light .cnav .arw { border-color: var(--ink); }
-  .on-light .cnav:hover:not(:disabled) { border-color: var(--ink); }
+.timelist { margin-top: var(--s3); display: flex; flex-direction: column; gap: 0.4rem; }
+.timeslot {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s2);
+  min-height: 52px; padding: 0.7rem 0.9rem;
+  background: transparent; border: 1px solid var(--line);
+  border-radius: var(--r-ctl); cursor: pointer;
+  font-size: var(--fs-body); color: var(--text); font-variant-numeric: tabular-nums;
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease);
+}
+.timeslot .st { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); }
+.timeslot:hover:not(:disabled) { border-color: var(--accent); }
+.timeslot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.timeslot.taken { cursor: not-allowed; background: var(--sunk); border-color: transparent; color: var(--text-3); }
+.timeslot.taken .st { color: #c96a52; }
+.timeslot.sel, .timeslot.sel:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: #fff; }
+.timeslot.sel .st { color: rgba(255,255,255,.85); }
+.cal-empty { padding: var(--s4) var(--s2); text-align: center; font-size: var(--fs-sm); color: var(--text-3); }
 
-  .dots { display: none; }
+.legend { margin-top: var(--s3); display: flex; gap: var(--s3); flex-wrap: wrap; }
+.legend span { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); }
+.legend i { width: 14px; height: 14px; border: 1px solid var(--line-2); border-radius: var(--r-ctl); flex-shrink: 0; }
+.legend i.t { border-color: transparent; background: var(--sunk); }
+.legend i.s { background: var(--accent); border-color: var(--accent); }
+.cal-note { margin-top: var(--s2); font-size: var(--fs-sm); color: var(--text-3); }
 
-  /* ---------- quote builder ---------- */
-  .quote-shell {
-    margin-top: var(--s6);
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: var(--s5);
-    align-items: start;
-  }
-  .steps { display: flex; flex-direction: column; gap: var(--s4); }
-  .step[hidden] { display: none; }
-  .step-label {
-    display: flex;
-    align-items: baseline;
-    gap: 0.9rem;
-    font-size: 0.56rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-    margin-bottom: var(--s2);
-  }
-  .step-label .n { color: var(--on-dark-dim); }
-  .opts { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .opt, .car-input {
-    flex: 1 1 auto;
-    min-width: 110px;
-    min-height: 48px;
-    padding: 0.9rem 1rem;
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-align: center;
-    color: var(--on-dark);
-    background: transparent;
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
-    transition: color var(--t) var(--ease), border-color var(--t) var(--ease),
-                background var(--t) var(--ease);
-  }
-  .opt { cursor: pointer; }
-  .opt:hover { border-color: var(--rule-strong-dark); }
-  .opt:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
-  .opt[aria-pressed="true"] {
-    color: var(--black);
-    background: var(--on-dark);
-    border-color: var(--on-dark);
-  }
-  .car-input { -moz-appearance: textfield; letter-spacing: 0.06em; }
-  .car-input::-webkit-outer-spin-button,
-  .car-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-  .car-input::placeholder { color: var(--on-dark-faint); }
-  .car-input:focus { outline: none; border-color: var(--rule-strong-dark); }
-  .car-input.active {
-    color: var(--black);
-    background: var(--on-dark);
-    border-color: var(--on-dark);
-  }
-  .step-hint {
-    margin-top: 0.8rem;
-    font-size: 0.78rem;
-    color: var(--on-dark-faint);
-  }
+.conf-card { border-color: var(--accent); }
+.conf-rows { margin-top: var(--s3); }
+.conf-rows div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s2); padding: 0.7rem 0; border-bottom: 1px solid var(--line); font-size: var(--fs-sm); }
+.conf-rows div:last-child { border-bottom: none; }
+.conf-rows div[hidden] { display: none; }
+.conf-rows .v { text-align: right; color: var(--text); }
+.conf-rows .v.money { font-family: var(--f-head); font-stretch: 125%; font-weight: 700; font-size: 1.15rem; color: var(--accent-soft); font-variant-numeric: tabular-nums; }
 
-  .quote-out {
-    background: var(--graphite-2);
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
-    padding: var(--s4);
-    position: sticky;
-    top: 100px;
-    transition: border-color var(--t-slow) var(--ease);
-  }
-  .quote-out:hover { border-color: var(--rule-strong-dark); }
-  .quote-out .k {
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-  }
-  .quote-total {
-    margin-top: var(--s2);
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    min-height: 62px;
-  }
-  .quote-total strong {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: clamp(2.8rem, 6vw, 3.8rem);
-    font-weight: 700;
-    letter-spacing: -0.035em;
-    color: var(--on-dark);
-    line-height: 1;
-  }
-  .quote-total .per {
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-  }
-  .quote-summary {
-    margin-top: var(--s2);
-    padding-top: var(--s2);
-    border-top: 1px solid var(--rule-dark);
-    font-size: 0.86rem;
-    color: var(--on-dark-dim);
-  }
-  .quote-saving {
-    margin-top: 0.8rem;
-    font-size: 0.84rem;
-    color: var(--wine-soft);
-    display: none;
-  }
-  .quote-saving.show { display: block; }
-  .quote-out .btn { margin-top: var(--s4); width: 100%; }
+.routes { margin-top: var(--s4); display: grid; gap: 0.7rem; }
+.route {
+  padding: var(--s3); border: 1px solid var(--line-2);
+  border-radius: var(--r-card); background: var(--bg);
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.route h4 { font-size: var(--fs-h3); }
+.route p { font-size: var(--fs-sm); color: var(--text-2); flex: 1; }
+.route .btn { width: 100%; }
 
-  /* ---------- before / after slider ----------
-     Drop real photos into .ba-before / .ba-after:
-       <img src="media/before.jpg" alt="Before"> — same for after.jpg */
-  .ba {
-    position: relative;
-    height: 78svh;
-    min-height: 400px;
-    overflow: hidden;
-    background: var(--graphite);
-    touch-action: pan-y;
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: ew-resize;
-  }
-  .ba-half { position: absolute; inset: 0; }
-  .ba-half img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    pointer-events: none;
-  }
-  .ba-before {
-    background:
-      repeating-linear-gradient(112deg, transparent 0 64px, rgba(0, 0, 0, 0.28) 64px 66px),
-      linear-gradient(165deg, #2b2823 0%, #1b1917 55%, #0d0c0b 100%);
-  }
-  .ba-after {
-    background:
-      radial-gradient(110% 78% at 62% 22%, rgba(247, 245, 241, 0.12), transparent 55%),
-      linear-gradient(165deg, #262124 0%, #1a1719 55%, #0d0c0d 100%);
-    clip-path: inset(0 0 0 var(--split, 50%));
-  }
-  .ba-tag {
-    position: absolute;
-    top: var(--s4);
-    z-index: 4;
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: rgba(247, 245, 241, 0.9);
-    background: rgba(7, 7, 6, 0.55);
-    border: 1px solid rgba(247, 245, 241, 0.16);
-    padding: 0.5rem 1rem;
-    pointer-events: none;
-  }
-  .ba-tag.l { left: var(--gutter); }
-  .ba-tag.r { right: var(--gutter); }
-  .ba-handle {
-    position: absolute;
-    top: 0; bottom: 0;
-    left: var(--split, 50%);
-    z-index: 4;
-    width: 1px;
-    background: rgba(247, 245, 241, 0.85);
-    pointer-events: none;
-  }
-  .ba-knob {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 54px; height: 54px;
-    border-radius: 50%;
-    background: var(--on-dark);
-    box-shadow: 0 6px 26px rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: transform var(--t) var(--ease);
-  }
-  .ba:hover .ba-knob { transform: translate(-50%, -50%) scale(1.08); }
-  .ba-knob i {
-    width: 6px; height: 6px;
-    border-top: 1px solid var(--black);
-    border-left: 1px solid var(--black);
-    display: block;
-  }
-  .ba-knob i:first-child { transform: rotate(-45deg); }
-  .ba-knob i:last-child { transform: rotate(135deg); }
-  .ba:focus-visible { outline: 2px solid var(--on-dark); outline-offset: -5px; }
-  .ba-hint {
-    position: absolute;
-    left: 50%; bottom: var(--s4);
-    z-index: 4;
-    transform: translateX(-50%);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: rgba(247, 245, 241, 0.5);
-    pointer-events: none;
-  }
+.quote { padding: var(--s3); }
+.quote-total { margin-top: 0.6rem; display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap; }
+.quote-total strong { font-family: var(--f-head); font-stretch: 125%; font-size: 2.75rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--accent-soft); font-variant-numeric: tabular-nums; }
+.quote-total .per { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); }
+.quote-sum { margin-top: var(--s2); padding-top: var(--s2); border-top: 1px solid var(--line); font-size: var(--fs-sm); color: var(--text-2); }
+.quote-save { margin-top: 0.6rem; padding: 0.55rem 0.7rem; border-radius: var(--r-ctl); background: var(--accent-tint); color: var(--accent-soft); font-size: var(--fs-sm); display: none; }
+.quote-save.show { display: block; }
+.quote-when { margin-top: var(--s2); padding-top: var(--s2); border-top: 1px solid var(--line); font-size: var(--fs-sm); display: none; }
+.quote-when.show { display: block; }
+.quote-when .label { display: block; margin-bottom: 0.25rem; }
 
-  /* ---------- secondary cta ---------- */
-  .snap-cta { padding: var(--s7) 0; }
-  .snap-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--s4);
-    flex-wrap: wrap;
-    text-align: center;
-  }
-  .snap-inner p { font-size: 0.98rem; color: var(--on-dark-dim); }
+/* ============================================================ FOOTER */
+.foot-slab { margin-bottom: var(--gutter); padding: var(--s5) var(--gutter) var(--s4); }
+.foot-top { display: grid; gap: var(--s4); padding-bottom: var(--s4); border-bottom: 1px solid var(--line); }
+.foot-brand { font-family: var(--f-head); font-stretch: 125%; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+.foot-loc { margin-top: 0.6rem; color: var(--text-3); font-size: var(--fs-sm); line-height: 1.75; }
+.foot-col h4 { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); margin-bottom: 0.5rem; }
+.foot-col a, .foot-col span, .foot-col button {
+  display: flex; align-items: center; min-height: 40px;
+  color: var(--text-2); text-decoration: none; font-size: var(--fs-sm);
+  background: none; border: none; cursor: pointer; text-align: left; padding: 0;
+  transition: color var(--t) var(--ease);
+}
+.foot-col a:hover, .foot-col button:hover { color: var(--accent-soft); }
+.foot-base { padding-top: var(--s3); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2); font-size: var(--fs-sm); color: var(--text-3); }
 
-  /* ---------- how it works (the one light section) ---------- */
-  .how-row {
-    display: flex;
-    align-items: baseline;
-    gap: var(--s4);
-    padding: var(--s4) 0.5rem;
-    border-top: 1px solid var(--rule);
-    transition: padding-left var(--t-slow) var(--ease), background var(--t-slow) var(--ease);
-  }
-  .how-row:hover { padding-left: var(--s3); background: rgba(22, 21, 19, 0.03); }
-  .how-row:last-of-type { border-bottom: 1px solid var(--rule); }
-  .how-row .n {
-    font-size: 0.56rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    color: var(--ink-faint);
-    flex-shrink: 0;
-  }
-  .how-row p {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: clamp(1.35rem, 4.4vw, 2.6rem);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    text-transform: uppercase;
-    line-height: 1.14;
-  }
+/* ============================================================ MENU */
+.menu { position: fixed; inset: 0; z-index: 200; display: none; background: #000; }
+.menu.live { display: block; }
+.menu-in { height: 100%; display: flex; flex-direction: column; padding: var(--s3) 0; overflow-y: auto; }
+.menu-top { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); }
+.x-btn {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  min-height: 42px; padding: 0.5rem 0.9rem;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  color: var(--paper); background: transparent;
+  border: 1px solid rgba(244,241,236,.26); border-radius: var(--r-ctl); cursor: pointer;
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease);
+}
+.x-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.x-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.x-btn i { position: relative; width: 11px; height: 11px; }
+.x-btn i::before, .x-btn i::after { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; }
+.x-btn i::before { transform: rotate(45deg); }
+.x-btn i::after { transform: rotate(-45deg); }
 
-  /* ---------- about ---------- */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 0.6fr 1.4fr;
-    gap: var(--s6);
-    align-items: center;
-  }
-  .founder {
-    position: relative;
-    aspect-ratio: 4 / 5;
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
-    overflow: hidden;
-    background:
-      radial-gradient(105% 75% at 60% 20%, rgba(247, 245, 241, 0.08), transparent 58%),
-      linear-gradient(165deg, var(--graphite-3) 0%, var(--graphite-2) 55%, #0a0a09 100%);
-    transition: border-color var(--t-slow) var(--ease);
-  }
-  .founder:hover { border-color: var(--rule-strong-dark); }
-  /* Founder photo: <img src="media/eduard.jpg" alt="Eduard"> */
-  .founder img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .founder span {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: rgba(247, 245, 241, 0.34);
-    border: 1px solid rgba(247, 245, 241, 0.14);
-    padding: 0.6rem 1.1rem;
-    white-space: nowrap;
-  }
-  .about-copy {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s4);
-    max-width: 48ch;
-  }
-  .about-copy p {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: var(--on-dark-dim);
-  }
-  .about-copy p:first-child {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: clamp(1.5rem, 4.4vw, 2.6rem);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    text-transform: uppercase;
-    line-height: 1.14;
-    color: var(--on-dark);
-  }
+.menu-nav { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.1rem; padding: var(--s5) 0; }
+.menu-item {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.5rem 0.6rem;
+  background: none; border: none; border-radius: var(--r-ctl);
+  cursor: pointer; text-align: left; color: var(--paper);
+  transition: background var(--t) var(--ease), padding-left var(--t-mid) var(--ease), color var(--t) var(--ease);
+}
+.menu-item:hover { background: rgba(168,72,44,.2); padding-left: 1.1rem; color: var(--accent-soft); }
+.menu-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.menu-item .mi-n { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); color: var(--accent-soft); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.menu-item .mi-t { font-family: var(--f-head); font-stretch: 125%; font-size: clamp(1.75rem, 8vw, 3.25rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; text-transform: uppercase; }
+.menu-foot { padding-top: var(--s3); border-top: 1px solid rgba(244,241,236,.14); display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem var(--s3); }
+.menu-foot a { color: #a8a299; text-decoration: none; font-size: var(--fs-sm); }
+.menu-foot a:hover { color: var(--accent-soft); }
 
-  /* ---------- reviews ---------- */
-  .rev-note {
-    margin-top: var(--s2);
-    font-size: 0.8rem;
-    color: var(--on-dark-faint);
-  }
-  .rev-track {
-    margin-top: var(--s6);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--s2);
-  }
-  .rev {
-    position: relative;
-    background: var(--graphite-2);
-    border: 1px solid var(--rule-dark);
-    border-radius: 1px;
-    padding: var(--s4);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s2);
-    transition: transform var(--t-slow) var(--ease), border-color var(--t-slow) var(--ease);
-  }
-  /* the second bordeaux moment */
-  .rev::before {
-    content: "";
-    position: absolute;
-    top: -1px; left: -1px; right: -1px;
-    height: 2px;
-    background: var(--wine-mid);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform var(--t-slow) var(--ease);
-    pointer-events: none;
-  }
-  .rev.from-right::before { transform-origin: right center; }
-  .stars { color: var(--on-dark-faint); font-size: 0.7rem; letter-spacing: 0.24em; }
-  .rev blockquote { font-size: 0.92rem; line-height: 1.75; color: var(--on-dark-dim); flex-grow: 1; }
-  .rev .who { font-size: 0.82rem; font-weight: 500; color: var(--on-dark); }
-  .rev .svc {
-    display: block;
-    margin-top: 0.4rem;
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-  }
-  @media (min-width: 761px) {
-    .rev:hover { transform: translateY(-4px); border-color: var(--rule-strong-dark); }
-    .rev:hover::before { transform: scaleX(1); }
-  }
+/* ============================================================ VIEWS */
+.view { position: fixed; inset: 0; z-index: 300; display: none; background: var(--black); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.view.on-light { background: var(--paper); }
+.view.live { display: block; }
+.view-bar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s2);
+  padding: 0.8rem var(--gutter);
+  background: rgba(12,12,11,.85);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.view.on-light .view-bar { background: rgba(247,244,238,.9); }
+.view-title { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); }
+.view-x {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  min-height: 40px; padding: 0.45rem 0.85rem;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  background: var(--text); color: var(--bg);
+  border: 1px solid var(--text); border-radius: var(--r-ctl); cursor: pointer;
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+.view-x:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.view-x:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.view-x i { position: relative; width: 11px; height: 11px; }
+.view-x i::before, .view-x i::after { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; }
+.view-x i::before { transform: rotate(45deg); }
+.view-x i::after { transform: rotate(-45deg); }
+.view-body { padding: var(--s5) 0 var(--s7); }
 
-  /* ---------- faq ---------- */
-  .faq-list { margin-top: var(--s6); max-width: 860px; }
-  .qa { border-top: 1px solid var(--rule-dark); }
-  .qa:last-child { border-bottom: 1px solid var(--rule-dark); }
-  .qa summary {
-    list-style: none;
-    cursor: pointer;
-    min-height: 56px;
-    padding: var(--s3) 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--s3);
-    font-size: 0.96rem;
-    font-weight: 400;
-    transition: background var(--t-slow) var(--ease), padding-left var(--t-slow) var(--ease);
-  }
-  .qa summary:hover {
-    background: rgba(247, 245, 241, 0.03);
-    padding-left: 1.2rem;
-  }
-  .qa summary::-webkit-details-marker { display: none; }
-  .qa summary:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
-  .plus { position: relative; width: 12px; height: 12px; flex-shrink: 0; }
-  .plus::before, .plus::after {
-    content: "";
-    position: absolute;
-    top: 50%; left: 0;
-    width: 100%; height: 1px;
-    background: currentColor;
-    transition: transform var(--t) var(--ease);
-  }
-  .plus::after { transform: rotate(90deg); }
-  .qa[open] .plus::after { transform: rotate(0deg); }
-  .qa p {
-    padding: 0 var(--s4) var(--s4) 0.5rem;
-    max-width: 64ch;
-    color: var(--on-dark-dim);
-    font-size: 0.92rem;
-    line-height: 1.8;
-    animation: qaIn var(--t-slow) var(--ease);
-  }
-  @keyframes qaIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: none; }
-  }
+.about-grid { margin-top: var(--s4); display: grid; gap: var(--s4); }
+.founder {
+  position: relative; aspect-ratio: 4/5; max-width: 280px;
+  border-radius: var(--r-card); overflow: hidden;
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, var(--graphite-3) 0%, var(--graphite-1) 100%);
+}
+.founder img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.founder span {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label);
+  font-weight: 600; letter-spacing: var(--track); text-transform: uppercase;
+  color: var(--text-3); border: 1px solid var(--line-2); border-radius: var(--r-ctl);
+  padding: 0.45rem 0.8rem; white-space: nowrap;
+}
+.about-copy { display: flex; flex-direction: column; gap: var(--s3); max-width: 52ch; }
+.about-copy p { color: var(--text-2); line-height: 1.75; }
+.about-copy p:first-child { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-h2); font-weight: 600; letter-spacing: -0.02em; line-height: 1.12; color: var(--text); }
 
-  /* ---------- footer ---------- */
-  footer { background: var(--black); color: var(--on-dark); padding: var(--s7) 0 var(--s4); }
-  .foot-top {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr 1fr;
-    gap: var(--s5);
-    padding-bottom: var(--s5);
-    border-bottom: 1px solid var(--rule-dark);
+.revs { margin-top: var(--s4); display: grid; gap: var(--s2); }
+.rev { padding: var(--s3); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); display: flex; flex-direction: column; gap: 0.7rem; }
+.stars { color: var(--accent-soft); font-size: var(--fs-sm); letter-spacing: 0.18em; }
+.on-light .stars { color: var(--accent); }
+.rev blockquote { font-size: var(--fs-sm); line-height: 1.7; color: var(--text-2); flex: 1; }
+.rev .who { font-size: var(--fs-sm); color: var(--text); font-weight: 500; }
+.rev .svc { display: block; margin-top: 0.25rem; font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--accent-soft); }
+.on-light .rev .svc { color: var(--accent); }
+
+.faq { margin-top: var(--s4); max-width: 800px; }
+.qa { border-top: 1px solid var(--line); }
+.qa:last-child { border-bottom: 1px solid var(--line); }
+.qa summary {
+  list-style: none; cursor: pointer; min-height: 54px;
+  padding: var(--s3) 0.4rem;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s2);
+  font-size: var(--fs-body); border-radius: var(--r-ctl);
+  transition: background var(--t) var(--ease), padding-left var(--t-mid) var(--ease);
+}
+.qa summary:hover { background: var(--accent-tint); padding-left: 0.9rem; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.qa .plus { position: relative; width: 12px; height: 12px; flex-shrink: 0; }
+.qa .plus::before, .qa .plus::after { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; transition: transform var(--t) var(--ease); }
+.qa .plus::after { transform: rotate(90deg); }
+.qa[open] .plus { color: var(--accent-soft); }
+.on-light .qa[open] .plus { color: var(--accent); }
+.qa[open] .plus::after { transform: rotate(0deg); }
+.qa p { padding: 0 var(--s3) var(--s3) 0.4rem; max-width: 66ch; color: var(--text-2); font-size: var(--fs-sm); line-height: 1.75; }
+
+.contact-grid { margin-top: var(--s4); display: grid; gap: var(--s2); }
+.contact-card { padding: var(--s3); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); text-decoration: none; color: var(--text); display: block; transition: border-color var(--t) var(--ease), background var(--t) var(--ease); }
+.contact-card:hover { border-color: var(--accent); background: var(--accent-tint); }
+.contact-card strong { display: block; margin-top: 0.4rem; font-size: var(--fs-h3); font-family: var(--f-head); font-stretch: 125%; font-weight: 600; }
+.contact-card .sub { display: block; margin-top: 0.3rem; font-size: var(--fs-sm); color: var(--text-2); }
+
+/* ============================================================ MEMBER AREA */
+.m-login { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: var(--s5) var(--gutter) var(--s7); }
+.m-login-card { width: min(420px, 100%); padding: var(--s4); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); }
+.m-form { margin-top: var(--s3); display: flex; flex-direction: column; gap: var(--s3); }
+.m-field { display: flex; flex-direction: column; gap: 0.45rem; }
+.m-field[hidden] { display: none; }
+.m-in { width: 100%; }
+.m-note { margin-top: var(--s3); padding: 0.7rem 0.85rem; border-radius: var(--r-ctl); background: var(--sunk); font-size: var(--fs-sm); color: var(--text-2); }
+.m-note[hidden] { display: none; }
+.m-switch { margin-top: var(--s3); text-align: center; font-size: var(--fs-sm); color: var(--text-2); }
+.m-switch button { background: none; border: none; color: var(--accent-soft); cursor: pointer; font-size: inherit; text-decoration: underline; padding: 0.4rem; }
+
+.m-dash { display: none; }
+.m-dash.live { display: block; }
+.m-main { padding: var(--s4) var(--gutter) calc(76px + var(--s5)); }
+.m-panel { display: none; }
+.m-panel.live { display: block; }
+.m-h { margin-bottom: var(--s3); }
+.m-h h2 { font-size: var(--fs-h2); }
+.m-h p { margin-top: 0.35rem; font-size: var(--fs-sm); color: var(--text-2); }
+
+.m-cards { display: grid; gap: var(--s2); }
+.m-card { padding: var(--s3); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); }
+.m-card.hero-card { border-color: var(--accent); background: var(--accent-tint); }
+.m-stat { margin-top: 0.5rem; }
+.m-stat b { display: block; font-family: var(--f-head); font-stretch: 125%; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.m-stat small { display: block; margin-top: 0.3rem; font-size: var(--fs-sm); color: var(--text-2); }
+
+.m-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.m-row { padding: var(--s3); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); }
+.m-row-top { display: flex; align-items: flex-start; gap: var(--s2); flex-wrap: wrap; }
+.m-row-main { flex: 1 1 180px; min-width: 0; }
+.m-row-main strong { display: block; font-size: var(--fs-body); font-weight: 500; }
+.m-row-main span { display: block; margin-top: 0.25rem; font-size: var(--fs-sm); color: var(--text-2); }
+.m-row-actions { margin-top: var(--s2); display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.m-mini {
+  min-height: 40px; padding: 0.45rem 0.8rem;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  color: var(--text-2); background: transparent;
+  border: 1px solid var(--line-2); border-radius: var(--r-ctl); cursor: pointer;
+  transition: color var(--t) var(--ease), border-color var(--t) var(--ease), background var(--t) var(--ease);
+}
+.m-mini:hover { color: var(--accent-soft); border-color: var(--accent); background: var(--accent-tint); }
+.m-mini:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.m-mini.danger:hover { color: #c0483a; border-color: #c0483a; background: rgba(192,72,58,.08); }
+.m-plate {
+  flex-shrink: 0; font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-sm); font-weight: 700; letter-spacing: 0.04em;
+  padding: 0.35rem 0.6rem; border-radius: var(--r-ctl);
+  background: var(--paper); color: var(--black); font-variant-numeric: tabular-nums;
+}
+.m-editor { display: none; margin-top: var(--s3); padding: var(--s3); border: 1px solid var(--accent); border-radius: var(--r-card); background: var(--accent-tint); }
+.m-editor.live { display: block; }
+.m-grid2 { display: grid; gap: var(--s3); margin-top: var(--s3); }
+.m-editor-actions { margin-top: var(--s3); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.m-editor-actions .btn { flex: 1 1 100%; }
+
+/* billing — stacked, never a table */
+.inv { display: flex; flex-direction: column; gap: 0.5rem; margin-top: var(--s2); }
+.inv-row {
+  padding: var(--s2); border: 1px solid var(--line); border-radius: var(--r-ctl);
+  background: var(--bg); display: grid; gap: 0.4rem;
+  grid-template-columns: 1fr auto; align-items: baseline;
+}
+.inv-id { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-sm); font-weight: 600; font-variant-numeric: tabular-nums; }
+.inv-amt { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-body); font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.inv-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem; font-size: var(--fs-sm); color: var(--text-2); }
+.pill { display: inline-block; padding: 0.15rem 0.5rem; border-radius: var(--r-ctl); font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; border: 1px solid var(--line-2); color: var(--text-2); }
+.pill.ok { border-color: var(--accent); color: var(--accent-soft); }
+.on-light .pill.ok { color: var(--accent); }
+
+.m-empty { padding: var(--s4) var(--s2); text-align: center; color: var(--text-3); font-size: var(--fs-sm); border: 1px dashed var(--line-2); border-radius: var(--r-card); }
+
+.m-tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+  padding: 0.4rem 0.4rem calc(0.4rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(12,12,11,.92);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border-top: 1px solid var(--line);
+}
+.m-tabs button {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem;
+  min-height: 58px; padding: 0.3rem 0.15rem;
+  background: transparent; border: 1px solid transparent; border-radius: var(--r-ctl);
+  cursor: pointer;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--track); text-transform: uppercase;
+  color: var(--text-3); line-height: 1.1; text-align: center;
+  transition: color var(--t) var(--ease), background var(--t) var(--ease);
+}
+.m-tabs button[aria-current="true"] { color: var(--accent-soft); background: var(--accent-tint); }
+.m-tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.m-tabs .ico { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ============================================================ FILM GRAIN
+   One texture, one intensity, across every section light and dark. Fixed to
+   the viewport so it holds still while content scrolls beneath it, and sits
+   above the menu and the full-screen views so nothing escapes it.
+
+   Plain compositing, not overlay: overlay keeps mid-grey neutral, which means
+   it vanishes entirely on near-black — the tone that needs the grain most.
+   A flat low-opacity wash lifts #0c0c0b by roughly six levels, which is what
+   makes it read as film base rather than a digital flat. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.07;
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  transform: translateZ(0);
+}
+
+
+/* ============================================================ REVEALS */
+[data-rv] { opacity: 0; }
+.no-motion [data-rv] { opacity: 1 !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  [data-rv] { opacity: 1 !important; transform: none !important; }
+}
+
+/* ============================================================ RESPONSIVE */
+@media (min-width: 560px) {
+  :root { --gutter: 1.75rem; }
+  .hero-cta .btn { flex: 0 1 auto; min-width: 190px; }
+  .hero-meta { grid-template-columns: repeat(3, 1fr); }
+  .actions .btn { flex: 0 1 auto; }
+  .actions .btn.grow { flex: 1 1 auto; }
+  .check-actions .btn { flex: 0 1 auto; }
+  .m-editor-actions .btn { flex: 0 1 auto; }
+  .fields { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .m-grid2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .revs { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .contact-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .routes { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .m-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cal-grid { display: grid; grid-template-columns: 46px repeat(7, minmax(0,1fr)); gap: 4px; }
+  .cal-m { display: none; }
+  .inv-row { grid-template-columns: 1fr auto auto; }
+  .inv-meta { grid-column: auto; }
+  .m-row-top { align-items: center; }
+  .m-row-actions { margin-top: 0; }
+}
+
+@media (min-width: 860px) {
+  :root { --gutter: 2.5rem; --pad-y: clamp(7rem, 16vh, 12rem); }
+  .acc-body { grid-template-columns: 1.2fr 0.8fr; }
+  .about-grid { grid-template-columns: 0.55fr 1.45fr; align-items: center; }
+  .founder { max-width: none; }
+  .foot-top { grid-template-columns: 1.3fr 1fr 1fr; }
+  .book-grid { grid-template-columns: 1.35fr 0.65fr; }
+  .quote { position: sticky; top: 84px; }
+  .revs { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .m-cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .book-slab, .foot-slab { padding-left: var(--s5); padding-right: var(--s5); }
+  .m-dash.live { display: grid; grid-template-columns: 220px 1fr; align-items: start; }
+  .m-tabs {
+    position: sticky; top: 62px; bottom: auto;
+    grid-template-columns: 1fr; gap: 0.25rem;
+    padding: var(--s3) var(--s2);
+    border-top: none; border-right: 1px solid var(--line);
+    background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+    align-self: start;
   }
-  .foot-brand {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: var(--track-wide);
-    text-transform: uppercase;
-  }
-  .foot-loc { margin-top: var(--s2); color: var(--on-dark-faint); font-size: 0.86rem; line-height: 1.8; }
-  .foot-col h4 {
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: var(--track);
-    text-transform: uppercase;
-    color: var(--on-dark-faint);
-    margin-bottom: var(--s2);
-  }
-  .foot-col a, .foot-col span {
-    display: flex;
-    align-items: center;
-    min-height: 44px;
-    color: var(--on-dark-dim);
-    text-decoration: none;
-    font-size: 0.88rem;
-    transition: opacity var(--t) var(--ease);
-  }
-  .foot-col a:hover { opacity: 0.6; }
-  .foot-col .pending { color: var(--on-dark-faint); font-size: 0.78rem; display: inline; min-height: 0; }
-  .foot-base {
-    padding-top: var(--s4);
-    display: flex;
-    justify-content: space-between;
-    gap: var(--s2);
-    flex-wrap: wrap;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    color: var(--on-dark-faint);
-  }
-
-  /* ---------- responsive ---------- */
-  @media (max-width: 900px) {
-    .quote-shell { grid-template-columns: 1fr; gap: var(--s4); }
-    .quote-out { position: static; }
-    .about-grid { grid-template-columns: 1fr; gap: var(--s4); }
-    .founder { max-width: 280px; aspect-ratio: 1 / 1; }
-    .foot-top { grid-template-columns: 1fr; gap: var(--s4); }
-    .plans .p-detail, .plans .plan-flag, .plans .p-ext { order: 0; }
-  }
-
-  @media (max-width: 900px) and (min-width: 761px) {
-    .plans { grid-template-columns: 1fr; max-width: 500px; margin-inline: auto; }
-  }
-
-  /* ---------- mobile ---------- */
-  @media (max-width: 760px) {
-    :root {
-      --section-y: clamp(5rem, 11vh, 7.5rem);
-      --cap-y: clamp(2.75rem, 6vh, 4rem);
-      --gutter: clamp(1.375rem, 5.5vw, 2rem);
-      --s6: 3.25rem;
-      --s7: 4.25rem;
-      --s8: 5.5rem;
-    }
-
-    .bar { height: 66px; }
-    .hero { padding: 8.5rem 0 var(--s6); min-height: auto; }
-    .hero h1 { line-height: 0.94; }
-    .hero-lead { max-width: 32ch; }
-    .hero-meta {
-      margin-top: var(--s6);
-      padding-top: var(--s3);
-      grid-template-columns: 1fr;
-      gap: var(--s2);
-    }
-    .hero-cta { gap: 0.6rem; }
-    .hero-cta .btn { flex: 1 1 100%; }
-
-    .media { height: 62svh; min-height: 340px; }
-    .ba { height: 58svh; min-height: 330px; }
-    .ba-knob { width: 48px; height: 48px; }
-
-    .how-row { gap: var(--s2); padding: var(--s3) 0.25rem; }
-    .how-row:hover { padding-left: 0.5rem; }
-
-    .snap-inner { flex-direction: column; gap: var(--s3); }
-    .snap-inner .btn { width: 100%; }
-
-    .plan { padding: var(--s4) 1.5rem; }
-    .rev { padding: var(--s4) 1.5rem; }
-    .quote-out { padding: var(--s4) 1.5rem; }
-    .anchor-line { margin-top: var(--s5); font-size: 0.92rem; }
-
-    .qa summary { font-size: 0.92rem; gap: var(--s2); }
-    .qa p { padding-right: var(--s2); font-size: 0.88rem; }
-
-    /* One card per view — the track sits inside the shell, so a card is
-       exactly the content width and no neighbour peeks in. */
-    .rev-track, .plans {
-      grid-template-columns: none;
-      display: flex;
-      gap: var(--s2);
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      margin-top: var(--s5);
-      padding-bottom: 0.25rem;
-    }
-    .rev-track::-webkit-scrollbar, .plans::-webkit-scrollbar { display: none; }
-    .rev, .plan {
-      flex: 0 0 100%;
-      max-width: none;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-    }
-    .rev.is-active::before { transform: scaleX(1); }
-
-    .carousel-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--s2);
-      margin-top: var(--s3);
-    }
-    .dots {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.15rem;
-    }
-    .dots button {
-      width: 40px; height: 40px;
-      padding: 0;
-      position: relative;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-    }
-    .dots button::before {
-      content: "";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      border: 1px solid var(--rule-strong-dark);
-      transition: background var(--t) var(--ease), transform var(--t) var(--ease),
-                  border-color var(--t) var(--ease);
-    }
-    .dots button[aria-current="true"]::before {
-      background: var(--on-dark);
-      border-color: var(--on-dark);
-      transform: translate(-50%, -50%) scale(1.5);
-    }
-    .dots button:focus-visible { outline: 2px solid var(--on-dark); outline-offset: -6px; }
-    .on-light .dots button::before { border-color: var(--rule-strong); }
-    .on-light .dots button[aria-current="true"]::before { background: var(--ink); border-color: var(--ink); }
-  }
-
-  @media (max-width: 420px) {
-    .wordmark { font-size: 0.72rem; letter-spacing: 0.18em; }
-    .disclose { padding: 0.55rem 0.7rem; font-size: 0.52rem; letter-spacing: 0.1em; }
-    .bar-actions { gap: 0.35rem; }
-    .btn { font-size: 0.6rem; letter-spacing: 0.12em; padding: 0.95rem 1.4rem; }
-    .opt, .car-input { min-width: 0; flex: 1 1 30%; font-size: 0.55rem; letter-spacing: 0.08em; padding: 0.85rem 0.3rem; }
-    #qService .opt { flex: 1 1 100%; }
-    .media-tag { font-size: 0.5rem; padding: 0.5rem 0.9rem; }
-    .plan li { font-size: 0.84rem; }
-  }
+  .m-tabs button { flex-direction: row; justify-content: flex-start; gap: 0.6rem; min-height: 44px; padding: 0.5rem 0.7rem; text-align: left; }
+  .m-main { padding: var(--s4) var(--s5) var(--s7); }
+}
 </style>
 </head>
 <body>
 
-  <!-- ============ HEADER ============ -->
-  <header id="siteHeader">
-    <div class="shell bar">
-      <a class="wordmark" href="#top">EMCleen</a>
-      <div class="bar-actions">
-        <button class="disclose" id="contactBtn" aria-expanded="false" aria-controls="contactPanel">
-          Contact <span class="chev" aria-hidden="true"></span>
-        </button>
-        <button class="disclose" id="socialBtn" aria-expanded="false" aria-controls="socialPanel">
-          Socials <span class="chev" aria-hidden="true"></span>
-        </button>
-      </div>
-    </div>
+<div class="grain" aria-hidden="true"></div>
 
-    <div class="panel" id="contactPanel">
-      <div class="panel-inner">
-        <div class="shell panel-rows">
-          <a href="tel:+353830166325"><span class="lbl">Phone</span> 083 016 6325</a>
-          <a href="https://wa.me/353830166325"><span class="lbl">WhatsApp</span> Text to book</a>
-          <a href="mailto:eduard@emcleen.com"><span class="lbl">Email</span> eduard@emcleen.com</a>
-        </div>
-      </div>
-    </div>
+<header class="bar">
+  <div class="shell bar-in">
+    <a class="wordmark" href="#top">EMCleen</a>
+    <button class="menu-btn" id="menuOpen" type="button" aria-haspopup="dialog">Menu <span class="bars" aria-hidden="true"></span></button>
+  </div>
+</header>
 
-    <div class="panel" id="socialPanel">
-      <div class="panel-inner">
-        <div class="shell panel-rows">
-          <a href="https://instagram.com/1.eduardm"><span class="lbl">Instagram</span> @1.eduardm</a>
-          <a href="#" aria-disabled="true"><span class="lbl">TikTok</span> <span class="soon">account coming</span></a>
-          <a href="#" aria-disabled="true"><span class="lbl">Facebook</span> <span class="soon">account coming</span></a>
-        </div>
-      </div>
-    </div>
-  </header>
+<main id="top">
 
-  <!-- ============ HERO ============ -->
-  <section class="hero gloss" id="top">
-    <div class="shell hero-inner">
-      <h1 class="reveal">EMCleen</h1>
-      <div class="hero-rule reveal" style="--d: 0.08s"></div>
-      <p class="hero-lead reveal" style="--d: 0.14s">Weekly car care in Ennis, Co.&nbsp;Clare.</p>
-      <div class="hero-cta reveal" style="--d: 0.2s">
-        <a class="btn" href="https://wa.me/353830166325">Text to Book</a>
-        <a class="btn btn-quiet" href="#pricing">View Pricing</a>
-      </div>
-
-      <div class="hero-meta reveal" style="--d: 0.28s">
-        <div class="meta-row">
-          <span class="k">Weekly detail</span>
-          <span class="v">€30 &mdash; about an hour</span>
-        </div>
-        <div class="meta-row">
-          <span class="k">Where</span>
-          <span class="v">Ennis, Co. Clare</span>
-        </div>
-        <div class="meta-row">
-          <span class="k">Book by</span>
-          <span class="v"><a href="tel:+353830166325">083 016 6325</a></span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ VIDEO SLOT ============ -->
-  <section class="media gloss" data-parallax>
-    <div class="media-layer">
-      <!-- Wash video drops in here:
-        <video autoplay muted loop playsinline poster="media/wash-poster.jpg">
-          <source src="media/wash.mp4" type="video/mp4">
-        </video> -->
-    </div>
-    <div class="media-scrim"></div>
-    <span class="media-tag">Video — the wash</span>
-    <div class="media-copy">
-      <p class="reveal">Clean once, it fades.<br>Clean weekly, it lasts.</p>
-    </div>
-  </section>
-
-  <!-- ============ PRICING ============ -->
-  <section class="pad dark gloss" id="pricing">
+  <section class="hero lit">
     <div class="shell">
-      <div class="eyebrow reveal">Pricing</div>
-      <h2 class="section-title reveal" style="--d: 0.08s">Three services.</h2>
-
-      <!-- flagship sits first in the DOM so the mobile carousel leads with it -->
-      <div class="plans" id="planTrack">
-        <div class="plan plan-flag is-active reveal" style="--d: 0.06s">
-          <span class="tag">Every week</span>
-          <h3>Maintenance Detail</h3>
-          <div class="price"><strong>€30</strong><span>per week</span></div>
-          <p class="price-alt">€45 as a one-off if you're not subscribing.</p>
-          <ul>
-            <li>Snow foam pre-wash</li>
-            <li>Two-bucket contact wash</li>
-            <li>Wheels and tyres cleaned, tyre dressing</li>
-            <li>Interior vacuum, mats included</li>
-            <li>Dash and plastics wiped</li>
-            <li>Hand dried</li>
-            <li>About an hour</li>
-          </ul>
-          <a class="btn" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20the%20weekly%20Maintenance%20Detail">Text to Book</a>
-        </div>
-
-        <div class="plan p-detail reveal" style="--d: 0.14s">
-          <h3>Detail</h3>
-          <div class="price"><strong>€80</strong><span>one-off</span></div>
-          <ul>
-            <li>Everything in the Maintenance Detail</li>
-            <li>Wheel arches and door shuts</li>
-            <li>Deep interior clean — plastics, trim, seat rails, seat belts</li>
-            <li>Mats deep cleaned</li>
-            <li>Boot fully detailed</li>
-            <li>Glass polished inside and out</li>
-          </ul>
-          <a class="btn btn-quiet" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Detail">Text to Book</a>
-        </div>
-
-        <div class="plan p-ext reveal" style="--d: 0.22s">
-          <h3>Extensive Detail</h3>
-          <div class="price"><strong>€140</strong><span>one-off</span></div>
-          <ul>
-            <li>Everything in the Detail</li>
-            <li>Clay bar decontamination</li>
-            <li>Tar removal</li>
-            <li>Wax or sealant applied</li>
-            <li>Alloys deep cleaned including barrels</li>
-            <li>All interior surfaces detailed and dressed</li>
-            <li>Air freshener</li>
-          </ul>
-          <a class="btn btn-quiet" href="https://wa.me/353830166325?text=Hi%2C%20I%27d%20like%20to%20book%20an%20Extensive%20Detail">Text to Book</a>
-        </div>
+      <span class="flag" data-rv>Subscription car care</span>
+      <h1 data-rv>Your car, kept clean. Not cleaned once.</h1>
+      <p class="lede" data-rv>A set slot on a set cycle in Ennis, Co.&nbsp;Clare. Fortnightly or monthly, the same standard every visit — <em class="hl" style="font-style:normal">the first subscription car care in the town</em>.</p>
+      <div class="hero-cta" data-rv>
+        <button class="btn" type="button" data-scroll="book">Become a member</button>
+        <button class="btn btn-line" type="button" data-scroll="services">See the services</button>
       </div>
-
-      <div class="carousel-nav">
-        <button class="cnav" id="planPrev" type="button" aria-label="Previous service">
-          <span class="arw l" aria-hidden="true"></span>
-        </button>
-        <div class="dots" id="planDots" role="tablist" aria-label="Services"></div>
-        <button class="cnav" id="planNext" type="button" aria-label="Next service">
-          <span class="arw r" aria-hidden="true"></span>
-        </button>
+      <div class="hero-meta">
+        <div><span class="label">Membership</span><span class="v num">From &euro;35 a visit</span></div>
+        <div><span class="label">Where</span><span class="v">Ennis, Co. Clare</span></div>
+        <div><span class="label">Book by</span><span class="v"><a href="tel:+353830166325" class="num">083 016 6325</a></span></div>
       </div>
-
-      <p class="anchor-line reveal">A valet in Ennis runs about €100. Weekly maintenance holds that standard for <span class="mark">€30</span>.</p>
     </div>
   </section>
 
-  <!-- ============ QUOTE BUILDER ============ -->
-  <section class="pad darker gloss" id="quote">
+  <section class="sec on-light" id="services">
     <div class="shell">
-      <div class="eyebrow reveal">Build a quote</div>
-      <h2 class="section-title reveal" style="--d: 0.08s">Work out your price.</h2>
+      <div class="sec-head">
+        <span class="label label-accent" data-rv>Services</span>
+        <h2 data-rv>Three services.</h2>
+        <p class="lede" data-rv>The Maintenance Detail is the membership. The other two are one-off resets — most people start with one, then hold it there.</p>
+      </div>
 
-      <div class="quote-shell">
-        <div class="steps reveal" style="--d: 0.14s" id="qSteps">
-          <div class="step">
-            <div class="step-label"><span class="n">01</span> How many cars?</div>
-            <div class="opts" id="qCars" role="group" aria-label="Number of cars">
-              <button class="opt" type="button" data-val="1" aria-pressed="true">1 car</button>
-              <button class="opt" type="button" data-val="2" aria-pressed="false">2 cars</button>
-              <input class="car-input" id="qCarsNum" type="number" min="1" max="99" step="1"
-                     inputmode="numeric" placeholder="3+" aria-label="Or enter a number of cars">
+      <div class="acc" id="acc">
+        <div class="acc-item" data-open="true">
+          <button class="acc-head" type="button" aria-expanded="true">
+            <span class="acc-n">01</span>
+            <span class="acc-t">Maintenance Detail</span>
+            <span class="acc-p num">from &euro;35</span>
+            <span class="acc-x" aria-hidden="true"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-in"><div class="acc-body">
+            <div>
+              <p class="acc-desc">Keeps an already-clean car clean. A set slot on a set cycle, about an hour, the same standard every time.</p>
+              <ul class="feat">
+                <li>Snow foam pre-wash</li>
+                <li>Two-bucket contact wash</li>
+                <li>Wheels and tyres cleaned, tyre dressing</li>
+                <li>Interior vacuum, mats included</li>
+                <li>Dash and plastics wiped</li>
+                <li>Hand dried</li>
+                <li>About an hour</li>
+              </ul>
             </div>
-            <p class="step-hint">10% off when two or more cars are done in the same visit.</p>
-          </div>
-
-          <div class="step">
-            <div class="step-label"><span class="n">02</span> Which service?</div>
-            <div class="opts" id="qService" role="group" aria-label="Service">
-              <button class="opt" type="button" data-val="maintenance" aria-pressed="true">Maintenance Detail</button>
-              <button class="opt" type="button" data-val="detail" aria-pressed="false">Detail</button>
-              <button class="opt" type="button" data-val="extensive" aria-pressed="false">Extensive Detail</button>
+            <div class="buy">
+              <span class="label">Membership</span>
+              <div class="buy-price"><strong class="num">&euro;35</strong><span>a visit, fortnightly</span></div>
+              <p class="buy-alt num">&euro;45 a visit on the monthly cycle.</p>
+              <button class="btn" type="button" data-book="maintenance">Book this</button>
             </div>
-          </div>
+          </div></div></div>
+        </div>
 
-          <div class="step" id="qFreqStep">
-            <div class="step-label"><span class="n">03</span> How often?</div>
-            <div class="opts" id="qFreq" role="group" aria-label="Frequency">
-              <button class="opt" type="button" data-val="weekly" aria-pressed="true">Weekly</button>
-              <button class="opt" type="button" data-val="fortnightly" aria-pressed="false">Fortnightly</button>
-              <button class="opt" type="button" data-val="oneoff" aria-pressed="false">One-off</button>
+        <div class="acc-item" data-open="false">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-n">02</span>
+            <span class="acc-t">Detail</span>
+            <span class="acc-p num">&euro;80</span>
+            <span class="acc-x" aria-hidden="true"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-in"><div class="acc-body">
+            <div>
+              <p class="acc-desc">The work a maintenance wash does not reach. A full reset of the car inside and out, done once.</p>
+              <ul class="feat">
+                <li>Everything in the Maintenance Detail</li>
+                <li>Wheel arches and door shuts</li>
+                <li>Deep interior clean &mdash; plastics, trim, seat rails, seat belts</li>
+                <li>Mats deep cleaned</li>
+                <li>Boot fully detailed</li>
+                <li>Glass polished inside and out</li>
+              </ul>
             </div>
+            <div class="buy">
+              <span class="label">One-off</span>
+              <div class="buy-price"><strong class="num">&euro;80</strong><span>one-off</span></div>
+              <p class="buy-alt">Hold the result with a membership.</p>
+              <button class="btn" type="button" data-book="detail">Book this</button>
+            </div>
+          </div></div></div>
+        </div>
+
+        <div class="acc-item" data-open="false">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-n">03</span>
+            <span class="acc-t">Extensive Detail</span>
+            <span class="acc-p num">&euro;140</span>
+            <span class="acc-x" aria-hidden="true"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-in"><div class="acc-body">
+            <div>
+              <p class="acc-desc">Everything in the Detail, then decontamination and protection on the paint. The deepest work offered.</p>
+              <ul class="feat">
+                <li>Everything in the Detail</li>
+                <li>Clay bar decontamination</li>
+                <li>Tar removal</li>
+                <li>Wax or sealant applied</li>
+                <li>Alloys deep cleaned including barrels</li>
+                <li>All interior surfaces detailed and dressed</li>
+                <li>Air freshener</li>
+              </ul>
+            </div>
+            <div class="buy">
+              <span class="label">One-off</span>
+              <div class="buy-price"><strong class="num">&euro;140</strong><span>one-off</span></div>
+              <p class="buy-alt">Paint decontaminated and protected.</p>
+              <button class="btn" type="button" data-book="extensive">Book this</button>
+            </div>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-wrap">
+    <div class="shell">
+      <div class="ba" id="ba" role="slider" tabindex="0"
+           aria-label="Before and after comparison"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-rv>
+        <div class="ba-half ba-before"><!-- <img src="media/before.jpg" alt="Car before"> --></div>
+        <div class="ba-half ba-after"><!-- <img src="media/after.jpg" alt="Car after"> --></div>
+        <span class="ba-tag l">Before</span>
+        <span class="ba-tag r">After</span>
+        <div class="ba-handle"><span class="ba-knob"><i></i><i></i></span></div>
+        <span class="ba-hint" id="baHint">Drag or click to compare</span>
+      </div>
+      <p class="small ba-cap">Same car, one visit</p>
+    </div>
+  </section>
+
+  <section class="sec lit" id="book" style="padding-top:0">
+    <div class="shell">
+      <div class="slab on-dark book-slab" data-rv>
+        <div class="sec-head">
+          <span class="label label-accent">Book</span>
+          <h2>Reserve a slot.</h2>
+          <p class="lede">Pick the service, leave your details, choose a time. Nothing is charged here.</p>
+        </div>
+
+        <ol class="progress" id="prog">
+          <li class="now" data-step="1"><button class="go" type="button" data-goto="1">01 Service</button></li>
+          <li data-step="2"><button class="go" type="button" data-goto="2">02 Details</button></li>
+          <li data-step="3"><button class="go" type="button" data-goto="3">03 Slot</button></li>
+          <li data-step="4"><button class="go" type="button" data-goto="4">04 Confirm</button></li>
+        </ol>
+
+        <div class="flow" id="flow">
+          <div class="book-grid" id="bookGrid">
+            <div>
+              <div class="step on" data-panel="1">
+                <div class="card step-card">
+                  <span class="label">Step 01 &mdash; Service</span>
+                  <h3>Service and frequency.</h3>
+                  <p class="step-sub">Select the number of cars and the service. The price updates as you go.</p>
+
+                  <div class="grp" style="margin-top:var(--s3)">
+                    <span class="label" id="lblCars">How many cars</span>
+                    <div class="opts" id="bCars" role="group" aria-labelledby="lblCars">
+                      <button class="opt" type="button" data-val="1" aria-pressed="true">1 car</button>
+                      <button class="opt" type="button" data-val="2" aria-pressed="false">2 cars</button>
+                      <input class="numin" id="bCarsNum" type="number" min="1" max="20" step="1" inputmode="numeric" placeholder="3+" aria-label="Or enter a number of cars">
+                    </div>
+                    <p class="hint">10% reduction on two or more cars in the same visit.</p>
+                  </div>
+
+                  <div class="grp">
+                    <span class="label" id="lblSvc">Service</span>
+                    <div class="opts" id="bService" role="group" aria-labelledby="lblSvc">
+                      <button class="opt tall" type="button" data-val="maintenance" aria-pressed="true">Maintenance Detail<span class="p num">from &euro;35</span></button>
+                      <button class="opt tall" type="button" data-val="detail" aria-pressed="false">Detail<span class="p num">&euro;80</span></button>
+                      <button class="opt tall" type="button" data-val="extensive" aria-pressed="false">Extensive Detail<span class="p num">&euro;140</span></button>
+                    </div>
+                  </div>
+
+                  <div class="grp" id="bFreqGrp">
+                    <span class="label" id="lblFreq">How often</span>
+                    <div class="opts" id="bFreq" role="group" aria-labelledby="lblFreq">
+                      <button class="opt tall" type="button" data-val="fortnightly" aria-pressed="true">Fortnightly<span class="p num">&euro;35 a visit</span></button>
+                      <button class="opt tall" type="button" data-val="monthly" aria-pressed="false">Monthly<span class="p num">&euro;45 a visit</span></button>
+                    </div>
+                    <p class="hint">A fixed slot each cycle. Pause, move or cancel at any time.</p>
+                  </div>
+
+                  <div class="actions"><button class="btn grow" type="button" data-next="2">Continue</button></div>
+                </div>
+              </div>
+
+              <div class="step" data-panel="2">
+                <div class="card step-card">
+                  <span class="label">Step 02 &mdash; Details</span>
+                  <h3>Contact and vehicle.</h3>
+                  <p class="step-sub">Required to hold the slot and identify the car.</p>
+
+                  <div class="fields" style="margin-top:var(--s3)">
+                    <div class="field">
+                      <label class="label" for="bName">Name</label>
+                      <input id="bName" type="text" autocomplete="name" placeholder="Your name">
+                      <span class="msg">Enter a name.</span>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="bPhone">Phone</label>
+                      <input id="bPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="083 016 6325">
+                      <span class="msg">Enter a phone number.</span>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="bReg">Car registration</label>
+                      <input id="bReg" type="text" autocomplete="off" spellcheck="false" placeholder="12 C 3456">
+                      <span class="msg">Enter the registration.</span>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="bCar">Make and model</label>
+                      <input id="bCar" type="text" autocomplete="off" placeholder="Volkswagen Golf">
+                      <span class="msg">Enter the make and model.</span>
+                    </div>
+                  </div>
+
+                  <div class="check" id="bCheck">
+                    <h4>Is this your car?</h4>
+                    <div class="check-body">
+                      <span class="plate"><span class="eu">IRL</span><span class="reg" id="bPlate">12 C 3456</span></span>
+                      <div class="check-what"><span class="label">Make and model</span><div id="bCarWhat">Volkswagen Golf</div></div>
+                    </div>
+                    <div class="check-actions">
+                      <button class="btn" type="button" id="bCarYes">Confirm</button>
+                      <button class="btn btn-line" type="button" id="bCarNo">Edit</button>
+                    </div>
+                    <p class="check-done"><span class="label label-accent">Car confirmed</span><button class="check-edit" type="button" id="bCarEdit">Change</button></p>
+                  </div>
+
+                  <div class="actions">
+                    <button class="btn btn-line" type="button" data-back="1">Back</button>
+                    <button class="btn grow" type="button" data-next="3">Continue</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" data-panel="3">
+                <div class="card step-card">
+                  <span class="label">Step 03 &mdash; Slot</span>
+                  <h3>Select a time.</h3>
+                  <p class="step-sub">Unavailable slots are marked. Times shown are drop-off.</p>
+
+                  <div style="margin-top:var(--s3)">
+                    <div class="cal-head">
+                      <button class="rnd" type="button" id="wkPrev" aria-label="Previous week"><span class="arw l" aria-hidden="true"></span></button>
+                      <span class="cal-range" id="wkRange" aria-live="polite">&nbsp;</span>
+                      <button class="rnd" type="button" id="wkNext" aria-label="Next week"><span class="arw r" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="cal-grid" id="calGrid" role="group" aria-label="Available slots this week"></div>
+                    <div class="cal-m" id="calM">
+                      <div class="daystrip" id="dayStrip" role="group" aria-label="Day"></div>
+                      <div class="timelist" id="timeList"></div>
+                    </div>
+                    <div class="legend">
+                      <span><i></i> Free</span>
+                      <span><i class="t"></i> Taken</span>
+                      <span><i class="s"></i> Selected</span>
+                    </div>
+                    <p class="cal-note" id="calNote">No booking is made until you send it or create an account.</p>
+                  </div>
+
+                  <div class="actions">
+                    <button class="btn btn-line" type="button" data-back="2">Back</button>
+                    <button class="btn grow" type="button" data-next="4">Confirm</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" data-panel="4">
+                <div class="card conf-card">
+                  <span class="label label-accent">Ready</span>
+                  <h3>Your booking.</h3>
+
+                  <div class="conf-rows">
+                    <div><span class="label">Service</span><span class="v" id="cSvc">&mdash;</span></div>
+                    <div id="cFreqRow"><span class="label">Frequency</span><span class="v" id="cFreq">&mdash;</span></div>
+                    <div><span class="label">Cars</span><span class="v" id="cCars">&mdash;</span></div>
+                    <div><span class="label">Car</span><span class="v" id="cCar">&mdash;</span></div>
+                    <div><span class="label">Slot</span><span class="v" id="cSlot">&mdash;</span></div>
+                    <div><span class="label">Name</span><span class="v" id="cName">&mdash;</span></div>
+                    <div><span class="label">Phone</span><span class="v" id="cPhone">&mdash;</span></div>
+                    <div><span class="label">Price</span><span class="v money" id="cPrice">&mdash;</span></div>
+                  </div>
+
+                  <div class="routes">
+                    <div class="route">
+                      <h4>Send it now</h4>
+                      <p>Opens WhatsApp with the whole booking written out. Confirmation follows by message.</p>
+                      <a class="btn" id="cSend" href="https://wa.me/353830166325">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.21.89 2.39 1.01 2.55.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+                        Send on WhatsApp
+                      </a>
+                    </div>
+                    <div class="route">
+                      <h4>Create an account</h4>
+                      <p>Sets up your member area with this booking already in your slots, plus your car on file.</p>
+                      <button class="btn" type="button" id="cAccount">Create an account</button>
+                    </div>
+                  </div>
+
+                  <div class="actions"><button class="btn btn-line" type="button" data-back="3">Back</button></div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="card quote" id="quote">
+              <span class="label">Your price</span>
+              <div class="quote-total" id="qTotal" aria-live="polite"><strong class="num">&euro;35</strong><span class="per">per visit</span></div>
+              <p class="quote-sum" id="qSum">1 car &middot; Maintenance Detail &middot; fortnightly</p>
+              <p class="quote-save" id="qSave"></p>
+              <p class="quote-when" id="qWhen"><span class="label">Your slot</span><span id="qWhenText"></span></p>
+            </aside>
           </div>
         </div>
-
-        <div class="quote-out reveal" style="--d: 0.2s">
-          <span class="k">Your price</span>
-          <div class="quote-total" id="qTotal" aria-live="polite">
-            <strong>€30</strong><span class="per">per week</span>
-          </div>
-          <p class="quote-summary" id="qSummary">1 car &middot; Maintenance Detail &middot; weekly</p>
-          <p class="quote-saving" id="qSaving"></p>
-          <a class="btn" id="qBook" href="https://wa.me/353830166325">Text to Book</a>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ BEFORE / AFTER SLIDER ============ -->
-  <section>
-    <div class="ba" id="ba" role="slider" tabindex="0"
-         aria-label="Before and after comparison"
-         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-      <div class="ba-half ba-before">
-        <!-- <img src="media/before.jpg" alt="Car before"> -->
-      </div>
-      <div class="ba-half ba-after">
-        <!-- <img src="media/after.jpg" alt="Car after"> -->
-      </div>
-      <span class="ba-tag l">Before</span>
-      <span class="ba-tag r">After</span>
-      <div class="ba-handle"><span class="ba-knob"><i></i><i></i></span></div>
-      <span class="ba-hint">Drag to compare</span>
-    </div>
-  </section>
-  <section class="cap dark">
-    <div class="shell">
-      <p class="media-caption reveal">Same car, one visit</p>
-    </div>
-  </section>
-
-  <!-- ============ SECONDARY CTA ============ -->
-  <section class="snap-cta dark rule-top gloss">
-    <div class="shell">
-      <div class="snap-inner reveal">
-        <p>Not sure what your car needs? Send a photo and I'll price it.</p>
-        <a class="btn btn-quiet" href="https://wa.me/353830166325?text=Hi%2C%20here%27s%20a%20photo%20of%20my%20car%20%E2%80%94%20could%20you%20price%20it%3F">Send a Photo</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ HOW IT WORKS — the one light section ============ -->
-  <section class="pad on-light matte" id="how">
-    <div class="shell">
-      <div class="eyebrow reveal">How it works</div>
-      <div class="how-row reveal" style="--d: 0.06s">
-        <span class="n">01</span>
-        <p>Text to book your slot.</p>
-      </div>
-      <div class="how-row reveal" style="--d: 0.14s">
-        <span class="n">02</span>
-        <p>Drop the car.</p>
-      </div>
-      <div class="how-row reveal" style="--d: 0.22s">
-        <span class="n">03</span>
-        <p>Collect it in about an hour.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ ABOUT ============ -->
-  <section class="pad darker gloss" id="about">
-    <div class="shell">
-      <div class="eyebrow reveal">About</div>
-      <div class="about-grid">
-        <div class="founder reveal" style="--d: 0.08s">
-          <!-- Founder photo: <img src="media/eduard.jpg" alt="Eduard, EMCleen"> -->
-          <span>Photo — Eduard</span>
-        </div>
-        <div class="about-copy">
-          <p class="reveal" style="--d: 0.16s">I'm Eduard. 20, from Ennis.</p>
-          <p class="reveal" style="--d: 0.22s">It started with my own car — I liked doing it properly, so I kept doing it properly. Friends noticed and asked. Then their friends asked.</p>
-          <p class="reveal" style="--d: 0.28s">I take a set number of cars a week. Every one goes through my hands. No volume work, no rushing, nobody else touching it.</p>
-          <p class="reveal" style="--d: 0.34s">That's the model. It's not complicated.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ REVIEWS ============ -->
-  <section class="pad dark gloss" id="reviews">
-    <div class="shell">
-      <div class="eyebrow reveal">Reviews</div>
-      <h2 class="section-title reveal" style="--d: 0.08s">What people say.</h2>
-      <p class="rev-note reveal" style="--d: 0.12s">Placeholder cards — real reviews go in as they come.</p>
-
-      <!-- PLACEHOLDER REVIEWS — replace name, service and quote with real ones. -->
-      <div class="rev-track" id="revTrack">
-        <article class="rev reveal" style="--d: 0.06s">
-          <div class="stars" aria-label="5 out of 5">★★★★★</div>
-          <blockquote>[Placeholder — a line here about the weekly Maintenance Detail and what it's like keeping the car on a set slot.]</blockquote>
-          <div><span class="who">Customer name</span><span class="svc">Maintenance Detail</span></div>
-        </article>
-        <article class="rev reveal" style="--d: 0.14s">
-          <div class="stars" aria-label="5 out of 5">★★★★★</div>
-          <blockquote>[Placeholder — a line here about an Extensive Detail and the state the car came back in.]</blockquote>
-          <div><span class="who">Customer name</span><span class="svc">Extensive Detail</span></div>
-        </article>
-        <article class="rev reveal" style="--d: 0.22s">
-          <div class="stars" aria-label="5 out of 5">★★★★★</div>
-          <blockquote>[Placeholder — a line here about booking by text and how quick the turnaround was.]</blockquote>
-          <div><span class="who">Customer name</span><span class="svc">Detail</span></div>
-        </article>
-      </div>
-
-      <div class="carousel-nav">
-        <button class="cnav" id="revPrev" type="button" aria-label="Previous review">
-          <span class="arw l" aria-hidden="true"></span>
-        </button>
-        <div class="dots" id="revDots" role="tablist" aria-label="Reviews"></div>
-        <button class="cnav" id="revNext" type="button" aria-label="Next review">
-          <span class="arw r" aria-hidden="true"></span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TWO-CAR BLEED ============ -->
-  <section class="media gloss" data-parallax>
-    <div class="media-layer">
-      <!-- <img src="media/two-cars.jpg" alt="Two cars cleaned in the same slot"> -->
-    </div>
-    <div class="media-scrim"></div>
-    <span class="media-tag">Photo — two cars</span>
-  </section>
-  <section class="cap dark">
-    <div class="shell">
-      <p class="media-caption reveal">Two cars, one slot — 10% off both</p>
-    </div>
-  </section>
-
-  <!-- ============ FAQ ============ -->
-  <section class="pad dark gloss" id="faq">
-    <div class="shell">
-      <div class="eyebrow reveal">FAQ</div>
-      <h2 class="section-title reveal" style="--d: 0.08s">Questions.</h2>
-
-      <div class="faq-list reveal" style="--d: 0.12s">
-        <details class="qa">
-          <summary>Where are you based?<span class="plus" aria-hidden="true"></span></summary>
-          <p>Ennis, Co. Clare. Drop the car to me, park up, and either collect it when it's done or wait the hour.</p>
-        </details>
-        <details class="qa">
-          <summary>Do you have slots free?<span class="plus" aria-hidden="true"></span></summary>
-          <p>There are only so many weekly slots, and they go first come, first served. Text me and I'll tell you what's open — if your preferred time is taken I'll offer you the nearest one.</p>
-        </details>
-        <details class="qa">
-          <summary>What's the difference between the Maintenance Detail and a one-off detail?<span class="plus" aria-hidden="true"></span></summary>
-          <p>The Maintenance Detail keeps an already-clean car clean: snow foam pre-wash, two-bucket contact wash, wheels and tyres, interior vacuum, dash and plastics wiped, hand dried — about an hour. The Detail adds the work a weekly wash doesn't reach: wheel arches and door shuts, a deep interior clean down to the trim, seat rails and seat belts, mats deep cleaned, the boot detailed and the glass polished. The Extensive Detail goes further again on the paint — clay bar decontamination, tar removal, and a wax or sealant, with the alloys done including the barrels and every interior surface detailed and dressed. Most people start with a Detail or Extensive Detail and then hold it there with the weekly Maintenance Detail.</p>
-        </details>
-        <details class="qa">
-          <summary>How long does it take?<span class="plus" aria-hidden="true"></span></summary>
-          <p>The Maintenance Detail is about an hour. The Detail and Extensive Detail take longer — you'll get a time when you book.</p>
-        </details>
-        <details class="qa">
-          <summary>How does the weekly subscription work?<span class="plus" aria-hidden="true"></span></summary>
-          <p>You get a set slot at the same time each week for €30. Text me any time to pause, move or cancel your slot.</p>
-        </details>
-        <details class="qa">
-          <summary>What if it rains?<span class="plus" aria-hidden="true"></span></summary>
-          <p>It's a covered setup, so the weather doesn't stop your slot.</p>
-        </details>
-        <details class="qa">
-          <summary>Can I pause or cancel?<span class="plus" aria-hidden="true"></span></summary>
-          <p>Yes, any time, no notice period.</p>
-        </details>
-        <details class="qa">
-          <summary>What if my car is badly soiled — pet hair, smoke, spills?<span class="plus" aria-hidden="true"></span></summary>
-          <p>All doable, but priced separately since it's more work. Send a photo on WhatsApp and I'll quote it.</p>
-        </details>
-        <details class="qa">
-          <summary>How do I pay?<span class="plus" aria-hidden="true"></span></summary>
-          <p>Cash, card, Revolut, or Stripe.</p>
-        </details>
-        <details class="qa">
-          <summary>Do you detail all cars?<span class="plus" aria-hidden="true"></span></summary>
-          <p>Any car, any condition.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ FOOTER ============ -->
-  <footer class="gloss">
-    <div class="shell">
+  <div class="shell">
+    <footer class="slab on-dark foot-slab" data-rv>
       <div class="foot-top">
         <div>
           <div class="foot-brand">EMCleen</div>
-          <p class="foot-loc">Weekly car care<br>Ennis, Co. Clare, Ireland</p>
+          <p class="foot-loc">Subscription car care<br>Ennis, Co. Clare, Ireland</p>
         </div>
         <div class="foot-col">
           <h4>Contact</h4>
-          <a href="tel:+353830166325">083 016 6325</a>
+          <a href="tel:+353830166325" class="num">083 016 6325</a>
           <a href="https://wa.me/353830166325">WhatsApp</a>
           <a href="mailto:eduard@emcleen.com">eduard@emcleen.com</a>
         </div>
         <div class="foot-col">
-          <h4>Follow</h4>
-          <a href="https://instagram.com/1.eduardm">Instagram — @1.eduardm</a>
-          <span>TikTok <span class="pending">— account coming</span></span>
-          <span>Facebook <span class="pending">— account coming</span></span>
+          <h4>More</h4>
+          <button type="button" data-view-open="about">About</button>
+          <button type="button" data-view-open="reviews">Reviews</button>
+          <button type="button" data-view-open="faq">FAQ</button>
+          <button type="button" data-view-open="members">Members</button>
         </div>
       </div>
       <div class="foot-base">
-        <span>&copy; <span id="yr">2026</span> EMCleen</span>
+        <span>&copy; <span id="yr" class="num">2026</span> EMCleen</span>
         <span>Ennis, Co. Clare</span>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
+</main>
 
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <div class="menu-in shell">
+    <div class="menu-top">
+      <span class="label" style="color:#8a847a">EMCleen &mdash; Menu</span>
+      <button class="x-btn" id="menuClose" type="button">Close <i aria-hidden="true"></i></button>
+    </div>
+    <nav class="menu-nav" id="menuNav">
+      <button class="menu-item" type="button" data-view-open="about"><span class="mi-n">01</span><span class="mi-t">About</span></button>
+      <button class="menu-item" type="button" data-view-open="reviews"><span class="mi-n">02</span><span class="mi-t">Reviews</span></button>
+      <button class="menu-item" type="button" data-view-open="faq"><span class="mi-n">03</span><span class="mi-t">FAQ</span></button>
+      <button class="menu-item" type="button" data-view-open="contact"><span class="mi-n">04</span><span class="mi-t">Contact</span></button>
+      <button class="menu-item" type="button" data-view-open="members"><span class="mi-n">05</span><span class="mi-t">Members</span></button>
+    </nav>
+    <div class="menu-foot">
+      <a href="#services" data-menu-scroll="services">Services</a>
+      <a href="#book" data-menu-scroll="book">Book a slot</a>
+      <a href="https://wa.me/353830166325">WhatsApp</a>
+      <a href="tel:+353830166325" class="num">083 016 6325</a>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="v-about" role="dialog" aria-modal="true" aria-label="About">
+  <div class="view-bar"><span class="view-title">About</span><button class="view-x" type="button" data-view-close>Close <i aria-hidden="true"></i></button></div>
+  <div class="view-body"><div class="shell">
+    <h2>The model.</h2>
+    <div class="about-grid">
+      <div class="founder"><!-- <img src="media/eduard.jpg" alt="Eduard, EMCleen"> --><span>Photo &mdash; Eduard</span></div>
+      <div class="about-copy">
+        <p>I'm Eduard. 20, from Ennis.</p>
+        <p>It started with my own car &mdash; I liked doing it properly, so I kept doing it properly. Friends noticed and asked. Then their friends asked.</p>
+        <p>I take a set number of cars a week. Every one goes through my hands. No volume work, no rushing, nobody else touching it.</p>
+        <p>That's the model. It's not complicated.</p>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="view" id="v-reviews" role="dialog" aria-modal="true" aria-label="Reviews">
+  <div class="view-bar"><span class="view-title">Reviews</span><button class="view-x" type="button" data-view-close>Close <i aria-hidden="true"></i></button></div>
+  <div class="view-body"><div class="shell">
+    <h2>On record.</h2>
+    <p class="lede" style="margin-top:var(--s2)">Placeholder. Real reviews to follow.</p>
+    <div class="revs">
+      <article class="rev"><div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Placeholder &mdash; a line on the Maintenance Detail and holding a set slot.]</blockquote><div><span class="who">Customer name</span><span class="svc">Maintenance Detail</span></div></article>
+      <article class="rev"><div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Placeholder &mdash; a line on an Extensive Detail and the condition returned.]</blockquote><div><span class="who">Customer name</span><span class="svc">Extensive Detail</span></div></article>
+      <article class="rev"><div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Placeholder &mdash; a line on booking by message and turnaround.]</blockquote><div><span class="who">Customer name</span><span class="svc">Detail</span></div></article>
+      <article class="rev"><div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Placeholder &mdash; a line on the two-car rate and doing both in one visit.]</blockquote><div><span class="who">Customer name</span><span class="svc">Maintenance Detail</span></div></article>
+      <article class="rev"><div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Placeholder &mdash; a line on the interior work and the state of the trim.]</blockquote><div><span class="who">Customer name</span><span class="svc">Detail</span></div></article>
+      <article class="rev"><div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Placeholder &mdash; a line on keeping a set slot over several months.]</blockquote><div><span class="who">Customer name</span><span class="svc">Maintenance Detail</span></div></article>
+    </div>
+  </div></div>
+</div>
+
+<div class="view on-light" id="v-faq" role="dialog" aria-modal="true" aria-label="FAQ">
+  <div class="view-bar"><span class="view-title">FAQ</span><button class="view-x" type="button" data-view-close>Close <i aria-hidden="true"></i></button></div>
+  <div class="view-body"><div class="shell">
+    <h2>Questions.</h2>
+    <div class="faq">
+      <details class="qa"><summary>Where are you based?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Ennis, Co. Clare. Drop the car to me, park up, and either collect it when it's done or wait the hour. Drop-off and collection are the same place.</p></details>
+      <details class="qa"><summary>Do you have slots free?<span class="plus" aria-hidden="true"></span></summary>
+        <p>There are only so many slots, and they go first come, first served. Text me and I'll tell you what's open — if your preferred time is taken I'll offer you the nearest one.</p></details>
+      <details class="qa"><summary>What's the difference between the Maintenance Detail and a one-off detail?<span class="plus" aria-hidden="true"></span></summary>
+        <p>The Maintenance Detail keeps an already-clean car clean: snow foam pre-wash, two-bucket contact wash, wheels and tyres, interior vacuum, dash and plastics wiped, hand dried — about an hour. The Detail adds the work a maintenance wash doesn't reach: wheel arches and door shuts, a deep interior clean down to the trim, seat rails and seat belts, mats deep cleaned, the boot detailed and the glass polished. The Extensive Detail goes further again on the paint — clay bar decontamination, tar removal, and a wax or sealant, with the alloys done including the barrels and every interior surface detailed and dressed. Most people start with a Detail or Extensive Detail and then hold it there with the Maintenance Detail.</p></details>
+      <details class="qa"><summary>How long does it take?<span class="plus" aria-hidden="true"></span></summary>
+        <p>The Maintenance Detail is about an hour. The Detail and Extensive Detail take longer — you'll get a time when you book.</p></details>
+      <details class="qa"><summary>How does the subscription work?<span class="plus" aria-hidden="true"></span></summary>
+        <p>You get a set slot at the same time on a set cycle &mdash; every fortnight at &euro;35 a visit, or monthly at &euro;45. Text me any time to pause, move or cancel your slot.</p></details>
+      <details class="qa"><summary>What if it rains?<span class="plus" aria-hidden="true"></span></summary>
+        <p>It's a covered setup, so the weather doesn't stop your slot.</p></details>
+      <details class="qa"><summary>Can I pause or cancel?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Yes, any time, no notice period.</p></details>
+      <details class="qa"><summary>What if my car is badly soiled — pet hair, smoke, spills?<span class="plus" aria-hidden="true"></span></summary>
+        <p>All doable, but priced separately since it's more work. Send a photo on WhatsApp and I'll quote it.</p></details>
+      <details class="qa"><summary>How do I pay?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Cash, card, Revolut, or Stripe.</p></details>
+      <details class="qa"><summary>Do you detail all cars?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Any car, any condition.</p></details>
+    </div>
+  </div></div>
+</div>
+
+<div class="view" id="v-contact" role="dialog" aria-modal="true" aria-label="Contact">
+  <div class="view-bar"><span class="view-title">Contact</span><button class="view-x" type="button" data-view-close>Close <i aria-hidden="true"></i></button></div>
+  <div class="view-body"><div class="shell">
+    <h2>Get in touch.</h2>
+    <p class="lede" style="margin-top:var(--s2)">Ennis, Co. Clare. Drop-off and collection are the same place — you get the address when the slot is confirmed.</p>
+    <div class="contact-grid">
+      <a class="contact-card" href="https://wa.me/353830166325"><span class="label label-accent">WhatsApp</span><strong>Message Eduard</strong><span class="sub">Fastest way to book or ask.</span></a>
+      <a class="contact-card" href="tel:+353830166325"><span class="label label-accent">Phone</span><strong class="num">083 016 6325</strong><span class="sub">Call or text.</span></a>
+      <a class="contact-card" href="mailto:eduard@emcleen.com"><span class="label label-accent">Email</span><strong>eduard@emcleen.com</strong><span class="sub">For anything longer.</span></a>
+      <a class="contact-card" href="https://instagram.com/1.eduardm"><span class="label label-accent">Instagram</span><strong>@1.eduardm</strong><span class="sub">Recent work.</span></a>
+    </div>
+  </div></div>
+</div>
+
+<div class="view" id="v-members" role="dialog" aria-modal="true" aria-label="Member area">
+  <div class="view-bar">
+    <span class="view-title" id="mBarTitle">Members</span>
+    <div style="display:flex;gap:0.4rem;align-items:center">
+      <button class="m-mini" type="button" id="mSignOut" hidden>Sign out</button>
+      <button class="view-x" type="button" data-view-close>Close <i aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="m-login" id="mLogin">
+    <div class="m-login-card">
+      <span class="label label-accent">Member area</span>
+      <h2 id="mFormTitle" style="margin-top:0.4rem">Sign in.</h2>
+      <p class="small" style="margin-top:0.5rem" id="mFormSub">Manage your cars, slots and billing.</p>
+
+      <form class="m-form" id="mForm">
+        <div class="m-field" id="mNameField" hidden>
+          <label class="label" for="mName">Name</label>
+          <input class="m-in" id="mName" type="text" autocomplete="name" placeholder="Your name">
+        </div>
+        <div class="m-field" id="mPhoneField" hidden>
+          <label class="label" for="mPhone">Phone</label>
+          <input class="m-in" id="mPhone" type="tel" autocomplete="tel" placeholder="083 016 6325">
+        </div>
+        <div class="m-field">
+          <label class="label" for="mEmail">Email</label>
+          <input class="m-in" id="mEmail" type="email" autocomplete="email" placeholder="you@example.com">
+        </div>
+        <div class="m-field">
+          <label class="label" for="mPass">Password</label>
+          <input class="m-in" id="mPass" type="password" autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-wide" type="submit" id="mSubmit">Sign in</button>
+      </form>
+
+      <p class="m-note">Visual demo — no account is created and nothing is stored. Any input continues.</p>
+      <p class="m-switch"><span id="mSwitchText">No account yet?</span> <button type="button" id="mSwitchBtn">Create one</button></p>
+    </div>
+  </div>
+
+  <div class="m-dash" id="mDash">
+    <nav class="m-tabs" id="mTabs" aria-label="Member sections">
+      <button type="button" data-tab="overview" aria-current="true">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Overview</button>
+      <button type="button" data-tab="cars" aria-current="false">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17h14M4 17v-4l2-5h12l2 5v4"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/></svg>Cars</button>
+      <button type="button" data-tab="slots" aria-current="false">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Slots</button>
+      <button type="button" data-tab="billing" aria-current="false">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19"/></svg>Billing</button>
+      <button type="button" data-tab="settings" aria-current="false">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>Settings</button>
+    </nav>
+
+    <div class="m-main">
+      <section class="m-panel live" data-tabp="overview">
+        <div class="m-h"><h2>Overview</h2><p id="mGreet">Welcome back.</p></div>
+        <div class="m-cards">
+          <div class="m-card hero-card">
+            <span class="label">Next slot</span>
+            <div class="m-stat"><b id="mNextSlot">&mdash;</b><small id="mNextCar">&mdash;</small></div>
+          </div>
+          <div class="m-card">
+            <span class="label">Current plan</span>
+            <div class="m-stat"><b id="mPlan">Maintenance Detail</b><small id="mPlanSub">Fortnightly &mdash; &euro;35 a visit</small></div>
+          </div>
+        </div>
+        <div class="m-card" style="margin-top:var(--s2)">
+          <span class="label">Next step</span>
+          <p class="small" style="margin-top:0.5rem">Book your next visit or move an existing one.</p>
+          <button class="btn btn-wide" type="button" data-tab-jump="slots" style="margin-top:var(--s2)">Manage my slots</button>
+        </div>
+      </section>
+
+      <section class="m-panel" data-tabp="cars">
+        <div class="m-h"><h2>My Cars</h2><p>Registration, make and model for each car on your account.</p></div>
+        <button class="btn btn-wide" type="button" id="carAdd" style="margin-bottom:var(--s3)">Add a car</button>
+        <div class="m-list" id="carList"></div>
+        <div class="m-editor" id="carEditor">
+          <h3 id="carEditorTitle">Add a car</h3>
+          <div class="m-grid2">
+            <div class="m-field"><label class="label" for="carReg">Registration</label><input class="m-in" id="carReg" type="text" placeholder="12 C 3456" spellcheck="false" style="text-transform:uppercase"></div>
+            <div class="m-field"><label class="label" for="carMake">Make</label><input class="m-in" id="carMake" type="text" placeholder="Volkswagen"></div>
+            <div class="m-field"><label class="label" for="carModel">Model</label><input class="m-in" id="carModel" type="text" placeholder="Golf GTI"></div>
+            <div class="m-field"><label class="label" for="carColour">Colour</label><input class="m-in" id="carColour" type="text" placeholder="Deep black"></div>
+          </div>
+          <div class="m-editor-actions">
+            <button class="btn" type="button" id="carSave">Save car</button>
+            <button class="btn btn-line" type="button" id="carCancel">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="m-panel" data-tabp="slots">
+        <div class="m-h"><h2>Slots</h2><p>Upcoming bookings on your account.</p></div>
+        <button class="btn btn-wide" type="button" id="slotBook" style="margin-bottom:var(--s3)">Book another</button>
+        <div class="m-list" id="slotList"></div>
+        <p class="m-note" id="slotNote" hidden></p>
+      </section>
+
+      <section class="m-panel" data-tabp="billing">
+        <div class="m-h"><h2>Billing</h2><p>Plan, payment method and invoices.</p></div>
+        <div class="m-cards">
+          <div class="m-card hero-card">
+            <span class="label">Plan</span>
+            <div class="m-stat"><b>Maintenance Detail</b><small>Fortnightly &mdash; &euro;35 a visit &mdash; next charge 11 Aug</small></div>
+            <div class="m-row-actions" style="margin-top:var(--s2)">
+              <button class="m-mini" type="button" data-mock="Plan changes are handled by message. Text Eduard to switch cycle.">Change plan</button>
+              <button class="m-mini" type="button" data-mock="Plan paused. Nothing further would be charged until you resume.">Pause</button>
+            </div>
+          </div>
+          <div class="m-card">
+            <span class="label">Payment method</span>
+            <div class="m-stat"><b class="num">Visa •••• 4471</b><small class="num">Expires 09 / 27</small></div>
+            <div class="m-row-actions" style="margin-top:var(--s2)">
+              <button class="m-mini" type="button" data-mock="Card details are handled by the payment provider, never on this site. Not wired up in this demo.">Update card</button>
+            </div>
+          </div>
+        </div>
+        <div class="m-card" style="margin-top:var(--s2)">
+          <span class="label">Invoices</span>
+          <div class="inv">
+            <div class="inv-row"><span class="inv-id">INV-0114</span><span class="inv-amt">&euro;35.00</span><span class="inv-meta"><span>28 Jul 2026</span><span>Maintenance Detail</span><span class="pill ok">Paid</span></span></div>
+            <div class="inv-row"><span class="inv-id">INV-0108</span><span class="inv-amt">&euro;35.00</span><span class="inv-meta"><span>14 Jul 2026</span><span>Maintenance Detail</span><span class="pill ok">Paid</span></span></div>
+            <div class="inv-row"><span class="inv-id">INV-0101</span><span class="inv-amt">&euro;35.00</span><span class="inv-meta"><span>30 Jun 2026</span><span>Maintenance Detail</span><span class="pill ok">Paid</span></span></div>
+            <div class="inv-row"><span class="inv-id">INV-0094</span><span class="inv-amt">&euro;140.00</span><span class="inv-meta"><span>16 Jun 2026</span><span>Extensive Detail</span><span class="pill ok">Paid</span></span></div>
+            <div class="inv-row"><span class="inv-id">INV-0088</span><span class="inv-amt">&euro;35.00</span><span class="inv-meta"><span>02 Jun 2026</span><span>Maintenance Detail</span><span class="pill ok">Paid</span></span></div>
+          </div>
+          <p class="m-note">Demo data. No payments are processed.</p>
+        </div>
+      </section>
+
+      <section class="m-panel" data-tabp="settings">
+        <div class="m-h"><h2>Settings</h2><p>Your contact details.</p></div>
+        <div class="m-card">
+          <span class="label">Your details</span>
+          <div class="m-grid2">
+            <div class="m-field"><label class="label" for="sName">Name</label><input class="m-in" id="sName" type="text" value="Eduard Mocanu"></div>
+            <div class="m-field"><label class="label" for="sPhone">Phone</label><input class="m-in" id="sPhone" type="tel" value="083 016 6325"></div>
+            <div class="m-field"><label class="label" for="sEmail">Email</label><input class="m-in" id="sEmail" type="email" value="eduard@emcleen.com"></div>
+          </div>
+          <button class="btn btn-wide" type="button" id="sSave" style="margin-top:var(--s3)">Save changes</button>
+          <p class="m-note" id="sNote" hidden></p>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (function () {
   'use strict';
 
   var WA = 'https://wa.me/353830166325';
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var G = typeof window.gsap !== 'undefined';
+  if (G && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  var EASE = 'power3.out';
 
-  /* ---------- reveal on scroll ---------- */
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  var $ = function (id) { return document.getElementById(id); };
+  var all = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ============================================== MOTION */
+  if (!G || reduce) {
+    document.documentElement.classList.add('no-motion');
+  } else {
+    all('[data-rv]').forEach(function (el) {
+      gsap.fromTo(el, { opacity: 0, y: 44 }, {
+        opacity: 1, y: 0, duration: 1.4, ease: 'power4.out',
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+      });
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-
-  /* ---------- parallax on full-bleed media ---------- */
-  var frames = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
-  function paintParallax() {
-    if (reduceMotion) return;
-    var vh = window.innerHeight;
-    frames.forEach(function (frame) {
-      var r = frame.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > vh) return;
-      var layer = frame.querySelector('.media-layer');
-      if (!layer) return;
-      var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
-      layer.style.transform = 'translateY(' + (progress * -5).toFixed(2) + '%)';
+    [['#acc', '.acc-item'], ['.hero-meta', 'div'], ['.foot-top', 'CHILDREN']].forEach(function (p) {
+      var root = document.querySelector(p[0]);
+      if (!root) return;
+      var kids = p[1] === 'CHILDREN' ? Array.prototype.slice.call(root.children) : all(p[1], root);
+      if (!kids.length) return;
+      gsap.fromTo(kids, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 1.15, stagger: 0.12, ease: 'power4.out',
+        scrollTrigger: { trigger: root, start: 'top 88%', once: true }
+      });
     });
   }
 
-  var ticking = false;
-  window.addEventListener('scroll', function () {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { paintParallax(); ticking = false; });
-  }, { passive: true });
-  window.addEventListener('resize', paintParallax, { passive: true });
-  paintParallax();
+  function scrollToId(id) {
+    var el = $(id);
+    if (!el) return;
+    var top = el.getBoundingClientRect().top + window.pageYOffset - 70;
+    window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  all('[data-scroll]').forEach(function (b) {
+    b.addEventListener('click', function () { scrollToId(b.dataset.scroll); });
+  });
 
-  /* ---------- header disclosure panels ---------- */
-  var panels = [
-    { btn: document.getElementById('contactBtn'), panel: document.getElementById('contactPanel') },
-    { btn: document.getElementById('socialBtn'), panel: document.getElementById('socialPanel') }
-  ];
-  panels.forEach(function (p, i) {
-    p.btn.addEventListener('click', function () {
-      var willOpen = p.btn.getAttribute('aria-expanded') !== 'true';
-      panels.forEach(function (q, j) {
-        var open = (j === i) && willOpen;
-        q.btn.setAttribute('aria-expanded', String(open));
-        q.panel.classList.toggle('open', open);
-      });
+  /* ============================================== MENU */
+  var menu = $('menu');
+  function anyViewOpen() { return !!document.querySelector('.view.live'); }
+  function openMenu() {
+    menu.classList.add('live');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('locked');
+    if (G && !reduce) {
+      /* a full black takeover that wipes down, then the items arrive one by one */
+      var tl = gsap.timeline();
+      tl.fromTo(menu,
+        { opacity: 1, clipPath: 'inset(0% 0% 100% 0%)' },
+        { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.85, ease: 'power4.inOut' });
+      tl.fromTo('.menu-top > *',
+        { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power3.out' }, '-=0.35');
+      tl.fromTo('.menu-item',
+        { opacity: 0, y: 54 }, { opacity: 1, y: 0, duration: 0.95, stagger: 0.09, ease: 'power4.out' }, '-=0.45');
+      tl.fromTo('.menu-foot > *',
+        { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.05, ease: 'power3.out' }, '-=0.55');
+    }
+  }
+  function closeMenu() {
+    if (G && !reduce) gsap.set(menu, { clearProps: 'clipPath' });
+    menu.classList.remove('live');
+    menu.setAttribute('aria-hidden', 'true');
+    if (!anyViewOpen()) document.body.classList.remove('locked');
+  }
+  $('menuOpen').addEventListener('click', openMenu);
+  $('menuClose').addEventListener('click', closeMenu);
+  all('[data-menu-scroll]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      closeMenu();
+      setTimeout(function () { scrollToId(a.dataset.menuScroll); }, 60);
     });
   });
+
+  /* ============================================== VIEWS */
+  function openView(name) {
+    var v = $('v-' + name);
+    if (!v) return;
+    closeMenu();
+    v.classList.add('live');
+    v.scrollTop = 0;
+    document.body.classList.add('locked');
+    if (G && !reduce) {
+      gsap.fromTo(v, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: EASE });
+      var kids = v.querySelectorAll('.view-body > .shell > *, .m-login-card');
+      if (kids.length) gsap.fromTo(kids, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.06, ease: EASE, delay: 0.05 });
+    }
+    var x = v.querySelector('[data-view-close]');
+    if (x) setTimeout(function () { x.focus(); }, 120);
+  }
+  function closeViews() {
+    all('.view.live').forEach(function (v) { v.classList.remove('live'); });
+    if (!menu.classList.contains('live')) document.body.classList.remove('locked');
+  }
+  all('[data-view-open]').forEach(function (b) { b.addEventListener('click', function () { openView(b.dataset.viewOpen); }); });
+  all('[data-view-close]').forEach(function (b) { b.addEventListener('click', closeViews); });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    panels.forEach(function (p) {
-      p.btn.setAttribute('aria-expanded', 'false');
-      p.panel.classList.remove('open');
-    });
+    if (anyViewOpen()) { closeViews(); return; }
+    if (menu.classList.contains('live')) closeMenu();
   });
 
-  /* ---------- quote builder ---------- */
-  var SERVICES = {
-    maintenance: { label: 'Maintenance Detail', recurring: 30, oneoff: 45, subscribable: true },
-    detail:      { label: 'Detail',             recurring: 80, oneoff: 80, subscribable: false },
-    extensive:   { label: 'Extensive Detail',   recurring: 140, oneoff: 140, subscribable: false }
-  };
-  var FREQ = {
-    weekly:      { label: 'weekly',      per: 'per week',  recurring: true },
-    fortnightly: { label: 'fortnightly', per: 'per visit', recurring: true },
-    oneoff:      { label: 'one-off',     per: 'one-off',   recurring: false }
-  };
-
-  var pick = { cars: 1, service: 'maintenance', freq: 'weekly' };
-
-  var elTotal = document.getElementById('qTotal');
-  var elSummary = document.getElementById('qSummary');
-  var elSaving = document.getElementById('qSaving');
-  var elBook = document.getElementById('qBook');
-  var freqStep = document.getElementById('qFreqStep');
-  var stepsWrap = document.getElementById('qSteps');
-  var carInput = document.getElementById('qCarsNum');
-  var carBtns = Array.prototype.slice.call(document.querySelectorAll('#qCars .opt'));
-
-  function renumberSteps() {
-    var n = 0;
-    Array.prototype.slice.call(stepsWrap.querySelectorAll('.step')).forEach(function (step) {
-      if (step.hidden) return;
-      n += 1;
-      var label = step.querySelector('.step-label .n');
-      if (label) label.textContent = n < 10 ? '0' + n : String(n);
+  /* ============================================== ACCORDION */
+  var acc = $('acc');
+  acc.addEventListener('click', function (e) {
+    var head = e.target.closest('.acc-head');
+    if (!head) return;
+    var item = head.parentElement;
+    var wasOpen = item.dataset.open === 'true';
+    all('.acc-item', acc).forEach(function (it) {
+      it.dataset.open = 'false';
+      it.querySelector('.acc-head').setAttribute('aria-expanded', 'false');
     });
-  }
-
-  function syncCarControls() {
-    carBtns.forEach(function (b) {
-      b.setAttribute('aria-pressed', String(Number(b.dataset.val) === pick.cars));
-    });
-    var typed = pick.cars !== 1 && pick.cars !== 2;
-    carInput.classList.toggle('active', typed);
-    if (document.activeElement !== carInput) {
-      carInput.value = typed ? String(pick.cars) : '';
+    if (!wasOpen) {
+      item.dataset.open = 'true';
+      head.setAttribute('aria-expanded', 'true');
     }
-  }
-
-  function wire(groupId, key) {
-    var group = document.getElementById(groupId);
-    group.addEventListener('click', function (ev) {
-      var btn = ev.target.closest('.opt');
-      if (!btn || !group.contains(btn)) return;
-      group.querySelectorAll('.opt').forEach(function (b) {
-        b.setAttribute('aria-pressed', String(b === btn));
-      });
-      pick[key] = btn.dataset.val;
-      render();
+  });
+  all('[data-book]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      selectService(b.dataset.book);
+      goTo(1, true);
+      scrollToId('book');
     });
-  }
-  wire('qService', 'service');
-  wire('qFreq', 'freq');
-
-  document.getElementById('qCars').addEventListener('click', function (ev) {
-    var btn = ev.target.closest('.opt');
-    if (!btn) return;
-    pick.cars = Number(btn.dataset.val);
-    syncCarControls();
-    render();
   });
 
-  carInput.addEventListener('input', function () {
-    var v = parseInt(carInput.value, 10);
-    if (!isFinite(v) || v < 1) return;
-    if (v > 99) { v = 99; carInput.value = '99'; }
-    pick.cars = v;
-    carBtns.forEach(function (b) {
-      b.setAttribute('aria-pressed', String(Number(b.dataset.val) === pick.cars));
-    });
-    carInput.classList.add('active');
-    render();
-  });
-  carInput.addEventListener('blur', syncCarControls);
-
-  function render() {
-    var svc = SERVICES[pick.service];
-
-    // Frequency only applies to the subscribable service; the details are one-off.
-    freqStep.hidden = !svc.subscribable;
-    renumberSteps();
-
-    var freq = svc.subscribable ? FREQ[pick.freq] : FREQ.oneoff;
-    var carsWord = pick.cars === 1 ? '1 car' : pick.cars + ' cars';
-
-    elSummary.textContent = carsWord + ' · ' + svc.label + ' · ' + freq.label;
-
-    var unit = freq.recurring ? svc.recurring : svc.oneoff;
-    var gross = unit * pick.cars;
-    var saving = pick.cars >= 2 ? Math.round(gross * 0.1) : 0;
-    var total = gross - saving;
-
-    elTotal.innerHTML = '<strong>€' + total + '</strong><span class="per">' + freq.per + '</span>';
-
-    if (saving > 0) {
-      elSaving.textContent = 'Saves €' + saving + ' — 10% off with ' + pick.cars + ' cars in the same visit.';
-      elSaving.classList.add('show');
-    } else if (pick.service === 'maintenance' && freq.recurring) {
-      elSaving.textContent = '€15 less than a one-off at €45.';
-      elSaving.classList.add('show');
-    } else {
-      elSaving.classList.remove('show');
-    }
-
-    elBook.href = WA + '?text=' + encodeURIComponent(
-      "Hi, I'd like " + carsWord + ', ' +
-      (svc.subscribable ? freq.label + ' ' : '') +
-      svc.label.toLowerCase() + '.'
-    );
-  }
-  syncCarControls();
-  render();
-
-  /* ---------- before / after slider ---------- */
-  var ba = document.getElementById('ba');
-  if (ba) {
+  /* ============================================== BEFORE / AFTER
+     Mouse, trackpad, pen and touch. A Mac trackpad tap does not hold the
+     button down, so press-and-drag alone is unreliable — click-to-set and
+     hover-scrub (fine pointers only) both work as well as dragging. */
+  (function () {
+    var ba = $('ba');
+    if (!ba) return;
     var dragging = false;
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    var setSplit = function (pct) {
+    function setSplit(pct) {
       pct = Math.max(0, Math.min(100, pct));
       ba.style.setProperty('--split', pct + '%');
       ba.setAttribute('aria-valuenow', String(Math.round(pct)));
-    };
-    var fromEvent = function (clientX) {
+    }
+    function fromX(x) {
       var r = ba.getBoundingClientRect();
-      setSplit(((clientX - r.left) / r.width) * 100);
-    };
+      if (!r.width) return;
+      setSplit(((x - r.left) / r.width) * 100);
+    }
 
     ba.addEventListener('pointerdown', function (e) {
       dragging = true;
-      ba.setPointerCapture(e.pointerId);
-      fromEvent(e.clientX);
+      try { ba.setPointerCapture(e.pointerId); } catch (_) {}
+      fromX(e.clientX);            /* no threshold — the press itself positions */
+      e.preventDefault();
     });
     ba.addEventListener('pointermove', function (e) {
-      if (!dragging) return;
-      e.preventDefault();
-      fromEvent(e.clientX);
+      if (dragging) { fromX(e.clientX); e.preventDefault(); return; }
+      /* No button held: a fine pointer still scrubs. An "armed on enter" flag
+         would stay off after any press inside the element — which is the exact
+         trackpad case this is here to fix — so read the button state directly. */
+      if (fine && e.pointerType === 'mouse' && e.buttons === 0) fromX(e.clientX);
     });
-    var stop = function (e) {
+    function stop(e) {
       if (!dragging) return;
       dragging = false;
-      if (e.pointerId != null && ba.hasPointerCapture(e.pointerId)) ba.releasePointerCapture(e.pointerId);
-    };
+      if (e && e.pointerId != null) {
+        try { if (ba.hasPointerCapture(e.pointerId)) ba.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+    }
     ba.addEventListener('pointerup', stop);
     ba.addEventListener('pointercancel', stop);
+    ba.addEventListener('lostpointercapture', stop);
+    window.addEventListener('blur', function () { stop(null); });
+
+    ba.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
     ba.addEventListener('keydown', function (e) {
       var now = Number(ba.getAttribute('aria-valuenow')) || 50;
@@ -1906,85 +1731,472 @@
       else if (e.key === 'End') { setSplit(100); e.preventDefault(); }
     });
 
+    if (!fine) { var h = $('baHint'); if (h) h.textContent = 'Drag to compare'; }
     setSplit(50);
+  })();
+
+  /* ============================================== BOOKING FLOW */
+  var SERVICES = {
+    maintenance: { label: 'Maintenance Detail', recurring: true },
+    detail:      { label: 'Detail',             recurring: false, price: 80 },
+    extensive:   { label: 'Extensive Detail',   recurring: false, price: 140 }
+  };
+  var FREQ = { fortnightly: { label: 'Fortnightly', price: 35 }, monthly: { label: 'Monthly', price: 45 } };
+  var HOURS = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'];
+  var DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var CLOSED = 6;
+  var NOTE = 'No booking is made until you send it or create an account.';
+
+  var st = { step:1, cars:1, service:'maintenance', freq:'fortnightly',
+             name:'', phone:'', reg:'', car:'', carOk:false, week:0, day:0, slot:null };
+
+  var flow = $('flow');
+  var steps = all('.step', flow);
+  var prog = $('prog');
+  var progItems = all('li', prog);
+  var grid = $('bookGrid');
+  var numin = $('bCarsNum');
+  var carBtns = all('#bCars .opt');
+  var freqGrp = $('bFreqGrp');
+
+  function unit() { var s = SERVICES[st.service]; return s.recurring ? FREQ[st.freq].price : s.price; }
+  function parts() { var g = unit()*st.cars, sv = st.cars>=2 ? Math.round(g*0.1) : 0; return {gross:g, save:sv, total:g-sv}; }
+  function per() { return SERVICES[st.service].recurring ? 'per visit' : 'one-off'; }
+  function carsWord() { return st.cars===1 ? '1 car' : st.cars+' cars'; }
+  function freqWord() { return SERVICES[st.service].recurring ? FREQ[st.freq].label.toLowerCase() : 'one-off'; }
+
+  function selectService(v) {
+    if (!SERVICES[v]) return;
+    st.service = v;
+    all('#bService .opt').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.val===v)); });
+    renderQuote();
+  }
+  function syncCars() {
+    var typed = st.cars!==1 && st.cars!==2;
+    carBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(!typed && Number(b.dataset.val)===st.cars)); });
+    numin.classList.toggle('on', typed);
+    if (document.activeElement !== numin) numin.value = typed ? String(st.cars) : '';
   }
 
-  /* ---------- swipeable tracks (pricing + reviews) ----------
-     One card per view on mobile. Arrows and dots both drive the same scroll,
-     and from-left / from-right records the swipe direction so the review
-     top-line draws in from the side it came from. */
-  function setupCarousel(opts) {
-    var track = document.getElementById(opts.track);
-    var dotWrap = document.getElementById(opts.dots);
-    var prev = document.getElementById(opts.prev);
-    var next = document.getElementById(opts.next);
-    if (!track || !dotWrap) return;
+  $('bService').addEventListener('click', function (e) { var b=e.target.closest('.opt'); if (b) selectService(b.dataset.val); });
+  $('bFreq').addEventListener('click', function (e) {
+    var b=e.target.closest('.opt'); if (!b) return;
+    all('#bFreq .opt').forEach(function (x) { x.setAttribute('aria-pressed', String(x===b)); });
+    st.freq=b.dataset.val; renderQuote();
+  });
+  $('bCars').addEventListener('click', function (e) {
+    var b=e.target.closest('.opt'); if (!b) return;
+    st.cars=Number(b.dataset.val); syncCars(); renderQuote();
+  });
+  numin.addEventListener('input', function () {
+    var v=parseInt(numin.value,10);
+    if (!isFinite(v) || v<1) return;
+    if (v>20) { v=20; numin.value='20'; }
+    st.cars=v;
+    carBtns.forEach(function (b) { b.setAttribute('aria-pressed','false'); });
+    numin.classList.add('on'); renderQuote();
+  });
+  numin.addEventListener('blur', syncCars);
 
-    var cards = Array.prototype.slice.call(track.querySelectorAll(opts.item));
-    if (!cards.length) return;
+  var fName=$('bName'), fPhone=$('bPhone'), fReg=$('bReg'), fCar=$('bCar'), chk=$('bCheck');
+  function fieldOf(i) { return i.closest('.field'); }
+  [fName,fPhone,fReg,fCar].forEach(function (i) {
+    i.addEventListener('input', function () {
+      fieldOf(i).classList.remove('err');
+      st.name=fName.value.trim(); st.phone=fPhone.value.trim();
+      st.reg=fReg.value.trim().toUpperCase(); st.car=fCar.value.trim();
+      if (i===fReg || i===fCar) { st.carOk=false; chk.classList.remove('ok'); }
+      renderCheck();
+    });
+  });
+  function renderCheck() {
+    var ready = st.reg.length>=4 && st.car.length>=2;
+    chk.classList.toggle('show', ready);
+    if (!ready) return;
+    $('bPlate').textContent=st.reg;
+    $('bCarWhat').textContent=st.car;
+  }
+  $('bCarYes').addEventListener('click', function () { st.carOk=true; chk.classList.add('ok'); });
+  function backToReg() { st.carOk=false; chk.classList.remove('ok'); fReg.focus(); fReg.select(); }
+  $('bCarNo').addEventListener('click', backToReg);
+  $('bCarEdit').addEventListener('click', backToReg);
 
-    function goTo(i) {
-      var card = cards[Math.max(0, Math.min(cards.length - 1, i))];
-      track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: reduceMotion ? 'auto' : 'smooth' });
+  function validate() {
+    var bad=null;
+    [[fName, st.name.length>=2],
+     [fPhone, st.phone.replace(/\D/g,'').length>=7],
+     [fReg, st.reg.length>=4],
+     [fCar, st.car.length>=2]].forEach(function (p) {
+      fieldOf(p[0]).classList.toggle('err', !p[1]);
+      if (!p[1] && !bad) bad=p[0];
+    });
+    if (bad) { bad.focus(); return false; }
+    if (!st.carOk) { renderCheck(); chk.scrollIntoView({behavior:reduce?'auto':'smooth', block:'center'}); $('bCarYes').focus(); return false; }
+    return true;
+  }
+
+  function weekStart(off) { var d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()-((d.getDay()+6)%7)+off*7); return d; }
+  function addD(d,n) { var c=new Date(d.getTime()); c.setDate(c.getDate()+n); return c; }
+  function iso(d) { return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+  function at(d,h) { var c=new Date(d.getTime()); c.setHours(Number(h.slice(0,2)),0,0,0); return c; }
+  function rng(seed) { var s=(seed>>>0)||1; return function(){ s^=s<<13; s>>>=0; s^=s>>>17; s^=s<<5; s>>>=0; return s/4294967296; }; }
+  var takenCache={};
+  function taken(ws) {
+    var k=iso(ws);
+    if (takenCache[k]) return takenCache[k];
+    var r=rng(Math.floor(ws.getTime()/86400000)*2654435761), set={}, n=0, g=0;
+    while(n<6 && g++<400){ var d=Math.floor(r()*CLOSED), h=Math.floor(r()*HOURS.length), kk=d+':'+h; if(!set[kk]){ set[kk]=true; n++; } }
+    takenCache[k]=set; return set;
+  }
+  function sState(ws,d,h) {
+    if (d===CLOSED) return 'closed';
+    if (at(addD(ws,d),HOURS[h]).getTime() <= Date.now()) return 'past';
+    if (taken(ws)[d+':'+h]) return 'taken';
+    return 'free';
+  }
+  function sKey(ws,d,h){ return iso(addD(ws,d))+'T'+HOURS[h]; }
+  function sLabel(ws,d,h){ var x=addD(ws,d); return DAYS[d]+' '+x.getDate()+' '+MON[x.getMonth()]+', '+HOURS[h]; }
+  function pickSlot(ws,d,h) {
+    $('calNote').textContent = NOTE;
+    st.slot = { key:sKey(ws,d,h), label:sLabel(ws,d,h) };
+    renderCal(); renderQuote();
+  }
+
+  var calGrid=$('calGrid'), dayStrip=$('dayStrip'), timeList=$('timeList');
+
+  function mkSlot(ws,d,h) {
+    var s=sState(ws,d,h), k=sKey(ws,d,h), sel=st.slot && st.slot.key===k;
+    var b=document.createElement('button');
+    b.type='button';
+    b.className='slot'+(s!=='free'?' '+s:'')+(sel?' sel':'');
+    b.disabled = s!=='free';
+    if (s==='taken') { b.textContent='×'; b.setAttribute('aria-label', sLabel(ws,d,h)+' — taken'); }
+    else if (s==='free') {
+      b.setAttribute('aria-label', sLabel(ws,d,h)+(sel?' — selected':''));
+      b.setAttribute('aria-pressed', String(!!sel));
+      b.addEventListener('click', function(){ pickSlot(ws,d,h); });
+    } else { b.setAttribute('aria-hidden','true'); b.tabIndex=-1; }
+    return b;
+  }
+
+  function renderCal() {
+    var ws=weekStart(st.week), we=addD(ws,6);
+    $('wkRange').textContent = ws.getDate()+' '+MON[ws.getMonth()]+' — '+we.getDate()+' '+MON[we.getMonth()];
+    $('wkPrev').disabled = st.week<=0;
+    $('wkNext').disabled = st.week>=8;
+    var todayK=iso(new Date());
+
+    calGrid.textContent='';
+    calGrid.appendChild(document.createElement('div'));
+    for (var d=0; d<7; d++) {
+      var dt=addD(ws,d), head=document.createElement('div');
+      head.className='cal-day'+(iso(dt)===todayK?' today':'');
+      head.innerHTML=DAYS[d]+'<b>'+dt.getDate()+'</b>';
+      calGrid.appendChild(head);
     }
-
-    cards.forEach(function (card, i) {
-      var d = document.createElement('button');
-      d.type = 'button';
-      d.setAttribute('role', 'tab');
-      d.setAttribute('aria-label', opts.label + ' ' + (i + 1));
-      d.setAttribute('aria-current', i === 0 ? 'true' : 'false');
-      d.addEventListener('click', function () { goTo(i); });
-      dotWrap.appendChild(d);
+    HOURS.forEach(function (hr,h) {
+      var t=document.createElement('div'); t.className='cal-time'; t.textContent=hr;
+      calGrid.appendChild(t);
+      for (var dd=0; dd<7; dd++) calGrid.appendChild(mkSlot(ws,dd,h));
     });
 
-    var dots = Array.prototype.slice.call(dotWrap.children);
-    var last = 0;
-    cards[0].classList.add('from-left');
-
-    if (prev) prev.addEventListener('click', function () { goTo(last - 1); });
-    if (next) next.addEventListener('click', function () { goTo(last + 1); });
-
-    function sync() {
-      var mid = track.scrollLeft + track.clientWidth / 2;
-      var active = 0;
-      var best = Infinity;
-      cards.forEach(function (card, i) {
-        var c = card.offsetLeft - track.offsetLeft + card.offsetWidth / 2;
-        var dist = Math.abs(c - mid);
-        if (dist < best) { best = dist; active = i; }
-      });
-
-      if (active !== last) {
-        var dir = active > last ? 'from-right' : 'from-left';
-        cards.forEach(function (c) { c.classList.remove('from-left', 'from-right'); });
-        cards[active].classList.add(dir);
-        last = active;
-      }
-
-      cards.forEach(function (card, i) { card.classList.toggle('is-active', i === active); });
-      dots.forEach(function (d, i) { d.setAttribute('aria-current', String(i === active)); });
-      if (prev) prev.disabled = active === 0;
-      if (next) next.disabled = active === cards.length - 1;
+    dayStrip.textContent='';
+    var firstOpen=-1;
+    for (var i=0; i<7; i++) {
+      var free=0;
+      for (var h2=0; h2<HOURS.length; h2++) if (sState(ws,i,h2)==='free') free++;
+      if (free>0 && firstOpen<0) firstOpen=i;
+      var dt2=addD(ws,i), chip=document.createElement('button');
+      chip.type='button'; chip.className='daychip'; chip.disabled=free===0; chip.dataset.day=String(i);
+      chip.innerHTML=DAYS[i]+'<b>'+dt2.getDate()+'</b><span class="free">'+(free?free+' free':'none')+'</span>';
+      dayStrip.appendChild(chip);
     }
+    var onDay=0;
+    for (var h3=0; h3<HOURS.length; h3++) if (sState(ws,st.day,h3)==='free') onDay++;
+    if (!onDay && firstOpen>=0) st.day=firstOpen;
+    Array.prototype.forEach.call(dayStrip.children, function (c,i) { c.setAttribute('aria-pressed', String(i===st.day)); });
 
-    var pending = false;
-    track.addEventListener('scroll', function () {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(function () { sync(); pending = false; });
-    }, { passive: true });
-    window.addEventListener('resize', sync, { passive: true });
-    sync();
+    timeList.textContent='';
+    if (firstOpen<0) {
+      var e=document.createElement('p'); e.className='cal-empty';
+      e.textContent='Nothing left this week — try the next one.';
+      timeList.appendChild(e);
+    } else {
+      HOURS.forEach(function (hr,h) {
+        var s=sState(ws,st.day,h);
+        if (s==='past'||s==='closed') return;
+        var k=sKey(ws,st.day,h), sel=st.slot && st.slot.key===k;
+        var row=document.createElement('button');
+        row.type='button';
+        row.className='timeslot'+(s==='taken'?' taken':'')+(sel?' sel':'');
+        row.disabled = s==='taken';
+        row.innerHTML='<span>'+hr+'</span><span class="st">'+(s==='taken'?'× Taken':(sel?'Selected':'Free'))+'</span>';
+        if (s==='free') row.addEventListener('click', function(){ pickSlot(ws,st.day,h); });
+        timeList.appendChild(row);
+      });
+    }
   }
 
-  setupCarousel({ track: 'planTrack', dots: 'planDots', item: '.plan', label: 'Service',
-                  prev: 'planPrev', next: 'planNext' });
-  setupCarousel({ track: 'revTrack', dots: 'revDots', item: '.rev', label: 'Review',
-                  prev: 'revPrev', next: 'revNext' });
+  dayStrip.addEventListener('click', function (e) {
+    var c=e.target.closest('.daychip');
+    if (!c || c.disabled) return;
+    st.day=Number(c.dataset.day); renderCal();
+  });
+  $('wkPrev').addEventListener('click', function(){ if(st.week>0){ st.week--; renderCal(); } });
+  $('wkNext').addEventListener('click', function(){ if(st.week<8){ st.week++; renderCal(); } });
 
-  /* ---------- footer year ---------- */
-  document.getElementById('yr').textContent = String(new Date().getFullYear());
+  function renderQuote() {
+    var s=SERVICES[st.service];
+    freqGrp.hidden = !s.recurring;
+    var p=parts();
+    $('qTotal').innerHTML = '<strong class="num">€'+p.total+'</strong><span class="per">'+per()+'</span>';
+    $('qSum').textContent = carsWord()+' · '+s.label+(s.recurring?' · '+freqWord():'');
+    var sv=$('qSave');
+    if (p.save>0) { sv.textContent='Includes €'+p.save+' reduction — 10% on '+st.cars+' cars in the same visit.'; sv.classList.add('show'); }
+    else sv.classList.remove('show');
+    var w=$('qWhen');
+    if (st.slot) { $('qWhenText').textContent=st.slot.label; w.classList.add('show'); }
+    else w.classList.remove('show');
+  }
+
+  function renderConfirm() {
+    var s=SERVICES[st.service], p=parts();
+    $('cSvc').textContent=s.label;
+    $('cFreqRow').hidden=!s.recurring;
+    $('cFreq').textContent = s.recurring ? FREQ[st.freq].label+' — €'+FREQ[st.freq].price+' a visit' : '';
+    $('cCars').textContent=carsWord();
+    $('cCar').textContent=st.reg+' — '+st.car;
+    $('cSlot').textContent=st.slot?st.slot.label:'Not picked';
+    $('cName').textContent=st.name;
+    $('cPhone').textContent=st.phone;
+    $('cPrice').textContent='€'+p.total+' '+per();
+    var lines=[
+      'Booking request — EMCleen','',
+      'Service: '+s.label+(s.recurring?' ('+freqWord()+')':''),
+      'Cars: '+carsWord(),
+      'Car: '+st.reg+' — '+st.car,
+      'Slot: '+(st.slot?st.slot.label:'flexible'),
+      'Price: €'+p.total+' '+per()+(p.save>0?' (10% multi-car reduction applied)':''),
+      '','Name: '+st.name,'Phone: '+st.phone
+    ];
+    $('cSend').href = WA+'?text='+encodeURIComponent(lines.join('\n'));
+  }
+
+  function goTo(n, skip) {
+    if (!skip && n>st.step) {
+      if (st.step===2 && !validate()) return;
+      if (st.step===3 && !st.slot) { $('calNote').textContent='Select an available slot to continue.'; return; }
+    }
+    st.step=n;
+    steps.forEach(function (p) { p.classList.toggle('on', Number(p.dataset.panel)===n); });
+    progItems.forEach(function (li) {
+      var i=Number(li.dataset.step);
+      li.classList.toggle('now', i===n);
+      li.classList.toggle('done', i<n);
+    });
+    grid.classList.toggle('solo', n===4);
+    if (n===3) renderCal();
+    if (n===4) renderConfirm();
+    if (G && !reduce) {
+      var p=flow.querySelector('.step.on');
+      gsap.fromTo(p, {opacity:0,y:14}, {opacity:1,y:0,duration:0.5,ease:EASE});
+    }
+  }
+
+  flow.addEventListener('click', function (e) {
+    var n=e.target.closest('[data-next]');
+    if (n) { goTo(Number(n.dataset.next)); scrollToId('book'); return; }
+    var b=e.target.closest('[data-back]');
+    if (b) { goTo(Number(b.dataset.back), true); scrollToId('book'); }
+  });
+  prog.addEventListener('click', function (e) {
+    var g=e.target.closest('.go'); if (!g) return;
+    var t=Number(g.dataset.goto);
+    if (t<st.step) goTo(t,true);
+  });
+
+  syncCars(); renderQuote(); renderCal();
+
+  /* ============================================== MEMBER AREA (mock) */
+  var mLogin=$('mLogin'), mDash=$('mDash'), mode='signin';
+
+  function setMode(m) {
+    mode=m;
+    var up = m==='signup';
+    $('mFormTitle').textContent = up ? 'Create an account.' : 'Sign in.';
+    $('mFormSub').textContent = up ? 'Your cars, slots and billing in one place.' : 'Manage your cars, slots and billing.';
+    $('mSubmit').textContent = up ? 'Create account' : 'Sign in';
+    $('mNameField').hidden = !up;
+    $('mPhoneField').hidden = !up;
+    $('mSwitchText').textContent = up ? 'Already have an account?' : 'No account yet?';
+    $('mSwitchBtn').textContent = up ? 'Sign in' : 'Create one';
+    $('mPass').setAttribute('autocomplete', up ? 'new-password' : 'current-password');
+  }
+  $('mSwitchBtn').addEventListener('click', function () { setMode(mode==='signin'?'signup':'signin'); });
+  setMode('signin');
+
+  function signIn(name) {
+    mLogin.style.display='none';
+    mDash.classList.add('live');
+    $('mSignOut').hidden=false;
+    $('mBarTitle').textContent='Member area';
+    var n=(name||'').trim() || (($('mEmail').value.split('@')[0])||'there').replace(/[._-]+/g,' ');
+    $('mGreet').textContent='Welcome back, '+n.charAt(0).toUpperCase()+n.slice(1)+'.';
+    if (G && !reduce) gsap.fromTo('.m-panel.live > *', {opacity:0,y:16}, {opacity:1,y:0,duration:0.55,stagger:0.06,ease:EASE});
+  }
+  $('mForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    signIn(mode==='signup' ? $('mName').value : '');
+  });
+  $('mSignOut').addEventListener('click', function () {
+    mDash.classList.remove('live');
+    mLogin.style.display='';
+    $('mSignOut').hidden=true;
+    $('mBarTitle').textContent='Members';
+    setMode('signin');
+    $('v-members').scrollTop=0;
+  });
+
+  var mTabs=$('mTabs');
+  function showTab(name) {
+    all('button', mTabs).forEach(function (b) { b.setAttribute('aria-current', String(b.dataset.tab===name)); });
+    all('.m-panel').forEach(function (p) { p.classList.toggle('live', p.dataset.tabp===name); });
+    var live=document.querySelector('.m-panel.live');
+    if (live && G && !reduce) gsap.fromTo(live.children, {opacity:0,y:14}, {opacity:1,y:0,duration:0.5,stagger:0.05,ease:EASE});
+    $('v-members').scrollTop=0;
+  }
+  mTabs.addEventListener('click', function (e) { var b=e.target.closest('button'); if (b) showTab(b.dataset.tab); });
+  all('[data-tab-jump]').forEach(function (b) { b.addEventListener('click', function(){ showTab(b.dataset.tabJump); }); });
+
+  var cars=[
+    {id:1, reg:'221 C 4471', make:'Volkswagen', model:'Golf GTI', colour:'Deep black pearl'},
+    {id:2, reg:'191 CW 812', make:'BMW', model:'320d M Sport', colour:'Mineral grey'}
+  ];
+  var carSeq=3, editing=null, carList=$('carList'), carEditor=$('carEditor');
+
+  function renderCars() {
+    carList.textContent='';
+    if (!cars.length) {
+      var e=document.createElement('div'); e.className='m-empty'; e.textContent='No cars saved yet.';
+      carList.appendChild(e); return;
+    }
+    cars.forEach(function (c) {
+      var row=document.createElement('div'); row.className='m-row';
+      row.innerHTML =
+        '<div class="m-row-top"><span class="m-plate">'+c.reg+'</span>'+
+        '<div class="m-row-main"><strong>'+c.make+' '+c.model+'</strong><span>'+c.colour+'</span></div>'+
+        '<div class="m-row-actions"><button class="m-mini" type="button" data-edit="'+c.id+'">Edit</button>'+
+        '<button class="m-mini danger" type="button" data-remove="'+c.id+'">Remove</button></div></div>';
+      carList.appendChild(row);
+    });
+  }
+  function openEditor(c) {
+    editing=c||null;
+    $('carEditorTitle').textContent = c?'Edit car':'Add a car';
+    $('carReg').value=c?c.reg:''; $('carMake').value=c?c.make:'';
+    $('carModel').value=c?c.model:''; $('carColour').value=c?c.colour:'';
+    carEditor.classList.add('live'); $('carReg').focus();
+  }
+  function closeEditor(){ carEditor.classList.remove('live'); editing=null; }
+  $('carAdd').addEventListener('click', function(){ openEditor(null); });
+  $('carCancel').addEventListener('click', closeEditor);
+  $('carSave').addEventListener('click', function () {
+    var reg=$('carReg').value.trim().toUpperCase(), make=$('carMake').value.trim(),
+        model=$('carModel').value.trim(), colour=$('carColour').value.trim()||'—';
+    if (!reg || !make) { $('carReg').focus(); return; }
+    if (editing) { editing.reg=reg; editing.make=make; editing.model=model; editing.colour=colour; }
+    else cars.push({id:carSeq++, reg:reg, make:make, model:model, colour:colour});
+    closeEditor(); renderCars();
+  });
+  carList.addEventListener('click', function (e) {
+    var ed=e.target.closest('[data-edit]');
+    if (ed) { var c=cars.filter(function(x){return x.id===Number(ed.dataset.edit);})[0]; if(c) openEditor(c); return; }
+    var rm=e.target.closest('[data-remove]');
+    if (rm) { cars=cars.filter(function(x){return x.id!==Number(rm.dataset.remove);}); renderCars(); }
+  });
+
+  var bookings=[
+    {id:1, name:'Maintenance Detail', when:'Tue 11 Aug, 10:00', car:'221 C 4471 — Volkswagen Golf GTI'},
+    {id:2, name:'Maintenance Detail', when:'Tue 25 Aug, 10:00', car:'221 C 4471 — Volkswagen Golf GTI'}
+  ];
+  var bookSeq=3, slotList=$('slotList'), slotNote=$('slotNote');
+  function note(msg){ slotNote.textContent=msg; slotNote.hidden=false; }
+
+  function renderBookings() {
+    slotList.textContent='';
+    if (!bookings.length) {
+      var e=document.createElement('div'); e.className='m-empty'; e.textContent='No upcoming slots.';
+      slotList.appendChild(e);
+      $('mNextSlot').textContent='—'; $('mNextCar').textContent='Nothing booked';
+      return;
+    }
+    bookings.forEach(function (b) {
+      var row=document.createElement('div'); row.className='m-row';
+      row.innerHTML =
+        '<div class="m-row-top"><div class="m-row-main"><strong>'+b.when+'</strong>'+
+        '<span>'+b.name+' · '+b.car+'</span></div>'+
+        '<div class="m-row-actions"><button class="m-mini" type="button" data-res="'+b.id+'">Reschedule</button>'+
+        '<button class="m-mini danger" type="button" data-cancel="'+b.id+'">Cancel</button></div></div>';
+      slotList.appendChild(row);
+    });
+    $('mNextSlot').textContent=bookings[0].when;
+    $('mNextCar').textContent=bookings[0].car;
+  }
+  slotList.addEventListener('click', function (e) {
+    if (e.target.closest('[data-res]')) { note('Reschedule requested. In the live version this opens the slot picker; here it is a demo only.'); return; }
+    var c=e.target.closest('[data-cancel]');
+    if (c) { bookings=bookings.filter(function(x){return x.id!==Number(c.dataset.cancel);}); renderBookings(); note('Slot cancelled. Demo only — nothing was sent.'); }
+  });
+  $('slotBook').addEventListener('click', function () {
+    closeViews();
+    setTimeout(function(){ goTo(1,true); scrollToId('book'); }, 100);
+  });
+
+  /* the second route out of the booking flow */
+  $('cAccount').addEventListener('click', function () {
+    var s=SERVICES[st.service], p=parts();
+    bookings.unshift({
+      id: bookSeq++,
+      name: s.label,
+      when: st.slot ? st.slot.label : 'To be confirmed',
+      car: st.reg + ' — ' + st.car
+    });
+    if (st.reg && !cars.some(function(c){ return c.reg===st.reg; })) {
+      var bits=st.car.split(' ');
+      cars.push({ id:carSeq++, reg:st.reg, make:bits.shift()||st.car, model:bits.join(' ')||'—', colour:'—' });
+    }
+    $('mPlan').textContent=s.label;
+    $('mPlanSub').textContent = s.recurring
+      ? FREQ[st.freq].label+' — €'+FREQ[st.freq].price+' a visit'
+      : 'One-off — €'+p.total;
+    renderBookings(); renderCars();
+
+    setMode('signup');
+    $('mName').value=st.name;
+    $('mPhone').value=st.phone;
+    if (st.name) $('sName').value=st.name;
+    if (st.phone) $('sPhone').value=st.phone;
+    openView('members');
+    showTab('slots');
+    setTimeout(function(){ $('mEmail').focus(); }, 200);
+  });
+
+  all('[data-mock]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var card=b.closest('.m-card'), n=card.querySelector('.m-note');
+      if (!n) { n=document.createElement('p'); n.className='m-note'; card.appendChild(n); }
+      n.textContent=b.dataset.mock; n.hidden=false;
+    });
+  });
+  $('sSave').addEventListener('click', function () {
+    var n=$('sNote'); n.textContent='Saved. Demo only — nothing left the browser.'; n.hidden=false;
+  });
+
+  renderCars(); renderBookings();
+
+  $('yr').textContent=String(new Date().getFullYear());
+  if (G && window.ScrollTrigger) window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
 })();
 </script>
 </body>
