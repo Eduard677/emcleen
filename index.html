@@ -187,13 +187,26 @@ p { font-size: var(--fs-body); }
   background: rgba(12, 12, 11, 0.82);
   -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
+  transition: background var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease),
+              box-shadow var(--t-mid) var(--ease);
 }
-.bar-in { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); height: 62px; }
+.bar-in {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s2); height: 62px;
+  transition: height var(--t-mid) var(--ease);
+}
+.bar.scrolled {
+  background: rgba(12, 12, 11, 0.94);
+  border-color: rgba(247,244,238,.18);
+  box-shadow: 0 18px 45px -34px rgba(0,0,0,.95);
+}
+.bar.scrolled .bar-in { height: 54px; }
 .wordmark {
   font-family: var(--f-head); font-stretch: 125%;
   font-size: 1.05rem; font-weight: 700; letter-spacing: 0.02em;
   text-transform: uppercase; color: var(--paper); text-decoration: none;
+  transition: letter-spacing var(--t-mid) var(--ease), color var(--t) var(--ease);
 }
+.wordmark:hover { color: var(--accent-soft); letter-spacing: 0.055em; }
 .menu-btn {
   display: inline-flex; align-items: center; gap: 0.6rem;
   min-height: 44px; padding: 0.5rem 0.95rem;
@@ -293,6 +306,8 @@ p { font-size: var(--fs-body); }
   font-size: clamp(1rem, 3.2vw, 1.6rem);
   font-weight: 600; letter-spacing: -0.015em;
   white-space: nowrap;
+  transition: transform var(--t-mid) var(--ease), color var(--t) var(--ease),
+              letter-spacing var(--t-mid) var(--ease);
 }
 .acc-p {
   flex-shrink: 0;
@@ -300,7 +315,11 @@ p { font-size: var(--fs-body); }
   font-size: var(--fs-sm); font-weight: 600;
   color: var(--text-2); font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  transition: color var(--t) var(--ease), transform var(--t-mid) var(--ease);
 }
+.acc-head:hover .acc-t { transform: translateX(8px); letter-spacing: -0.005em; }
+.acc-head:hover .acc-p { color: var(--accent); transform: translateX(-3px); }
+.acc-item[data-open="true"] .acc-head { background: rgba(168,72,44,.07); }
 .acc-item[data-open="true"] .acc-p { color: var(--accent-soft); }
 .on-light .acc-item[data-open="true"] .acc-p { color: var(--accent); }
 .acc-x { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
@@ -334,6 +353,8 @@ p { font-size: var(--fs-body); }
   align-self: start; padding: var(--card-pad);
   border: 1px solid var(--line); border-radius: var(--r-card);
   background: var(--surface);
+  transition: transform var(--t-mid) var(--ease), border-color var(--t) var(--ease),
+              box-shadow var(--t-mid) var(--ease);
 }
 .buy-price { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
 .buy-price strong {
@@ -354,12 +375,22 @@ p { font-size: var(--fs-body); }
   background: var(--black);
   touch-action: pan-y;
   -webkit-user-select: none; user-select: none;
-  cursor: ew-resize;
+  cursor: pointer;
+  isolation: isolate;
 }
+.ba::after {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: rgba(8,8,7,.19);
+  opacity: 1;
+  transition: opacity .28s var(--ease);
+}
+.ba[data-active="true"] { cursor: ew-resize; }
+.ba[data-active="true"]::after { opacity: 0; }
 .ba-half { position: absolute; inset: 0; }
 .ba-half img {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; pointer-events: none; -webkit-user-drag: none;
+  object-fit: cover; object-position: 50% 52%;
+  pointer-events: none; -webkit-user-drag: none;
 }
 .comparison-slider {
   width: 100%;
@@ -389,6 +420,7 @@ p { font-size: var(--fs-body); }
     radial-gradient(110% 78% at 62% 22%, rgba(244,241,236,.14), transparent 55%),
     linear-gradient(165deg, #2a2520 0%, #1b1815 55%, #0f0e0c 100%);
   clip-path: inset(0 0 0 var(--split, 50%));
+  transition: clip-path .52s var(--ease);
 }
 .ba-tag {
   position: absolute; top: var(--s3); z-index: 4;
@@ -406,6 +438,7 @@ p { font-size: var(--fs-body); }
 .ba-handle {
   position: absolute; top: 0; bottom: 0; left: var(--split, 50%);
   z-index: 4; width: 2px; background: var(--accent); pointer-events: none;
+  transition: left .52s var(--ease), opacity var(--t) var(--ease);
 }
 .ba-knob {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -414,20 +447,41 @@ p { font-size: var(--fs-body); }
   display: flex; align-items: center; justify-content: center; gap: 5px;
   transition: transform var(--t) var(--ease);
 }
-.ba:hover .ba-knob { transform: translate(-50%, -50%) scale(1.08); }
+.ba:hover .ba-knob, .ba[data-active="true"] .ba-knob { transform: translate(-50%, -50%) scale(1.08); }
 .ba-knob i { width: 6px; height: 6px; display: block; border-top: 1.5px solid #fff; border-left: 1.5px solid #fff; }
 .ba-knob i:first-child { transform: rotate(-45deg); }
 .ba-knob i:last-child { transform: rotate(135deg); }
 .ba:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
 .ba-hint {
-  position: absolute; left: 50%; bottom: var(--s3); z-index: 4;
+  position: absolute; left: 50%; bottom: var(--s3); z-index: 5;
   transform: translateX(-50%);
   font-family: var(--f-head); font-stretch: 125%;
   font-size: var(--fs-label); letter-spacing: var(--track);
   text-transform: uppercase; color: rgba(244,241,236,.6);
   pointer-events: none; white-space: nowrap;
+  transition: opacity .25s var(--ease), transform .4s var(--ease);
 }
+.ba[data-active="true"] .ba-hint { opacity: 0; transform: translate(-50%, 8px); }
+.ba[data-dragging="true"] .ba-after { transition: none; }
+.ba[data-dragging="true"] .ba-handle { transition: none; }
 .ba-cap { margin-top: var(--s2); }
+
+/* ============================================================ STATEMENT */
+.statement {
+  position: relative; overflow: hidden;
+  padding: clamp(4.5rem, 10vh, 8rem) 0 clamp(2.5rem, 7vh, 5.5rem);
+  background:
+    radial-gradient(80% 110% at 90% 38%, rgba(168,72,44,.12), transparent 62%),
+    var(--black);
+}
+.statement-mask { margin-top: var(--s2); overflow: hidden; padding-bottom: 0.08em; }
+.statement-line {
+  max-width: 12ch;
+  font-family: var(--f-head); font-stretch: 125%;
+  font-size: clamp(3rem, 9vw, 7.5rem); font-weight: 600;
+  letter-spacing: -0.045em; line-height: 0.96;
+}
+.statement-note { margin-top: var(--s3); max-width: 42ch; color: var(--text-2); }
 
 /* ============================================================ BOOKING (dark slab) */
 .book-slab { padding: clamp(1.25rem, 4vw, var(--s5)) var(--gutter); }
@@ -479,7 +533,7 @@ p { font-size: var(--fs-body); }
   transition: color var(--t) var(--ease), border-color var(--t) var(--ease), background var(--t) var(--ease);
 }
 .opt { cursor: pointer; }
-.opt:hover { border-color: var(--line-2); color: var(--text); }
+.opt:hover { border-color: var(--accent); color: var(--text); background: rgba(168,72,44,.08); }
 .opt:active { background: var(--accent-tint); transition-duration: 0.08s; }
 .opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .opt[aria-pressed="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
@@ -702,7 +756,12 @@ p { font-size: var(--fs-body); }
 .menu-item:hover { background: rgba(168,72,44,.2); padding-left: 1.1rem; color: var(--accent-soft); }
 .menu-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .menu-item .mi-n { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); color: var(--accent-soft); flex-shrink: 0; font-variant-numeric: tabular-nums; }
-.menu-item .mi-t { font-family: var(--f-head); font-stretch: 125%; font-size: clamp(1.75rem, 8vw, 3.25rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; text-transform: uppercase; }
+.menu-item .mi-t {
+  font-family: var(--f-head); font-stretch: 125%; font-size: clamp(1.75rem, 8vw, 3.25rem);
+  font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; text-transform: uppercase;
+  transition: transform var(--t-mid) var(--ease), letter-spacing var(--t-mid) var(--ease);
+}
+.menu-item:hover .mi-t { transform: translateX(6px); letter-spacing: -0.005em; }
 .menu-foot { padding-top: var(--s3); border-top: 1px solid rgba(244,241,236,.14); display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem var(--s3); }
 .menu-foot a { color: #a8a299; text-decoration: none; font-size: var(--fs-sm); }
 .menu-foot a:hover { color: var(--accent-soft); }
@@ -764,7 +823,12 @@ p { font-size: var(--fs-body); }
 .about-copy p:first-child { font-family: var(--f-body); font-stretch: normal; font-size: var(--fs-body); font-weight: 400; letter-spacing: 0; line-height: 1.75; color: var(--text-2); }
 
 .revs { margin-top: var(--s4); display: grid; gap: var(--s2); }
-.rev { padding: var(--card-pad); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); display: flex; flex-direction: column; gap: 0.7rem; }
+.rev {
+  padding: var(--card-pad); border: 1px solid var(--line); border-radius: var(--r-card);
+  background: var(--surface); display: flex; flex-direction: column; gap: 0.7rem;
+  transition: transform var(--t-mid) var(--ease), border-color var(--t) var(--ease),
+              background var(--t) var(--ease);
+}
 .stars { color: var(--accent-soft); font-size: var(--fs-sm); letter-spacing: 0.18em; }
 .on-light .stars { color: var(--accent); }
 .rev blockquote { font-size: var(--fs-sm); line-height: 1.7; color: var(--text-2); flex: 1; }
@@ -794,8 +858,13 @@ p { font-size: var(--fs-body); }
 .qa p { padding: 0 var(--s3) var(--s3) 0.4rem; max-width: 66ch; color: var(--text-2); font-size: var(--fs-sm); line-height: 1.75; }
 
 .contact-grid { margin-top: var(--s4); display: grid; gap: var(--s2); }
-.contact-card { padding: var(--card-pad); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); text-decoration: none; color: var(--text); display: block; transition: border-color var(--t) var(--ease), background var(--t) var(--ease); }
-.contact-card:hover { border-color: var(--accent); background: var(--accent-tint); }
+.contact-card {
+  padding: var(--card-pad); border: 1px solid var(--line); border-radius: var(--r-card);
+  background: var(--surface); text-decoration: none; color: var(--text); display: block;
+  transition: border-color var(--t) var(--ease), background var(--t) var(--ease),
+              transform var(--t-mid) var(--ease);
+}
+.contact-card:hover { border-color: var(--accent); background: var(--accent-tint); transform: translateY(-2px); }
 .contact-card strong { display: block; margin-top: 0.4rem; font-size: var(--fs-h3); font-family: var(--f-head); font-stretch: 125%; font-weight: 600; }
 .contact-card .sub { display: block; margin-top: 0.3rem; font-size: var(--fs-sm); color: var(--text-2); }
 
@@ -932,12 +1001,22 @@ p { font-size: var(--fs-body); }
 
 
 /* ============================================================ REVEALS */
-[data-rv] { opacity: 0; }
-.no-motion [data-rv] { opacity: 1 !important; transform: none !important; }
+[data-rv], [data-statement] { opacity: 0; }
+.no-motion [data-rv], .no-motion [data-statement] { opacity: 1 !important; transform: none !important; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
-  [data-rv] { opacity: 1 !important; transform: none !important; }
+  [data-rv], [data-statement] { opacity: 1 !important; transform: none !important; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .buy:hover, .rev:hover, .m-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(168,72,44,.45);
+    box-shadow: 0 24px 50px -38px rgba(0,0,0,.9);
+  }
+  .founder img { transition: transform .8s var(--ease), filter .8s var(--ease); }
+  .founder:hover img { transform: scale(1.018); filter: contrast(1.02); }
 }
 
 /* ============================================================ RESPONSIVE */
@@ -1146,6 +1225,16 @@ p { font-size: var(--fs-body); }
     </div>
   </section>
 
+  <section class="statement lit" aria-label="EMCleen service promise">
+    <div class="shell">
+      <span class="label label-accent" data-rv>Designed around your time</span>
+      <div class="statement-mask">
+        <p class="statement-line" data-statement>One less thing to think about.</p>
+      </div>
+      <p class="statement-note" data-rv>A reserved appointment. The same standard. Every time.</p>
+    </div>
+  </section>
+
   <section class="ba-wrap">
     <div class="shell">
       <div class="sec-head">
@@ -1154,13 +1243,14 @@ p { font-size: var(--fs-body); }
       </div>
       <div class="ba comparison-slider" id="ba" role="slider" tabindex="0"
            aria-label="Before and after comparison"
-           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-rv>
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
+           data-active="false" data-rv>
         <div class="ba-half ba-before"><img src="/media/preview.webp" alt="Mercedes before detailing" draggable="false"></div>
         <div class="ba-half ba-after"><img src="/media/preview.jpeg" alt="Mercedes after detailing" draggable="false"></div>
         <span class="ba-tag l">Before</span>
         <span class="ba-tag r">After</span>
         <div class="ba-handle"><span class="ba-knob"><i></i><i></i></span></div>
-        <span class="ba-hint" id="baHint">Click or drag to compare</span>
+        <span class="ba-hint" id="baHint">Click to compare</span>
       </div>
     </div>
   </section>
@@ -1650,11 +1740,26 @@ p { font-size: var(--fs-body); }
     document.documentElement.classList.add('no-motion');
   } else {
     all('[data-rv]').forEach(function (el) {
-      gsap.fromTo(el, { opacity: 0, y: 44 }, {
-        opacity: 1, y: 0, duration: 1.4, ease: 'power4.out',
-        scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-      });
+      var heading = el.matches('h1, h2');
+      gsap.fromTo(el,
+        heading
+          ? { opacity: 0, y: 34, clipPath: 'inset(0 0 100% 0)' }
+          : { opacity: 0, y: 22 },
+        {
+          opacity: 1, y: 0, clipPath: heading ? 'inset(0 0 0% 0)' : 'none',
+          duration: heading ? 1.05 : 0.85, ease: 'power4.out',
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        });
     });
+    var statement = document.querySelector('[data-statement]');
+    if (statement) {
+      gsap.fromTo(statement,
+        { opacity: 0, yPercent: 110, x: -26 },
+        {
+          opacity: 1, yPercent: 0, x: 0, duration: 1.25, ease: 'power4.out',
+          scrollTrigger: { trigger: statement, start: 'top 90%', once: true }
+        });
+    }
     [['#acc', '.acc-item'], ['.hero-meta', 'div'], ['.foot-top', 'CHILDREN']].forEach(function (p) {
       var root = document.querySelector(p[0]);
       if (!root) return;
@@ -1666,6 +1771,13 @@ p { font-size: var(--fs-body); }
       });
     });
   }
+
+  var pageBar = document.querySelector('.bar');
+  function syncBar() {
+    if (pageBar) pageBar.classList.toggle('scrolled', window.scrollY > 24);
+  }
+  syncBar();
+  window.addEventListener('scroll', syncBar, { passive: true });
 
   function scrollToId(id) {
     var el = $(id);
@@ -1767,14 +1879,20 @@ p { font-size: var(--fs-body); }
   });
 
   /* ============================================== BEFORE / AFTER
-     Mouse, trackpad, pen and touch. A Mac trackpad tap does not hold the
-     button down, so press-and-drag alone is unreliable — click-to-set and
-     hover-scrub (fine pointers only) both work as well as dragging. */
+     Deliberately inactive until clicked. Pointer hover never changes the
+     comparison; clicking outside returns it to the centred, tinted state. */
   (function () {
     var ba = $('ba');
     if (!ba) return;
     var dragging = false;
-    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var pressX = 0;
+    var pressY = 0;
+
+    function setActive(on) {
+      ba.dataset.active = on ? 'true' : 'false';
+      var hint = $('baHint');
+      if (hint) hint.setAttribute('aria-hidden', on ? 'true' : 'false');
+    }
 
     function setSplit(pct) {
       pct = Math.max(0, Math.min(100, pct));
@@ -1788,21 +1906,25 @@ p { font-size: var(--fs-body); }
     }
 
     ba.addEventListener('pointerdown', function (e) {
-      dragging = true;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      setActive(true);
+      pressX = e.clientX;
+      pressY = e.clientY;
+      dragging = false;
       try { ba.setPointerCapture(e.pointerId); } catch (_) {}
-      fromX(e.clientX);            /* no threshold — the press itself positions */
-      e.preventDefault();
+      fromX(e.clientX);
     });
     ba.addEventListener('pointermove', function (e) {
-      if (dragging) { fromX(e.clientX); e.preventDefault(); return; }
-      /* No button held: a fine pointer still scrubs. An "armed on enter" flag
-         would stay off after any press inside the element — which is the exact
-         trackpad case this is here to fix — so read the button state directly. */
-      if (fine && e.pointerType === 'mouse' && e.buttons === 0) fromX(e.clientX);
+      if (!ba.hasPointerCapture || !ba.hasPointerCapture(e.pointerId)) return;
+      if (!dragging && Math.hypot(e.clientX - pressX, e.clientY - pressY) > 5) {
+        dragging = true;
+        ba.dataset.dragging = 'true';
+      }
+      if (dragging) { fromX(e.clientX); e.preventDefault(); }
     });
     function stop(e) {
-      if (!dragging) return;
       dragging = false;
+      delete ba.dataset.dragging;
       if (e && e.pointerId != null) {
         try { if (ba.hasPointerCapture(e.pointerId)) ba.releasePointerCapture(e.pointerId); } catch (_) {}
       }
@@ -1812,18 +1934,31 @@ p { font-size: var(--fs-body); }
     ba.addEventListener('lostpointercapture', stop);
     window.addEventListener('blur', function () { stop(null); });
 
+    function reset() {
+      stop(null);
+      setActive(false);
+      setSplit(50);
+    }
+    document.addEventListener('pointerdown', function (e) {
+      if (!ba.contains(e.target)) reset();
+    }, true);
+
     ba.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
     ba.addEventListener('keydown', function (e) {
       var now = Number(ba.getAttribute('aria-valuenow')) || 50;
       var step = e.shiftKey ? 10 : 4;
-      if (e.key === 'ArrowLeft') { setSplit(now - step); e.preventDefault(); }
-      else if (e.key === 'ArrowRight') { setSplit(now + step); e.preventDefault(); }
-      else if (e.key === 'Home') { setSplit(0); e.preventDefault(); }
-      else if (e.key === 'End') { setSplit(100); e.preventDefault(); }
+      if (e.key === 'Escape') { reset(); e.stopPropagation(); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { setActive(true); setSplit(now - step); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { setActive(true); setSplit(now + step); e.preventDefault(); }
+      else if (e.key === 'Home') { setActive(true); setSplit(0); e.preventDefault(); }
+      else if (e.key === 'End') { setActive(true); setSplit(100); e.preventDefault(); }
     });
 
-    if (!fine) { var h = $('baHint'); if (h) h.textContent = 'Tap or drag to compare'; }
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      var h = $('baHint'); if (h) h.textContent = 'Tap to compare';
+    }
+    setActive(false);
     setSplit(50);
   })();
 
@@ -2042,7 +2177,12 @@ p { font-size: var(--fs-body); }
     var s=SERVICES[st.service];
     freqGrp.hidden = !s.recurring;
     var p=parts();
-    $('qTotal').innerHTML = '<strong class="num">€'+p.total+'</strong><span class="per">'+per()+'</span>';
+    var total = $('qTotal');
+    total.innerHTML = '<strong class="num">€'+p.total+'</strong><span class="per">'+per()+'</span>';
+    if (G && !reduce) {
+      gsap.killTweensOf(total);
+      gsap.fromTo(total, { opacity: 0, y: 7 }, { opacity: 1, y: 0, duration: 0.38, ease: EASE });
+    }
     $('qSum').textContent = carsWord()+' · '+s.label+(s.recurring?' · '+freqWord():'');
     var sv=$('qSave');
     if (p.save>0) { sv.textContent='Includes €'+p.save+' reduction — 10% on '+st.cars+' cars in the same visit.'; sv.classList.add('show'); }
