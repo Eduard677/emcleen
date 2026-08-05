@@ -9,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,600;125,700&family=Inter:opsz,wght@14..32,400..500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,600;125,700&family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================ TOKENS */
@@ -202,18 +202,18 @@ p { font-size: var(--fs-body); }
 }
 .bar.scrolled .bar-in { height: 54px; }
 .brand-mark {
-  display: inline-flex; align-items: center; gap: 0.18em;
+  display: inline-flex; align-items: center; gap: 0.14em;
   color: var(--paper); text-decoration: none;
-  font-family: "Inter", Arial, sans-serif; font-size: 1.02rem;
-  font-weight: 400; line-height: 1; letter-spacing: 0.055em;
-  transition: color var(--t) var(--ease), transform var(--t-mid) var(--ease);
+  font-family: "Inter", Arial, sans-serif; font-size: .96rem;
+  font-weight: 300; line-height: 1; letter-spacing: 0.11em;
+  transition: color var(--t) var(--ease), opacity var(--t) var(--ease);
 }
-.brand-mark:hover { color: #fff; transform: translateX(2px); }
+.brand-mark:hover { color: #fff; opacity: .82; }
 .brand-e {
-  width: 0.78em; height: 0.84em; flex: 0 0 auto;
+  width: 0.68em; height: 0.66em; flex: 0 0 auto;
   display: flex; flex-direction: column; justify-content: space-between;
 }
-.brand-e i { display: block; width: 100%; height: 0.11em; background: currentColor; }
+.brand-e i { display: block; width: 100%; height: 0.075em; min-height: 1px; background: currentColor; }
 .brand-e i:nth-child(2) { background: var(--accent-soft); }
 .brand-type { white-space: nowrap; }
 .menu-btn {
@@ -269,7 +269,7 @@ p { font-size: var(--fs-body); }
   padding-top: clamp(3.5rem, 10vh, 7.5rem); padding-bottom: clamp(1rem, 3vh, 2rem);
 }
 .hero-copy { align-self: center; width: min(980px, 100%); padding-bottom: clamp(2rem, 6vh, 4.5rem); }
-.hero h1 { max-width: none; color: var(--paper); text-shadow: 0 8px 42px rgba(0,0,0,.36); }
+.hero h1 { max-width: none; color: var(--paper); font-weight: 500; letter-spacing: -.025em; text-shadow: 0 8px 42px rgba(0,0,0,.36); }
 .hero-line { display: block; overflow: hidden; padding-bottom: .045em; margin-bottom: -.045em; }
 .hero-line > span { display: block; white-space: nowrap; }
 .hero .lede { margin-top: var(--s3); color: rgba(247,244,238,.76); max-width: 47ch; }
@@ -522,14 +522,12 @@ p { font-size: var(--fs-body); }
 }
 .statement-mask { margin-top: var(--s2); overflow: hidden; padding-bottom: 0.08em; }
 .statement-line {
-  max-width: none;
+  max-width: 12ch;
   font-family: var(--f-head); font-stretch: 125%;
-  font-size: clamp(2.8rem, 7.6vw, 6.75rem); font-weight: 600;
-  letter-spacing: -0.05em; line-height: 0.91;
+  font-size: clamp(2.8rem, 6.6vw, 6rem); font-weight: 500;
+  letter-spacing: -0.04em; line-height: 0.95;
 }
-.statement-line span { display: block; white-space: nowrap; }
-.statement-line span:nth-child(2) { margin-left: clamp(.5rem, 7vw, 7rem); }
-.statement-line span:nth-child(3) { color: var(--accent-soft); text-align: right; }
+.statement-line span { display: block; }
 .statement-note { margin-top: var(--s3); max-width: 42ch; color: var(--text-2); }
 
 /* ============================================================ BOOKING (dark slab) */
@@ -761,7 +759,7 @@ p { font-size: var(--fs-body); }
 .foot-slab { margin-bottom: var(--gutter); padding: var(--s5) var(--gutter) var(--s4); }
 .foot-top { display: grid; gap: var(--s4); padding-bottom: var(--s4); border-bottom: 1px solid var(--line); }
 .foot-brand { font-family: var(--f-head); font-stretch: 125%; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
-.foot-brand .brand-mark { font-size: 1.15rem; }
+.foot-brand .brand-mark { font-size: 1.05rem; }
 .foot-loc { margin-top: 0.6rem; color: var(--text-3); font-size: var(--fs-sm); line-height: 1.75; }
 .foot-col h4 { font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); margin-bottom: 0.5rem; }
 .foot-col a, .foot-col span, .foot-col button {
@@ -860,8 +858,7 @@ p { font-size: var(--fs-body); }
   border: 1px solid var(--line);
   background: linear-gradient(165deg, var(--graphite-3) 0%, var(--graphite-1) 100%);
 }
-.founder.revealing { will-change: clip-path; }
-.founder img { position: relative; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.founder img { position: relative; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 42%; }
 .founder span {
   position: static; display: block;
   font-family: var(--f-head); font-stretch: 125%; font-size: var(--fs-label);
@@ -1066,8 +1063,6 @@ p { font-size: var(--fs-body); }
     border-color: rgba(164,98,75,.45);
     box-shadow: 0 24px 50px -38px rgba(0,0,0,.9);
   }
-  .founder img { transition: transform .8s var(--ease), filter .8s var(--ease); }
-  .founder:hover img { transform: scale(1.018); filter: contrast(1.02); }
 }
 
 /* ============================================================ RESPONSIVE */
@@ -1091,7 +1086,6 @@ p { font-size: var(--fs-body); }
   .hero-meta .v { font-size: .78rem; line-height: 1.35; }
   .statement-line { font-size: clamp(2.35rem, 12vw, 3.8rem); }
   .statement-line span { white-space: normal; }
-  .statement-line span:nth-child(3) { text-align: left; margin-left: clamp(1rem, 10vw, 3rem); }
   .acc-head { padding-block: 1.25rem; }
   .acc-n { letter-spacing: 0.06em; }
   .progress { margin-top: var(--s3); }
@@ -1311,9 +1305,9 @@ p { font-size: var(--fs-body); }
     <div class="shell">
       <span class="label label-accent" data-rv>Designed around your time</span>
       <div class="statement-mask">
-        <p class="statement-line" data-statement><span>Your car.</span><span>Your standard.</span><span>Your time protected.</span></p>
+        <p class="statement-line" data-statement><span>One less thing to think about.</span></p>
       </div>
-      <p class="statement-note" data-rv>One less thing to think about. A reserved appointment, delivered to the same exacting standard every time.</p>
+      <p class="statement-note" data-rv>A reserved appointment. The same standard. Every time.</p>
     </div>
   </section>
 
@@ -1931,16 +1925,6 @@ p { font-size: var(--fs-body); }
       gsap.fromTo(v, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: EASE });
       var kids = v.querySelectorAll('.view-body > .shell > *, .m-login-card');
       if (kids.length) gsap.fromTo(kids, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.06, ease: EASE, delay: 0.05 });
-      if (name === 'about') {
-        var founder = v.querySelector('.founder');
-        if (founder) {
-          founder.classList.add('revealing');
-          gsap.fromTo(founder,
-            { clipPath: 'inset(0 100% 0 0)' },
-            { clipPath: 'inset(0 0% 0 0)', duration: 1.05, ease: 'power4.inOut', delay: .12,
-              onComplete: function () { founder.classList.remove('revealing'); } });
-        }
-      }
     }
     var x = v.querySelector('[data-view-close]');
     if (x) setTimeout(function () { x.focus(); }, 120);
