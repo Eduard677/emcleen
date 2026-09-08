@@ -1,7 +1,6 @@
 {
   "buildCommand": "mkdir -p .vercel-static && cp index.html .vercel-static/index.html && cp -R public/. .vercel-static/",
   "outputDirectory": ".vercel-static",
-  "cleanUrls": true,
   "rewrites": [
     { "source": "/auto", "destination": "/index.html" },
     { "source": "/home", "destination": "/index.html" }
