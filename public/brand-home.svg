@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 92" role="img" aria-labelledby="title desc">
+  <title id="title">BC Stone Mason and Construction Restoration</title>
+  <desc id="desc">A structured stone-block monogram in mineral blue and oxide red.</desc>
+  <g transform="translate(4 10)">
+    <path d="M0 0h70v70H0z" fill="#173544"/>
+    <path d="M8 8h26v25H8zm30 0h24v16H38zm0 20h24v34H38zM8 37h26v25H8z" fill="#EAE3D7"/>
+    <path d="M34 8h4v54h-4zM8 33h54v4H8z" fill="#B43B34"/>
+  </g>
+  <g transform="translate(92 7)">
+    <text x="0" y="38" fill="#173544" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="900" letter-spacing="-1">BC STONE MASON</text>
+    <text x="1" y="66" fill="#B43B34" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="800" letter-spacing="2.4">CONSTRUCTION &amp; RESTORATION</text>
+  </g>
+</svg>
