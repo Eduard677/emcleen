@@ -1,9 +1,14 @@
 {
-  "buildCommand": "mkdir -p .vercel-static && cp index.html review.html .vercel-static/ && cp -R public/. .vercel-static/",
+  "buildCommand": "mkdir -p .vercel-static && cp index.html review.html privacy.html car-wash-newmarket-on-fergus.html car-valeting-clare.html stone-mason-clare.html house-painting-clare.html .vercel-static/ && cp -R public/. .vercel-static/",
   "outputDirectory": ".vercel-static",
   "rewrites": [
     { "source": "/auto", "destination": "/index.html" },
     { "source": "/home", "destination": "/index.html" },
-    { "source": "/review", "destination": "/review.html" }
+    { "source": "/review", "destination": "/review.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/car-wash-newmarket-on-fergus", "destination": "/car-wash-newmarket-on-fergus.html" },
+    { "source": "/car-valeting-clare", "destination": "/car-valeting-clare.html" },
+    { "source": "/stone-mason-clare", "destination": "/stone-mason-clare.html" },
+    { "source": "/house-painting-clare", "destination": "/house-painting-clare.html" }
   ]
 }

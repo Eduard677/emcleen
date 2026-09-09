@@ -113,14 +113,15 @@
     const data = new FormData(event.currentTarget);
     const mode = body.dataset.mode;
     const service = mode === 'auto' ? data.get('auto_service') : data.get('home_service');
-    const subject = mode === 'auto' ? 'Car wash / valet enquiry' : 'Property work estimate request';
     const message = [
+      mode === 'auto' ? 'Car wash / valet enquiry' : 'Property work estimate request',
+      '',
       `Name: ${data.get('name')}`,
       `Phone: ${data.get('phone')}`,
       `Service: ${service || 'Not selected'}`,
       '',
       String(data.get('details') || '')
     ].join('\n');
-    location.href = `mailto:bledar24@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    location.href = `https://wa.me/353877070331?text=${encodeURIComponent(message)}`;
   });
 })();

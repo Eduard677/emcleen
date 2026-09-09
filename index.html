@@ -15,11 +15,55 @@
   <meta name="twitter:title" content="Cankaj — Auto Care & Property Restoration">
   <meta name="twitter:description" content="Car care in Newmarket-on-Fergus and considered property work across County Clare.">
   <meta name="twitter:image" content="https://cankaj-dual-services-demo.vercel.app/og.png">
+  <link rel="canonical" href="https://cankaj-dual-services-demo.vercel.app/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AutoWash",
+        "@id": "https://cankaj-dual-services-demo.vercel.app/#carwash",
+        "name": "Cankaj Super Car Wash",
+        "url": "https://cankaj-dual-services-demo.vercel.app/auto",
+        "telephone": "+353877070331",
+        "email": "bledar24@gmail.com",
+        "image": "https://cankaj-dual-services-demo.vercel.app/media/cankaj/auto-hero.jpg",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Halpins Service Station, Limerick Road, Boheraroan",
+          "addressLocality": "Newmarket-on-Fergus",
+          "addressRegion": "County Clare",
+          "addressCountry": "IE"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "areaServed": ["Newmarket-on-Fergus", "Ennis", "Shannon", "County Clare"]
+      },
+      {
+        "@type": "HomeAndConstructionBusiness",
+        "@id": "https://cankaj-dual-services-demo.vercel.app/#property",
+        "name": "BC Stone Mason & Construction Restoration",
+        "url": "https://cankaj-dual-services-demo.vercel.app/home",
+        "telephone": "+353877070331",
+        "email": "bledar24@gmail.com",
+        "founder": { "@type": "Person", "name": "Bledar Cankaj" },
+        "identifier": "CRO 789324",
+        "areaServed": { "@type": "AdministrativeArea", "name": "County Clare" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body data-mode="auto">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -292,16 +336,19 @@
         <label class="mode-auto">What does the car need?<select name="auto_service"><option>Hand wash</option><option>Mini valet</option><option>Full valet</option><option>Not sure — please advise</option></select></label>
         <label class="mode-home">What type of work?<select name="home_service"><option>Stone masonry or restoration</option><option>House painting</option><option>Exterior power washing</option><option>Deep cleaning or maintenance</option><option>Not sure — please advise</option></select></label>
         <label>Anything we should know?<textarea name="details" rows="4" placeholder="A short description is plenty"></textarea></label>
-        <button class="button button-primary" type="submit">Prepare enquiry</button>
-        <p class="form-note">This opens your email app with the details ready to send. Nothing is stored on this site.</p>
+        <button class="button button-primary" type="submit">Start WhatsApp enquiry</button>
+        <p class="form-note">This opens WhatsApp with the details ready to send. Property customers can attach photographs in the chat. Nothing is stored on this site.</p>
       </form>
     </section>
   </main>
 
   <footer>
     <div><img class="footer-logo footer-logo-auto mode-auto" src="/brand-auto.svg" alt="Cankaj Super Car Wash"><img class="footer-logo footer-logo-home mode-home" src="/brand-home.svg" alt="BC Stone Mason and Construction Restoration"></div>
-    <p>Independent local services by Bledar Cankaj · County Clare</p>
-    <a href="#top">Back to top ↑</a>
+    <div class="footer-centre">
+      <p>Independent local services by Bledar Cankaj · County Clare</p>
+      <nav aria-label="Local services"><a href="/car-wash-newmarket-on-fergus">Car wash</a><a href="/car-valeting-clare">Valeting</a><a href="/stone-mason-clare">Stone masonry</a><a href="/house-painting-clare">House painting</a></nav>
+    </div>
+    <div class="footer-end"><a href="/privacy">Privacy</a><a href="#top">Back to top ↑</a></div>
   </footer>
 
   <div class="mobile-actions" aria-label="Quick contact">

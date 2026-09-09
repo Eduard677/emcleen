@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cankaj-dual-services-demo.vercel.app/sitemap.xml
