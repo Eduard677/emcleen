@@ -906,6 +906,7 @@ body[data-mode="auto"] .review-score span { color: #ff5c54; }
 body[data-mode="auto"] .location { background: #e7f5fb; }
 body[data-mode="auto"] .location-map,
 body[data-mode="auto"] .location-map iframe { border-radius: 24px; overflow: hidden; }
+body[data-mode="auto"] .location-map iframe { filter: saturate(1.08) contrast(1.01); }
 body[data-mode="auto"] .confidence { background: #f5f9fb; }
 body[data-mode="auto"] .enquiry-form {
   border: 1px solid rgba(31,122,160,.16);
