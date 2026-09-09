@@ -33,12 +33,26 @@
         "telephone": "+353877070331",
         "email": "bledar24@gmail.com",
         "image": "https://cankaj-dual-services-demo.vercel.app/media/cankaj/auto-hero.jpg",
+        "sameAs": "https://maps.google.com/?cid=18333088850512823541",
+        "hasMap": "https://maps.google.com/?cid=18333088850512823541",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 52.7585055,
+          "longitude": -8.8947586
+        },
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Halpins Service Station, Limerick Road, Boheraroan",
           "addressLocality": "Newmarket-on-Fergus",
           "addressRegion": "County Clare",
+          "postalCode": "V95 YR25",
           "addressCountry": "IE"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": 4.7,
+          "reviewCount": 14,
+          "bestRating": 5
         },
         "openingHoursSpecification": [
           {
@@ -287,12 +301,17 @@
 
     <section class="reviews mode-auto" id="reviews">
       <div class="reviews-inner">
-        <div class="review-score"><strong>5.0</strong><span aria-label="5 out of 5 stars">★★★★★</span><small>11 reviews shown on the current public business listing</small></div>
+        <div class="review-score"><strong>4.7</strong><span role="img" aria-label="4.7 out of 5 stars">★★★★★</span><small>From 14 Google reviews · rating checked September 2026</small></div>
         <blockquote>“Best car wash around. Great service with attention to detail and served up with a smile. Sure what more could you want!”</blockquote>
         <div class="review-attribution"><span>Customer review</span><span>Public business listing</span></div>
         <div class="review-actions">
           <a class="button button-light" href="/review">Leave feedback or a review</a>
-          <a class="text-link" href="https://www.google.com/maps/search/?api=1&amp;query=Cankaj+Super+Car+Wash%2C+Halpins+Service+Station%2C+Limerick+Road%2C+Newmarket+on+Fergus%2C+Co.+Clare" target="_blank" rel="noopener">View the listing ↗</a>
+          <a class="text-link" href="https://maps.google.com/?cid=18333088850512823541" target="_blank" rel="noopener">Read all Google reviews ↗</a>
+        </div>
+        <div class="review-proof">
+          <div><strong>13</strong><span>five-star ratings</span></div>
+          <div><strong>Local</strong><span>Newmarket-on-Fergus</span></div>
+          <div><strong>Direct</strong><span>Call Bledar himself</span></div>
         </div>
       </div>
     </section>
@@ -304,7 +323,7 @@
       <div class="location-copy">
         <p class="kicker">Find the wash</p>
         <h2>Easy to find<br>Easy to call in</h2>
-        <address>Halpin’s Service Station<br>Limerick Road<br>Newmarket-on-Fergus<br>Co. Clare</address>
+        <address>Halpin’s Service Station<br>Limerick Road<br>Newmarket-on-Fergus<br>Co. Clare · V95 YR25</address>
         <dl><div><dt>Monday–Saturday</dt><dd>9:00–18:00</dd></div><div><dt>Sunday</dt><dd>Closed</dd></div></dl>
         <a class="button button-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cankaj+Super+Car+Wash%2C+Halpins+Service+Station%2C+Limerick+Road%2C+Newmarket+on+Fergus%2C+Co.+Clare" target="_blank" rel="noopener">Get directions</a>
       </div>
@@ -338,6 +357,15 @@
         <h2 class="mode-auto">What does your car need</h2><h2 class="mode-home">Tell us what needs attention</h2>
         <p class="mode-auto">Call in during opening hours, phone ahead or send a few details below.</p>
         <p class="mode-home">A few details and photos are enough to begin. Bledar can then arrange a site visit where needed.</p>
+        <section class="photo-brief mode-home" aria-labelledby="photo-brief-title">
+          <h3 id="photo-brief-title">Three photos are enough to start</h3>
+          <ol>
+            <li><span>01</span>A full view of the area</li>
+            <li><span>02</span>A close view of the damage or finish</li>
+            <li><span>03</span>Something that shows the scale</li>
+          </ol>
+          <p>Add your town and an approximate size. Attach the photos after WhatsApp opens.</p>
+        </section>
         <div class="direct-links">
           <a href="tel:+353877070331"><span>Call</span><strong>087 707 0331</strong></a>
           <a href="https://wa.me/353877070331" target="_blank" rel="noopener"><span>WhatsApp</span><strong>Send a message ↗</strong></a>
@@ -350,6 +378,7 @@
         <label>Phone number<input type="tel" name="phone" autocomplete="tel" required></label>
         <label class="mode-auto">What does the car need?<select name="auto_service"><option>Hand wash</option><option>Mini valet</option><option>Full valet</option><option>Not sure — please advise</option></select></label>
         <label class="mode-home">What type of work?<select name="home_service"><option>Stone masonry or restoration</option><option>House painting</option><option>Exterior power washing</option><option>Deep cleaning or maintenance</option><option>Not sure — please advise</option></select></label>
+        <label class="mode-home">Town or general area<input type="text" name="location" autocomplete="address-level2" placeholder="For example Ennis or Shannon"></label>
         <label>Anything we should know?<textarea name="details" rows="4" placeholder="A short description is plenty"></textarea></label>
         <button class="button button-primary" type="submit">Start WhatsApp enquiry</button>
         <p class="form-note">This opens WhatsApp with the details ready to send. Property customers can attach photographs in the chat. Nothing is stored on this site.</p>
@@ -366,9 +395,9 @@
     <div class="footer-end"><a href="/privacy">Privacy</a><a href="#top">Back to top ↑</a></div>
   </footer>
 
-  <div class="mobile-actions" aria-label="Quick contact">
+  <nav class="mobile-actions" aria-label="Quick contact">
     <a href="tel:+353877070331">Call</a><a href="https://wa.me/353877070331" target="_blank" rel="noopener">WhatsApp</a><a class="mode-auto" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cankaj+Super+Car+Wash%2C+Halpins+Service+Station%2C+Limerick+Road%2C+Newmarket+on+Fergus%2C+Co.+Clare" target="_blank" rel="noopener">Directions</a><a class="mode-home" href="#contact">Estimate</a>
-  </div>
+  </nav>
 
   <dialog class="gallery-dialog" id="gallery-dialog">
     <button type="button" class="dialog-close" data-close-dialog aria-label="Close gallery">×</button>

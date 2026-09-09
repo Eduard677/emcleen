@@ -186,9 +186,11 @@
       `Name: ${data.get('name')}`,
       `Phone: ${data.get('phone')}`,
       `Service: ${service || 'Not selected'}`,
-      '',
-      String(data.get('details') || '')
-    ].join('\n');
-    location.href = `https://wa.me/353877070331?text=${encodeURIComponent(message)}`;
+    ];
+    if (mode === 'home') message.push(`Area: ${data.get('location') || 'Not provided'}`);
+    message.push('', String(data.get('details') || ''));
+    if (mode === 'home') message.push('', 'I can attach a wide photo, a close detail and a photo showing scale.');
+    const messageText = message.join('\n');
+    location.href = `https://wa.me/353877070331?text=${encodeURIComponent(messageText)}`;
   });
 })();
