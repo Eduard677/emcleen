@@ -15,7 +15,7 @@
   function syncMode(mode) {
     body.dataset.mode = mode;
     if (formMode) formMode.value = mode === 'auto' ? 'Car wash' : 'Property care';
-    if (metaTheme) metaTheme.setAttribute('content', mode === 'auto' ? '#0b0f12' : '#e9e3d9');
+    if (metaTheme) metaTheme.setAttribute('content', mode === 'auto' ? '#0e1111' : '#e8e3da');
     document.title = mode === 'auto'
       ? 'Cankaj Super Car Wash — Newmarket-on-Fergus'
       : 'BC Stone Mason & Construction Restoration — County Clare';

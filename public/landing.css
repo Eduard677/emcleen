@@ -25,7 +25,7 @@
 .landing-home .landing-copy p { color: #656a64; }
 .landing-services { margin-bottom: clamp(5rem,10vw,9rem); border-top: 1px solid rgba(29,40,46,.2); }
 .landing-services article { display: grid; grid-template-columns: 10% 35% 1fr; gap: 2rem; padding: 1.8rem 0; border-bottom: 1px solid rgba(29,40,46,.2); }
-.landing-services article > span { color: #347fa8; font-family: var(--serif); }
+.landing-services article > span { color: #867461; font-family: var(--serif); }
 .landing-home .landing-services article > span, .landing-home .kicker { color: #99594f; }
 .landing-services article > div { display: contents; }
 .landing-services h3 { margin: 0; font-family: var(--serif); font-size: clamp(1.7rem,2.8vw,2.8rem); font-weight: 400; }
@@ -37,7 +37,7 @@
 .faq-list summary { padding: 1.25rem 2rem 1.25rem 0; cursor: pointer; font-weight: 600; list-style-position: outside; }
 .faq-list p { margin: 0; padding: 0 0 1.25rem; color: #687278; line-height: 1.65; }
 .landing-home .faq-list p { color: #656a64; }
-.landing-cta { padding: clamp(4rem,8vw,7rem) var(--gutter); display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 3rem; background: #347fa8; color: #fff; }
+.landing-cta { padding: clamp(4rem,8vw,7rem) var(--gutter); display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 3rem; background: #222625; color: #fff; }
 .landing-home .landing-cta { background: #2e3b3b; }
 .landing-cta h2 { max-width: 900px; font-size: clamp(2.8rem,5.8vw,6rem); }
 .landing-cta p { max-width: 560px; color: rgba(255,255,255,.7); line-height: 1.6; }
@@ -69,3 +69,25 @@
   .landing-hero h1 { font-size: clamp(3.1rem,15vw,4.8rem); }
   .landing-page footer { padding-bottom: 2rem; }
 }
+
+/* Refined service-page palette */
+.landing-page { background: #e9e5dd; color: #242825; }
+.landing-page.landing-home { background: #e8e3da; color: #2a2c28; }
+.landing-header { border-color: rgba(36,40,37,.15); background: rgba(233,229,221,.96); }
+.landing-home .landing-header { background: rgba(232,227,218,.96); }
+.landing-header nav a { font-weight: 500; letter-spacing: .15em; }
+.landing-header .button-primary { background: #2b2f2c; color: #f0ede6; }
+.landing-auto .landing-header img, .landing-auto footer img { filter: saturate(.58) contrast(.94); }
+.landing-hero h1, .landing-home .landing-hero h1 { font-family: var(--serif); font-weight: 400; line-height: .93; letter-spacing: -.045em; text-transform: none; }
+.landing-hero-copy > p:not(.kicker):not(.breadcrumbs), .landing-copy p, .landing-services p, .faq-list p { color: #70716b; }
+.landing-home .landing-hero-copy > p:not(.kicker):not(.breadcrumbs), .landing-home .landing-copy p, .landing-home .landing-services p, .landing-home .faq-list p { color: #6c6b64; }
+.landing-hero-media img { filter: saturate(.62) contrast(.98); }
+.landing-hero-media small { background: rgba(17,20,19,.76); }
+.landing-actions .button-primary { background: #2b2f2c; color: #f0ede6; }
+.landing-actions .button-secondary { border-color: rgba(36,40,37,.28); }
+.landing-services article > span, .landing-home .landing-services article > span, .landing-home .kicker { color: #867461; }
+.landing-cta, .landing-home .landing-cta { background: #222625; }
+.landing-cta .kicker { color: #b5a28d; }
+.landing-page footer { background: #e9e5dd; color: #70716b; }
+.landing-home footer { background: #e8e3da; color: #6c6b64; }
+.privacy-content h1, .privacy-content h2 { font-family: var(--serif); }
