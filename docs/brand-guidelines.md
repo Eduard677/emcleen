@@ -14,10 +14,11 @@ Cankaj is presented as a dependable, owner-led local service with the visual com
 
 ## Typography
 
-- Display and editorial: Newsreader, regular or italic, with optical sizing enabled.
+- Auto display: Barlow Condensed in bold or italic bold to echo the supplied car-wash wordmark.
+- Property display and editorial: Newsreader, regular or italic, with optical sizing enabled.
 - Interface and body: Manrope, primarily regular and medium.
-- Large headlines remain sentence case. Uppercase is reserved for short labels, navigation and buttons.
-- Avoid ultra-bold display faces and compressed all-caps headlines.
+- Property headlines remain sentence case. Auto headlines may use compressed uppercase to carry the energy of the supplied logo.
+- Keep heavy compressed type exclusive to Auto so the two businesses retain distinct characters.
 
 ## Colour system
 
@@ -30,7 +31,7 @@ Cankaj is presented as a dependable, owner-led local service with the visual com
 - Desaturated steel: `#6f858d`
 - Muted signal red: `#8d4b45`
 
-The supplied red and blue logo remains recognisable but is visually contained. Large surfaces should never use saturated logo blue or red.
+The supplied red and blue logo remains recognisable and leads a brighter more energetic auto-care identity. Saturated colour is used for focused moments such as calls to action highlights and small interface details rather than covering every surface.
 
 ### Property care
 
@@ -48,7 +49,7 @@ Avoid bright brick red, cold blue-grey and decorative gold effects.
 - Use full-bleed photography sparingly and give it room.
 - Prefer fine rules and spacing over cards, shadows or coloured boxes.
 - Motion should be slow and purposeful; service switching is the signature interaction.
-- Buttons are solid ivory or deep neutral, with square edges and restrained lettering.
+- Auto buttons may use rounded ends and brighter signal colour. Property buttons remain square edged and restrained.
 - Keep the mobile path to call, WhatsApp and directions immediate.
 
 ## Voice

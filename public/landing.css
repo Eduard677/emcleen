@@ -102,3 +102,54 @@
 @media (prefers-reduced-motion: reduce) {
   .landing-hero-media img { transform: none; }
 }
+
+/* Auto pages carry the brighter wash identity; property pages stay editorial. */
+.landing-auto { background: #f5f9fb; color: #101b22; }
+.landing-auto .landing-header { background: rgba(245,249,251,.96); border-color: rgba(16,27,34,.13); }
+.landing-auto .landing-header img,
+.landing-auto footer img { filter: none; }
+.landing-auto .landing-header .button-primary,
+.landing-auto .landing-actions .button-primary { border-radius: 999px; background: #df3938; color: #fff; }
+.landing-auto .landing-actions .button-secondary { border-radius: 999px; border-color: rgba(22,115,153,.3); }
+.landing-auto .landing-hero h1,
+.landing-auto .landing-intro h2,
+.landing-auto .landing-faq h2,
+.landing-auto .landing-cta h2 {
+  font-family: var(--auto-display);
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: .85;
+  text-transform: uppercase;
+}
+.landing-auto .kicker,
+.landing-auto .landing-services article > span { color: #d93434; }
+.landing-auto .landing-hero-media { border-radius: 0 0 0 48px; }
+.landing-auto .landing-hero-media img { filter: saturate(.86) contrast(1.02); }
+.landing-auto .landing-services { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; border: 0; }
+.landing-auto .landing-services article {
+  display: block;
+  padding: 1.5rem;
+  border: 1px solid rgba(17,65,85,.15);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 16px 48px rgba(17,74,98,.06);
+}
+.landing-auto .landing-services article > div { display: block; }
+.landing-auto .landing-services h3 {
+  margin-top: 4rem;
+  font-family: var(--auto-display);
+  font-size: clamp(2.4rem,3.5vw,3.7rem);
+  font-style: italic;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.landing-auto .landing-cta { background: #092d43; }
+.landing-auto .landing-cta .button { border-radius: 999px; background: #62c8f5; color: #08283b; }
+.landing-auto footer { background: #f5f9fb; color: #586974; }
+
+@media (max-width:800px) {
+  .landing-auto .landing-services { grid-template-columns: 1fr; }
+  .landing-auto .landing-services h3 { margin-top: 2rem; }
+  .landing-auto .landing-hero-media { border-radius: 0; }
+}

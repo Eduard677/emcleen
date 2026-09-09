@@ -7,19 +7,22 @@
   const metaTheme = document.querySelector('meta[name="theme-color"]');
   const validModes = ['auto', 'home'];
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const compactViewport = window.matchMedia('(max-width: 700px)');
   const saveData = Boolean(navigator.connection?.saveData);
+  let heroVisible = true;
   let transitionTimers = [];
 
   if (saveData) document.documentElement.classList.add('save-data');
 
   function setVideoPlayback(mode, chooserOpen) {
+    const canPlay = !reduceMotion.matches && !compactViewport.matches && !saveData && !document.hidden;
     document.querySelectorAll('.choice-video').forEach((video) => {
-      if (chooserOpen && !reduceMotion.matches && !saveData) video.play().catch(() => {});
+      if (chooserOpen && canPlay) video.play().catch(() => {});
       else video.pause();
     });
     document.querySelectorAll('.hero-video').forEach((video) => {
       const active = video.classList.contains(`hero-video-${mode}`);
-      if (active && !chooserOpen && !reduceMotion.matches && !saveData) video.play().catch(() => {});
+      if (active && !chooserOpen && heroVisible && canPlay) video.play().catch(() => {});
       else video.pause();
     });
   }
@@ -127,13 +130,24 @@
     setVideoPlayback('auto', true);
   }
 
+  const refreshVideoPlayback = () => {
+    const chooserOpen = !chooser?.classList.contains('is-hidden');
+    setVideoPlayback(body.dataset.mode, chooserOpen);
+  };
+  compactViewport.addEventListener('change', refreshVideoPlayback);
+  reduceMotion.addEventListener('change', refreshVideoPlayback);
+
+  const hero = document.querySelector('.hero');
+  if (hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      refreshVideoPlayback();
+    }, { threshold: 0.02 }).observe(hero);
+  }
+
   window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 24), { passive: true });
 
-  const compare = document.getElementById('compare');
-  const compareRange = document.getElementById('compare-range');
-  if (compare && compareRange) {
-    compareRange.addEventListener('input', () => compare.style.setProperty('--pos', `${compareRange.value}%`));
-  }
+  document.addEventListener('visibilitychange', refreshVideoPlayback);
 
   const galleryDialog = document.getElementById('gallery-dialog');
   const dialogImage = document.getElementById('dialog-image');

@@ -56,22 +56,6 @@
     revealItems.forEach((item) => item.classList.add('is-visible'));
   }
 
-  let framePending = false;
-  const updateParallax = () => {
-    const hero = document.querySelector('.hero, .landing-hero');
-    if (hero) {
-      const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(hero.offsetHeight, 1)));
-      hero.style.setProperty('--hero-shift', `${progress * 34}px`);
-    }
-    framePending = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (framePending) return;
-    framePending = true;
-    window.requestAnimationFrame(updateParallax);
-  }, { passive: true });
-  updateParallax();
-
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => root.classList.add('page-ready'));
   });
