@@ -149,6 +149,15 @@
 
   document.addEventListener('visibilitychange', refreshVideoPlayback);
 
+  const compare = document.getElementById('compare');
+  const compareRange = document.getElementById('compare-range');
+  if (compare && compareRange) {
+    compareRange.addEventListener('input', () => {
+      compare.style.setProperty('--pos', `${compareRange.value}%`);
+      compareRange.setAttribute('aria-valuetext', `${compareRange.value} percent after`);
+    });
+  }
+
   const galleryDialog = document.getElementById('gallery-dialog');
   const dialogImage = document.getElementById('dialog-image');
   const dialogCaption = document.getElementById('dialog-caption');
