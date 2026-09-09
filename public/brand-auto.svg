@@ -1,13 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 92" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 104" role="img" aria-labelledby="title desc">
   <title id="title">Cankaj Super Car Wash</title>
-  <desc id="desc">A refined red and blue identity inspired by the original SCW mark.</desc>
-  <g fill="none" stroke-linecap="round">
-    <path d="M8 20h63M22 34h72M9 48h49" stroke="#56A9D2" stroke-width="8"/>
-    <path d="M76 20h48M96 34h30" stroke="#D6403A" stroke-width="8"/>
+  <desc id="desc">The Cankaj red and blue car wash wordmark, redrawn from the supplied business card.</desc>
+  <g transform="translate(4 7)">
+    <path d="M21 59c-10 0-17-7-17-16s7-16 17-16c2-13 13-22 27-22 8 0 15 3 20 9 6-6 14-9 23-9 17 0 30 11 32 27 9 1 16 8 16 17 0 10-8 18-19 18H23c-1 0-2 0-2-1Z" fill="none" stroke="#58A9D3" stroke-width="7"/>
+    <circle cx="22" cy="18" r="7" fill="#D83D38"/>
+    <circle cx="53" cy="7" r="5" fill="#58A9D3"/>
+    <circle cx="87" cy="13" r="6" fill="#D83D38"/>
+    <path d="M18 73h113" stroke="#D83D38" stroke-width="5" stroke-linecap="round"/>
   </g>
-  <g transform="translate(132 4)">
-    <text x="0" y="48" fill="#F7F5F0" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="900" letter-spacing="-2">CANKAJ</text>
-    <text x="2" y="73" fill="#56A9D2" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" letter-spacing="3.6">SUPER CAR WASH</text>
+  <g transform="translate(151 7) skewX(-5)">
+    <text x="0" y="52" fill="#D83D38" font-family="Arial, Helvetica, sans-serif" font-size="55" font-weight="900" letter-spacing="-2.5">CANKAJ</text>
+    <text x="5" y="80" fill="#58A9D3" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" letter-spacing="3.2">SUPER CAR WASH</text>
   </g>
-  <path d="M400 4l3.2 9.8L413 17l-9.8 3.2L400 30l-3.2-9.8L387 17l9.8-3.2L400 4z" fill="#D6403A"/>
+  <path d="m452 3 3.5 11 10.5 3.5-10.5 3.5-3.5 11-3.5-11-10.5-3.5 10.5-3.5L452 3Z" fill="#D83D38"/>
 </svg>

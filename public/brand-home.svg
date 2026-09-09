@@ -1,13 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 92" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 104" role="img" aria-labelledby="title desc">
   <title id="title">BC Stone Mason and Construction Restoration</title>
-  <desc id="desc">A structured stone-block monogram in mineral blue and oxide red.</desc>
-  <g transform="translate(4 10)">
-    <path d="M0 0h70v70H0z" fill="#173544"/>
-    <path d="M8 8h26v25H8zm30 0h24v16H38zm0 20h24v34H38zM8 37h26v25H8z" fill="#EAE3D7"/>
-    <path d="M34 8h4v54h-4zM8 33h54v4H8z" fill="#B43B34"/>
+  <desc id="desc">A restrained stone-joint monogram and registered business wordmark.</desc>
+  <g transform="translate(4 8)">
+    <rect width="84" height="84" fill="#2C3B3D"/>
+    <path d="M10 10h29v28H10zm35 0h29v18H45zm0 24h29v40H45zM10 44h29v30H10z" fill="#E8E1D5"/>
+    <path d="M39 10h6v64h-6zM10 38h64v6H10z" fill="#9D5B50"/>
   </g>
-  <g transform="translate(92 7)">
-    <text x="0" y="38" fill="#173544" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="900" letter-spacing="-1">BC STONE MASON</text>
-    <text x="1" y="66" fill="#B43B34" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="800" letter-spacing="2.4">CONSTRUCTION &amp; RESTORATION</text>
+  <g transform="translate(108 13)">
+    <text x="0" y="35" fill="#2C3B3D" font-family="Georgia, 'Times New Roman', serif" font-size="35" font-weight="700" letter-spacing=".2">BC STONE MASON</text>
+    <path d="M1 47h414" stroke="#AFA697" stroke-width="1"/>
+    <text x="1" y="70" fill="#7A564D" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="2.5">CONSTRUCTION &amp; RESTORATION</text>
   </g>
 </svg>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Leave feedback — Cankaj Super Car Wash</title>
+  <meta name="description" content="Leave a public review or send private feedback to Cankaj Super Car Wash in Newmarket-on-Fergus.">
+  <meta name="theme-color" content="#f3f1ec">
+  <meta property="og:title" content="Leave feedback — Cankaj Super Car Wash">
+  <meta property="og:description" content="Your honest feedback helps a local independent business improve.">
+  <meta property="og:image" content="https://cankaj-dual-services-demo.vercel.app/og.png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body class="review-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="review-header">
+    <a href="/auto" aria-label="Back to Cankaj Super Car Wash"><img src="/brand-auto.svg" alt="Cankaj Super Car Wash"></a>
+    <a href="/auto">Back to car wash</a>
+  </header>
+
+  <main class="review-main" id="main">
+    <section class="review-hero">
+      <p class="kicker">Thank you for calling in</p>
+      <h1>A minute of your time<br><em>means a lot.</em></h1>
+      <p>Honest feedback helps Bledar improve the service and helps other local drivers know what to expect.</p>
+    </section>
+
+    <section aria-labelledby="feedback-options">
+      <h2 class="sr-only" id="feedback-options">Choose how to leave feedback</h2>
+      <div class="feedback-choices">
+        <a class="feedback-card" href="https://www.google.com/maps/search/?api=1&amp;query=Cankaj+Super+Car+Wash%2C+Halpins+Service+Station%2C+Limerick+Road%2C+Newmarket+on+Fergus%2C+Co.+Clare" target="_blank" rel="noopener">
+          <span>Public feedback</span>
+          <h2>Leave a Google review</h2>
+          <p>Share your experience publicly on the business listing so other customers can find it.</p>
+          <strong>Open Google Maps ↗</strong>
+        </a>
+        <a class="feedback-card" href="#private-feedback">
+          <span>Direct feedback</span>
+          <h2>Send a private note</h2>
+          <p>Tell Bledar directly what worked well or what could have been better.</p>
+          <strong>Write private feedback ↓</strong>
+        </a>
+      </div>
+      <p class="feedback-note">No incentive and no rating filter—good or bad, your honest feedback is welcome.</p>
+    </section>
+
+    <section class="private-feedback" id="private-feedback">
+      <div class="private-feedback-copy">
+        <p class="kicker">Private feedback</p>
+        <h2>Send it straight to Bledar.</h2>
+        <p>This form prepares an email on your device. Your message is not stored by this website.</p>
+      </div>
+      <form class="enquiry-form" id="feedback-form">
+        <label>Your name <span>(optional)</span><input type="text" name="name" autocomplete="name"></label>
+        <label>Email or phone <span>(optional)</span><input type="text" name="contact" autocomplete="email"></label>
+        <label>When did you visit? <span>(optional)</span><input type="date" name="visit_date"></label>
+        <label>Your feedback<textarea name="feedback" rows="6" required placeholder="Tell us about your visit"></textarea></label>
+        <button class="button button-primary" type="submit">Prepare private feedback</button>
+        <p class="form-note">Prefer to speak? Call <a href="tel:+353877070331">087 707 0331</a>.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div><img class="footer-logo" src="/brand-auto.svg" alt="Cankaj Super Car Wash"></div>
+    <p>Halpin’s Service Station · Newmarket-on-Fergus · Co. Clare</p>
+    <a href="tel:+353877070331">087 707 0331</a>
+  </footer>
+  <script src="/review.js" defer></script>
+</body>
+</html>

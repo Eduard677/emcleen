@@ -14,8 +14,8 @@
 
   function syncMode(mode) {
     body.dataset.mode = mode;
-    formMode.value = mode === 'auto' ? 'Auto care' : 'Property care';
-    metaTheme.setAttribute('content', mode === 'auto' ? '#0b0f12' : '#f1ece3');
+    if (formMode) formMode.value = mode === 'auto' ? 'Car wash' : 'Property care';
+    if (metaTheme) metaTheme.setAttribute('content', mode === 'auto' ? '#0b0f12' : '#e9e3d9');
     document.title = mode === 'auto'
       ? 'Cankaj Super Car Wash — Newmarket-on-Fergus'
       : 'BC Stone Mason & Construction Restoration — County Clare';
@@ -33,26 +33,28 @@
   function animateMode(mode, updateUrl = true) {
     if (!validModes.includes(mode)) return;
     const current = body.dataset.mode;
-    if (current === mode && chooser.classList.contains('is-hidden')) return;
+    if (current === mode && chooser?.classList.contains('is-hidden')) return;
 
-    wipe.style.setProperty('--wipe-color', mode === 'auto' ? '#0b0f12' : '#e9e2d7');
-    wipe.classList.remove('run');
-    void wipe.offsetWidth;
-    wipe.classList.add('run');
+    if (wipe) {
+      wipe.style.setProperty('--wipe-color', mode === 'auto' ? '#0b0f12' : '#e9e3d9');
+      wipe.classList.remove('run');
+      void wipe.offsetWidth;
+      wipe.classList.add('run');
+    }
 
     window.setTimeout(() => {
       syncMode(mode);
-      chooser.classList.add('is-hidden');
+      chooser?.classList.add('is-hidden');
       body.classList.remove('chooser-open');
       if (updateUrl) setUrl(mode);
     }, 350);
 
-    window.setTimeout(() => wipe.classList.remove('run'), 900);
+    window.setTimeout(() => wipe?.classList.remove('run'), 900);
   }
 
   function openChooser(event) {
     if (event) event.preventDefault();
-    chooser.classList.remove('is-hidden');
+    chooser?.classList.remove('is-hidden');
     body.classList.add('chooser-open');
   }
 
@@ -65,7 +67,7 @@
     const mode = pathMode();
     if (mode) {
       syncMode(mode);
-      chooser.classList.add('is-hidden');
+      chooser?.classList.add('is-hidden');
       body.classList.remove('chooser-open');
     } else {
       openChooser();
@@ -75,13 +77,13 @@
   const initial = pathMode();
   if (initial) {
     syncMode(initial);
-    chooser.classList.add('is-hidden');
+    chooser?.classList.add('is-hidden');
   } else {
     syncMode('auto');
     body.classList.add('chooser-open');
   }
 
-  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 24), { passive: true });
+  window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 24), { passive: true });
 
   const compare = document.getElementById('compare');
   const compareRange = document.getElementById('compare-range');
@@ -89,7 +91,24 @@
     compareRange.addEventListener('input', () => compare.style.setProperty('--pos', `${compareRange.value}%`));
   }
 
-  document.getElementById('enquiry-form').addEventListener('submit', (event) => {
+  const galleryDialog = document.getElementById('gallery-dialog');
+  const dialogImage = document.getElementById('dialog-image');
+  const dialogCaption = document.getElementById('dialog-caption');
+  document.querySelectorAll('[data-gallery-src]').forEach((item) => {
+    item.addEventListener('click', () => {
+      if (!galleryDialog || !dialogImage || !dialogCaption) return;
+      dialogImage.src = item.dataset.gallerySrc;
+      dialogImage.alt = item.querySelector('img')?.alt || '';
+      dialogCaption.textContent = item.dataset.galleryCaption || '';
+      galleryDialog.showModal();
+    });
+  });
+  document.querySelector('[data-close-dialog]')?.addEventListener('click', () => galleryDialog?.close());
+  galleryDialog?.addEventListener('click', (event) => {
+    if (event.target === galleryDialog) galleryDialog.close();
+  });
+
+  document.getElementById('enquiry-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const mode = body.dataset.mode;

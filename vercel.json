@@ -1,8 +1,9 @@
 {
-  "buildCommand": "mkdir -p .vercel-static && cp index.html .vercel-static/index.html && cp -R public/. .vercel-static/",
+  "buildCommand": "mkdir -p .vercel-static && cp index.html review.html .vercel-static/ && cp -R public/. .vercel-static/",
   "outputDirectory": ".vercel-static",
   "rewrites": [
     { "source": "/auto", "destination": "/index.html" },
-    { "source": "/home", "destination": "/index.html" }
+    { "source": "/home", "destination": "/index.html" },
+    { "source": "/review", "destination": "/review.html" }
   ]
 }
