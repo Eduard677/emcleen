@@ -91,3 +91,14 @@
 .landing-page footer { background: #e9e5dd; color: #70716b; }
 .landing-home footer { background: #e8e3da; color: #6c6b64; }
 .privacy-content h1, .privacy-content h2 { font-family: var(--serif); }
+
+/* Quiet depth: imagery moves a fraction slower than the page. */
+.landing-hero-media img {
+  transform: translate3d(0,var(--hero-shift,0),0) scale(1.07);
+  transition: transform .12s linear;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-media img { transform: none; }
+}

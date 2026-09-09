@@ -54,3 +54,11 @@ Avoid bright brick red, cold blue-grey and decorative gold effects.
 ## Voice
 
 Use short, concrete language: what is done, where it is done and how to begin. Avoid “world-class,” “unmatched,” “luxury,” “master craftsman” and other unsupported status language. The premium impression should come from care, clarity and evidence.
+
+## Motion
+
+- Treat motion like material: weighted, calm and purposeful rather than playful.
+- The business switch uses one full-screen material wipe—graphite and steel for Auto, limestone and bronze for Property.
+- Hero content enters in a short editorial sequence; section content reveals once as it comes into view.
+- Image movement stays shallow (roughly 2–4% of the frame) and hover feedback is limited to fine lines, gentle scale and a quiet gallery cue.
+- Honour `prefers-reduced-motion`; every interaction remains complete and understandable without animation.
