@@ -7,7 +7,22 @@
   const metaTheme = document.querySelector('meta[name="theme-color"]');
   const validModes = ['auto', 'home'];
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const saveData = Boolean(navigator.connection?.saveData);
   let transitionTimers = [];
+
+  if (saveData) document.documentElement.classList.add('save-data');
+
+  function setVideoPlayback(mode, chooserOpen) {
+    document.querySelectorAll('.choice-video').forEach((video) => {
+      if (chooserOpen && !reduceMotion.matches && !saveData) video.play().catch(() => {});
+      else video.pause();
+    });
+    document.querySelectorAll('.hero-video').forEach((video) => {
+      const active = video.classList.contains(`hero-video-${mode}`);
+      if (active && !chooserOpen && !reduceMotion.matches && !saveData) video.play().catch(() => {});
+      else video.pause();
+    });
+  }
 
   const pathMode = () => {
     const part = location.pathname.split('/').filter(Boolean)[0];
@@ -45,6 +60,7 @@
       syncMode(mode);
       chooser?.classList.add('is-hidden');
       body.classList.remove('chooser-open');
+      setVideoPlayback(mode, false);
       delete body.dataset.transitionTo;
       if (updateUrl) setUrl(mode);
       return;
@@ -65,6 +81,7 @@
       syncMode(mode);
       chooser?.classList.add('is-hidden');
       body.classList.remove('chooser-open');
+      setVideoPlayback(mode, false);
       if (updateUrl) setUrl(mode);
     }, 430));
 
@@ -79,6 +96,7 @@
     if (event) event.preventDefault();
     chooser?.classList.remove('is-hidden');
     body.classList.add('chooser-open');
+    setVideoPlayback(body.dataset.mode, true);
   }
 
   document.querySelectorAll('[data-choose], [data-switch]').forEach((button) => {
@@ -92,6 +110,7 @@
       syncMode(mode);
       chooser?.classList.add('is-hidden');
       body.classList.remove('chooser-open');
+      setVideoPlayback(mode, false);
     } else {
       openChooser();
     }
@@ -101,9 +120,11 @@
   if (initial) {
     syncMode(initial);
     chooser?.classList.add('is-hidden');
+    setVideoPlayback(initial, false);
   } else {
     syncMode('auto');
     body.classList.add('chooser-open');
+    setVideoPlayback('auto', true);
   }
 
   window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 24), { passive: true });
