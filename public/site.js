@@ -9,13 +9,15 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const compactViewport = window.matchMedia('(max-width: 700px)');
   const saveData = Boolean(navigator.connection?.saveData);
+  const isSlowConnection = () => ['slow-2g', '2g'].includes(navigator.connection?.effectiveType);
   let heroVisible = true;
+  let mediaReady = false;
   let transitionTimers = [];
 
   if (saveData) document.documentElement.classList.add('save-data');
 
   function setVideoPlayback(mode, chooserOpen) {
-    const canPlay = !reduceMotion.matches && !compactViewport.matches && !saveData && !document.hidden;
+    const canPlay = mediaReady && !reduceMotion.matches && !compactViewport.matches && !saveData && !isSlowConnection() && !document.hidden;
     document.querySelectorAll('.choice-video').forEach((video) => {
       if (chooserOpen && canPlay) video.play().catch(() => {});
       else video.pause();
@@ -39,8 +41,9 @@
     document.title = mode === 'auto'
       ? 'Cankaj Super Car Wash — Newmarket-on-Fergus'
       : 'BC Stone Mason & Construction Restoration — County Clare';
-    document.querySelectorAll('[data-switch]').forEach((button) => {
-      button.setAttribute('aria-pressed', String(button.dataset.switch === mode));
+    document.querySelectorAll('[data-switch], [data-choose]').forEach((button) => {
+      const buttonMode = button.dataset.switch || button.dataset.choose;
+      button.setAttribute('aria-pressed', String(buttonMode === mode));
     });
   }
 
@@ -134,8 +137,19 @@
     const chooserOpen = !chooser?.classList.contains('is-hidden');
     setVideoPlayback(body.dataset.mode, chooserOpen);
   };
+  const enableDeferredMedia = () => {
+    const start = () => {
+      mediaReady = true;
+      refreshVideoPlayback();
+    };
+    if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 1800 });
+    else window.setTimeout(start, 800);
+  };
+  if (document.readyState === 'complete') enableDeferredMedia();
+  else window.addEventListener('load', enableDeferredMedia, { once: true });
   compactViewport.addEventListener('change', refreshVideoPlayback);
   reduceMotion.addEventListener('change', refreshVideoPlayback);
+  navigator.connection?.addEventListener?.('change', refreshVideoPlayback);
 
   const hero = document.querySelector('.hero');
   if (hero && 'IntersectionObserver' in window) {
@@ -152,28 +166,106 @@
   const compare = document.getElementById('compare');
   const compareRange = document.getElementById('compare-range');
   if (compare && compareRange) {
-    compareRange.addEventListener('input', () => {
+    const updateCompare = () => {
       compare.style.setProperty('--pos', `${compareRange.value}%`);
       compareRange.setAttribute('aria-valuetext', `${compareRange.value} percent after`);
+    };
+    compareRange.addEventListener('input', updateCompare);
+    updateCompare();
+  }
+
+  document.querySelectorAll('[data-service-panels]').forEach((group) => {
+    const panels = [...group.querySelectorAll('.service-panel')];
+    panels.forEach((panel) => {
+      const trigger = panel.querySelector('.service-panel-trigger');
+      const bodyPanel = panel.querySelector('.service-panel-body');
+      const mark = panel.querySelector('.panel-mark');
+      trigger?.addEventListener('click', () => {
+        const closeCurrent = panel.classList.contains('is-active');
+        panels.forEach((candidate) => {
+          const isOpen = candidate === panel && !closeCurrent;
+          candidate.classList.toggle('is-active', isOpen);
+          candidate.querySelector('.service-panel-trigger')?.setAttribute('aria-expanded', String(isOpen));
+          const candidateBody = candidate.querySelector('.service-panel-body');
+          candidateBody?.setAttribute('aria-hidden', String(!isOpen));
+          candidateBody?.toggleAttribute('inert', !isOpen);
+          const candidateMark = candidate.querySelector('.panel-mark');
+          if (candidateMark) candidateMark.textContent = isOpen ? '−' : '+';
+        });
+      });
+      bodyPanel?.setAttribute('aria-hidden', String(!panel.classList.contains('is-active')));
+      bodyPanel?.toggleAttribute('inert', !panel.classList.contains('is-active'));
+      if (mark) mark.textContent = panel.classList.contains('is-active') ? '−' : '+';
+    });
+  });
+
+  const processShowcase = document.querySelector('[data-process-showcase]');
+  if (processShowcase) {
+    const processButtons = [...processShowcase.querySelectorAll('[data-process-src]')];
+    const processImage = processShowcase.querySelector('.process-media img');
+    const processZoom = processShowcase.querySelector('[data-zoom-src]');
+    const processCaption = processShowcase.querySelector('.process-media figcaption');
+
+    const selectProcessStep = (button) => {
+      processButtons.forEach((candidate) => {
+        const active = candidate === button;
+        candidate.setAttribute('aria-pressed', String(active));
+        candidate.closest('li')?.classList.toggle('is-active', active);
+      });
+      if (!processImage || !processCaption || !processZoom) return;
+      processImage.classList.add('is-changing');
+      const updateImage = () => {
+        processImage.srcset = button.dataset.processSrcset || '';
+        processImage.src = button.dataset.processSrc;
+        processImage.alt = button.dataset.processAlt || '';
+        processCaption.textContent = button.dataset.processCaption || '';
+        processZoom.dataset.zoomSrc = button.dataset.processSrc;
+        processZoom.dataset.zoomCaption = button.dataset.processCaption || '';
+        requestAnimationFrame(() => processImage.classList.remove('is-changing'));
+      };
+      if (reduceMotion.matches) updateImage();
+      else window.setTimeout(updateImage, 130);
+    };
+
+    processButtons.forEach((button, index) => {
+      button.addEventListener('click', () => selectProcessStep(button));
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) return;
+        event.preventDefault();
+        const direction = ['ArrowDown', 'ArrowRight'].includes(event.key) ? 1 : -1;
+        const next = processButtons[(index + direction + processButtons.length) % processButtons.length];
+        next.focus();
+        selectProcessStep(next);
+      });
     });
   }
 
   const galleryDialog = document.getElementById('gallery-dialog');
   const dialogImage = document.getElementById('dialog-image');
   const dialogCaption = document.getElementById('dialog-caption');
-  document.querySelectorAll('[data-gallery-src]').forEach((item) => {
+  const openZoom = (item) => {
+    if (!galleryDialog || !dialogImage || !dialogCaption) return;
+    dialogImage.src = item.dataset.gallerySrc || item.dataset.zoomSrc;
+    dialogImage.alt = item.querySelector('img')?.alt || '';
+    dialogCaption.textContent = item.dataset.galleryCaption || item.dataset.zoomCaption || '';
+    galleryDialog.showModal();
+  };
+  const closeZoom = () => {
+    if (galleryDialog?.open) galleryDialog.close();
+  };
+  document.querySelectorAll('[data-gallery-src], [data-zoom-src]').forEach((item) => {
     item.addEventListener('click', () => {
-      if (!galleryDialog || !dialogImage || !dialogCaption) return;
-      dialogImage.src = item.dataset.gallerySrc;
-      dialogImage.alt = item.querySelector('img')?.alt || '';
-      dialogCaption.textContent = item.dataset.galleryCaption || '';
-      galleryDialog.showModal();
+      openZoom(item);
     });
   });
-  document.querySelector('[data-close-dialog]')?.addEventListener('click', () => galleryDialog?.close());
+  document.querySelector('[data-close-dialog]')?.addEventListener('click', closeZoom);
+  dialogImage?.addEventListener('click', closeZoom);
   galleryDialog?.addEventListener('click', (event) => {
-    if (event.target === galleryDialog) galleryDialog.close();
+    if (event.target === galleryDialog) closeZoom();
   });
+  galleryDialog?.addEventListener('wheel', closeZoom, { passive: true });
+  galleryDialog?.addEventListener('touchmove', closeZoom, { passive: true });
+  window.addEventListener('scroll', closeZoom, { passive: true });
 
   document.getElementById('enquiry-form')?.addEventListener('submit', (event) => {
     event.preventDefault();

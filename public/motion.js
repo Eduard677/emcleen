@@ -2,27 +2,28 @@
   const root = document.documentElement;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const revealSelector = [
-    '.section-heading',
-    '.service-card',
-    '.heritage-services article',
-    '.work-copy',
-    '.compare',
-    '.heritage-work-head',
-    '.project-grid figure',
-    '.gallery-item',
-    '.review-score',
+    '.section-heading > *',
+    '.service-panel-trigger > *',
+    '.service-panel-body p',
+    '.service-panel-body a',
+    '.work-copy > *',
+    '.heritage-work-head > *',
+    '.review-score > *',
+    '.review-intro > *',
     '.reviews blockquote',
-    '.review-attribution',
-    '.review-actions',
-    '.location-map',
-    '.location-copy',
-    '.approach-head',
-    '.process-list li',
-    '.confidence-intro',
+    '.review-card > p',
+    '.review-card footer > *',
+    '.review-attribution > *',
+    '.review-actions > *',
+    '.location-copy > *',
+    '.approach-head > *',
+    '.process-list button > span',
+    '.confidence-intro > *',
     '.confidence-facts > div',
-    '.contact-copy',
-    '.enquiry-form',
-    '.landing-section > *',
+    '.contact-copy > *',
+    '.enquiry-form > *',
+    '.landing-section h2',
+    '.landing-section p',
     '.landing-cta > *',
     '.privacy-content > *'
   ].join(',');
@@ -32,7 +33,7 @@
     item.classList.add('motion-reveal');
     const siblings = item.parentElement ? [...item.parentElement.children].filter((sibling) => sibling.matches?.(revealSelector)) : [];
     const index = Math.max(0, siblings.indexOf(item));
-    item.style.setProperty('--reveal-delay', `${Math.min(index, 3) * 70}ms`);
+    item.style.setProperty('--reveal-delay', `${Math.min(index, 3) * 40}ms`);
   });
 
   root.classList.add('motion-ready');
